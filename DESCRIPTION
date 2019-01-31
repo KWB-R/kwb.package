@@ -1,14 +1,28 @@
 Package: kwb.package
-Maintainer: Hauke Sonnenberg <hauke.sonnenberg@kompetenz-wasser.de>
-Author: Hauke Sonnenberg
+Title: Install / Unstall KWB Packages and Show Package Dependencies 
 Version: 0.2.0
-Imports: devtools, mvbutils, networkD3
-Suggests: kwb.utils
-License: GPL
-Title: install/uninstall KWB packages and show package dependencies
-Description: DEVELOPMENT VERSION! This package contains some helper functions 
-  for (un-)installing KWB packages and for showing package dependencies. The
-  function of main interest may be updateKwbPackages() that checks for the 
-  latest package version on KWB's MOBY server and installs the packages from
-  there if required.
-RoxygenNote: 6.0.1
+Authors@R: c(
+    person("Hauke", "Sonnenberg", , "hauke.sonnenberg@kompetenz-wasser.de", 
+           role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9134-2871")),
+    person("Michael", "Rustler", , "michael.rustler@kompetenz-wasser.de", 
+           role = c("ctb"), comment = c(ORCID = "0000-0003-0647-7726")),
+    person("Kompetenzzentrum Wasser Berlin gGmbH", role = c("cph")))
+Description: DEVELOPMENT VERSION! This package contains some
+    helper functions for (un-)installing KWB packages and for showing
+    package dependencies. The function of main interest may be
+    updateKwbPackages() that checks for the latest package version on
+    KWB's MEDUSA server and installs the packages from there if required.
+License: MIT + file LICENSE
+Imports: 
+    devtools,
+    mvbutils,
+    networkD3
+Suggests: 
+    kwb.utils,
+    covr
+Remotes: 
+    github::kwb-r/kwb.utils
+Encoding: UTF-8
+RoxygenNote: 6.1.1
+URL: https://github.com/kwb-r/kwb.package
+BugReports: https://github.com/kwb-r/kwb.package/issues
