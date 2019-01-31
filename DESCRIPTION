@@ -1,0 +1,14 @@
+Package: kwb.package
+Maintainer: Hauke Sonnenberg <hauke.sonnenberg@kompetenz-wasser.de>
+Author: Hauke Sonnenberg
+Version: 0.2.0
+Imports: devtools, mvbutils, networkD3
+Suggests: kwb.utils
+License: GPL
+Title: install/uninstall KWB packages and show package dependencies
+Description: DEVELOPMENT VERSION! This package contains some helper functions 
+  for (un-)installing KWB packages and for showing package dependencies. The
+  function of main interest may be updateKwbPackages() that checks for the 
+  latest package version on KWB's MOBY server and installs the packages from
+  there if required.
+RoxygenNote: 6.0.1
