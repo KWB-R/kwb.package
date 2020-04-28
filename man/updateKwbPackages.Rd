@@ -4,8 +4,11 @@
 \alias{updateKwbPackages}
 \title{Update or Install KWB-Packages}
 \usage{
-updateKwbPackages(packageNames = sort(installedKwbPackages()),
-  skip = character(), package.dir = defaultPackageDir())
+updateKwbPackages(
+  packageNames = sort(installedKwbPackages()),
+  skip = character(),
+  package.dir = defaultPackageDir()
+)
 }
 \arguments{
 \item{packageNames}{vector of packages to be installed. Default: names of all

@@ -4,8 +4,14 @@
 \alias{plotDependencies}
 \title{Plot Dependencies Between Nodes on a Circle Line}
 \usage{
-plotDependencies(nodes, dependencies, main = "", r = 1.5,
-  nodeColours = grDevices::rainbow(nrow(nodes)), ...)
+plotDependencies(
+  nodes,
+  dependencies,
+  main = "",
+  r = 1.5,
+  nodeColours = grDevices::rainbow(nrow(nodes)),
+  ...
+)
 }
 \arguments{
 \item{nodes}{data frame as returned by \code{\link{toNodes}}}

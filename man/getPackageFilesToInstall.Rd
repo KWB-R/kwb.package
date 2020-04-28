@@ -4,9 +4,14 @@
 \alias{getPackageFilesToInstall}
 \title{Get Package Files to Install}
 \usage{
-getPackageFilesToInstall(package.dir = defaultPackageDir(),
-  packageNames = NULL, filepattern = "", full.names = TRUE,
-  dbg = FALSE, warn = TRUE)
+getPackageFilesToInstall(
+  package.dir = defaultPackageDir(),
+  packageNames = NULL,
+  filepattern = "",
+  full.names = TRUE,
+  dbg = FALSE,
+  warn = TRUE
+)
 }
 \arguments{
 \item{package.dir}{full path to directory containing the package files}
