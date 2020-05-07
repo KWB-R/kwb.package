@@ -22,7 +22,7 @@ Imports:
 Suggests: 
     covr
 Remotes: 
-    github::kwb-r/kwb.utils@v0.5.0
+    github::kwb-r/kwb.utils@v0.5.0,
     github::r-lib/remotes@v2.2.1
 Encoding: UTF-8
 RoxygenNote: 7.1.0
