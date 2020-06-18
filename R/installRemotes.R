@@ -4,6 +4,8 @@
 #' 
 #' @param lib path to the library to which to install the remotes package
 #' @export
+#' @importFrom utils install.packages
+#' 
 installRemotes <- function(lib)
 {
   package_remotes <- "package:remotes"
