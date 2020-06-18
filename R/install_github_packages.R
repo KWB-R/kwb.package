@@ -52,8 +52,8 @@ get_r_version_majorminor <- function() {
 #' 
 #' pkgs <- pkgmeta::get_github_packages()
 #' 
-#' install_kwb_github_packages(lib = paths$lib_win, pkgs$full_name)
-#' install_kwb_github_packages(lib = paths$lib_linux, pkgs$full_name)
+#' install_github_packages(lib = paths$lib_win, pkgs$full_name)
+#' install_github_packages(lib = paths$lib_linux, pkgs$full_name)
 #' }
 #' 
 install_github_packages <- function(lib, 
