@@ -14,14 +14,15 @@ getRVersionMajorMinor <- function()
 #' Install GitHub Packages 
 #'
 #' @param lib path to R library where packages should be installed
-#' @param pkgs_full_name vector with full name to GitHub R packages (e.g.
-#'   "kwb-r/kwb.utils")
+#' @param repos vector of relative paths to GitHub repositories containing 
+#'   R packages (e.g. "kwb-r/kwb.utils")
 #' @param dependencies passed to remotes::install_github(). TRUE is shorthand
 #'   for "Depends", "Imports", "LinkingTo" and "Suggests"  NA is shorthand for
 #'   "Depends", "Imports" and "LinkingTo" and is the default. FALSE is shorthand
 #'   for no dependencies (i.e. just check this package, not its dependencies),
 #'   (default: TRUE)
-#' @param upgrade  passed to remotes::install_github(), (default: "always")
+#' @param upgrade  passed to \code{\link[remotes]{install_github}}, (default:
+#'   "never")
 #' @param auth_token GitHub Personal Access token, required with scope "private"
 #'   if access to non-public R packages is required (default:
 #'   Sys.getenv("GITHUB_PAT"))
@@ -49,28 +50,24 @@ getRVersionMajorMinor <- function()
 #' 
 installGithubPackages <- function(
   lib, 
-  pkgs_full_name, 
+  repos, 
   dependencies = TRUE, 
-  upgrade = "always", 
+  upgrade = "never", 
   auth_token = Sys.getenv("GITHUB_PAT")
 )
 {
-  kwb.utils::createDirectory(lib, dbg = FALSE)
-
-  withr::with_libpaths(new = lib, {
-    install.packages("remotes", repos = "https://cran.rstudio.org")
-  })
-  
-  for (full_name in pkgs_full_name) {
+  withr::with_libpaths(kwb.utils::createDirectory(lib, dbg = FALSE), code = {
     
-    withr::with_libpaths(new = lib, {
+    install.packages("remotes", repos = "https://cran.rstudio.org")
+    
+    for (repo in repos) {
       
-      code = remotes::install_github(
-        repo = full_name,
+      remotes::install_github(
+        repo = repo,
         dependencies = dependencies,
         upgrade = upgrade,
         auth_token = auth_token
       )
-    })
-  }
+    }
+  })
 }

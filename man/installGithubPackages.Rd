@@ -6,17 +6,17 @@
 \usage{
 installGithubPackages(
   lib,
-  pkgs_full_name,
+  repos,
   dependencies = TRUE,
-  upgrade = "always",
+  upgrade = "never",
   auth_token = Sys.getenv("GITHUB_PAT")
 )
 }
 \arguments{
 \item{lib}{path to R library where packages should be installed}
 
-\item{pkgs_full_name}{vector with full name to GitHub R packages (e.g.
-"kwb-r/kwb.utils")}
+\item{repos}{vector of relative paths to GitHub repositories containing 
+R packages (e.g. "kwb-r/kwb.utils")}
 
 \item{dependencies}{passed to remotes::install_github(). TRUE is shorthand
 for "Depends", "Imports", "LinkingTo" and "Suggests"  NA is shorthand for
@@ -24,7 +24,8 @@ for "Depends", "Imports", "LinkingTo" and "Suggests"  NA is shorthand for
 for no dependencies (i.e. just check this package, not its dependencies),
 (default: TRUE)}
 
-\item{upgrade}{passed to remotes::install_github(), (default: "always")}
+\item{upgrade}{passed to \code{\link[remotes]{install_github}}, (default:
+"never")}
 
 \item{auth_token}{GitHub Personal Access token, required with scope "private"
 if access to non-public R packages is required (default:
