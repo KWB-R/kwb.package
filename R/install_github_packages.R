@@ -13,15 +13,18 @@ getRVersionMajorMinor <- function()
 
 #' Install GitHub Packages 
 #'
-#' @param lib path to R library where packages should be instaslled
-#' @param pkgs_full_name vector with full sname to GitHub R packages (e.g. "kwb-r/kwb.utils")
-#' @param dependencies passed to remotes::install_github(). TRUE is shorthand for 
-#' "Depends", "Imports", "LinkingTo" and "Suggests"  NA is shorthand for "Depends", 
-#' "Imports" and "LinkingTo" and is the default. FALSE is shorthand for no 
-#' dependencies (i.e. just check this package, not its dependencies), (default: TRUE)
+#' @param lib path to R library where packages should be installed
+#' @param pkgs_full_name vector with full name to GitHub R packages (e.g.
+#'   "kwb-r/kwb.utils")
+#' @param dependencies passed to remotes::install_github(). TRUE is shorthand
+#'   for "Depends", "Imports", "LinkingTo" and "Suggests"  NA is shorthand for
+#'   "Depends", "Imports" and "LinkingTo" and is the default. FALSE is shorthand
+#'   for no dependencies (i.e. just check this package, not its dependencies),
+#'   (default: TRUE)
 #' @param upgrade  passed to remotes::install_github(), (default: "always")
-#' @param auth_token GitHub Personal Access token, required with scope "private" if
-#' access to non-public R packages is required (default: Sys.getenv("GITHUB_PAT"))
+#' @param auth_token GitHub Personal Access token, required with scope "private"
+#'   if access to non-public R packages is required (default:
+#'   Sys.getenv("GITHUB_PAT"))
 #' @return installs multiple GitHub R packages into one R library
 #' @export
 #' @importFrom fs dir_create
