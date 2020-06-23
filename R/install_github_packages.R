@@ -4,22 +4,12 @@
 #' @return returns R version major.minor string (e.g. 4.0), used by standard R 
 #' libraries for grouping all R packages into one folder
 #' @export
-#' @importFrom utils sessionInfo
-#' @importFrom stringr str_extract
 #' @examples
-#' get_r_version_majorminor(
-#' )
-get_r_version_majorminor <- function() {
-  
-  session_metadata <- sessionInfo()
-  
-  paste0(session_metadata$R.version$major, ".",
-         stringr::str_extract(session_metadata$R.version$minor, 
-                              "^[0-9]+"))
+#' getRVersionMajorMinor()
+getRVersionMajorMinor <- function()
+{
+  paste(version$major, strsplit(version$minor, "\\.")[[1L]][1L], sep = ".")
 }
-
-
-
 
 #' Install GitHub Packages 
 #'
@@ -42,7 +32,7 @@ get_r_version_majorminor <- function() {
 #' remotes::install_github("kwb-r/pkgmeta") 
 #' pkgs <- pkgmeta::get_github_packages()
 #' paths_list <- list(
-#' r_version = kwb.packages::get_r_version_majorminor(),
+#' r_version = kwb.packages::getRVersionMajorMinor(),
 #' lib_linux = "/usr/lib/R/site-library",
 #' lib_win = "<win_root_dir>/kwbran/<r_version>"
 #' )
@@ -52,26 +42,34 @@ get_r_version_majorminor <- function() {
 #' 
 #' pkgs <- pkgmeta::get_github_packages()
 #' 
-#' install_github_packages(lib = paths$lib_win, pkgs$full_name)
-#' install_github_packages(lib = paths$lib_linux, pkgs$full_name)
+#' installGithubPackages(lib = paths$lib_win, pkgs$full_name)
+#' installGithubPackages(lib = paths$lib_linux, pkgs$full_name)
 #' }
 #' 
-install_github_packages <- function(lib, 
-                                    pkgs_full_name,
-                                    dependencies = TRUE,
-                                    upgrade = "always",  
-                                    auth_token = Sys.getenv("GITHUB_PAT")) {
-  
+installGithubPackages <- function(
+  lib, 
+  pkgs_full_name, 
+  dependencies = TRUE, 
+  upgrade = "always", 
+  auth_token = Sys.getenv("GITHUB_PAT")
+)
+{
   fs::dir_create(lib, recurse = TRUE)
-  withr::with_libpaths(new = lib,  {
-    install.packages("remotes", repos = "https://cran.rstudio.org")  }
-  )
-  for(full_name in pkgs_full_name) {
-    withr::with_libpaths(new = lib, {
-      code = remotes::install_github(repo = full_name,
-                                     dependencies = dependencies,
-                                     upgrade = upgrade,
-                                     auth_token = auth_token)})
-  }
   
+  withr::with_libpaths(new = lib, {
+    install.packages("remotes", repos = "https://cran.rstudio.org")
+  })
+  
+  for (full_name in pkgs_full_name) {
+    
+    withr::with_libpaths(new = lib, {
+      
+      code = remotes::install_github(
+        repo = full_name,
+        dependencies = dependencies,
+        upgrade = upgrade,
+        auth_token = auth_token
+      )
+    })
+  }
 }
