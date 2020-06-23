@@ -13,19 +13,22 @@ installGithubPackages(
 )
 }
 \arguments{
-\item{lib}{path to R library where packages should be instaslled}
+\item{lib}{path to R library where packages should be installed}
 
-\item{pkgs_full_name}{vector with full sname to GitHub R packages (e.g. "kwb-r/kwb.utils")}
+\item{pkgs_full_name}{vector with full name to GitHub R packages (e.g.
+"kwb-r/kwb.utils")}
 
-\item{dependencies}{passed to remotes::install_github(). TRUE is shorthand for 
-"Depends", "Imports", "LinkingTo" and "Suggests"  NA is shorthand for "Depends", 
-"Imports" and "LinkingTo" and is the default. FALSE is shorthand for no 
-dependencies (i.e. just check this package, not its dependencies), (default: TRUE)}
+\item{dependencies}{passed to remotes::install_github(). TRUE is shorthand
+for "Depends", "Imports", "LinkingTo" and "Suggests"  NA is shorthand for
+"Depends", "Imports" and "LinkingTo" and is the default. FALSE is shorthand
+for no dependencies (i.e. just check this package, not its dependencies),
+(default: TRUE)}
 
 \item{upgrade}{passed to remotes::install_github(), (default: "always")}
 
-\item{auth_token}{GitHub Personal Access token, required with scope "private" if
-access to non-public R packages is required (default: Sys.getenv("GITHUB_PAT"))}
+\item{auth_token}{GitHub Personal Access token, required with scope "private"
+if access to non-public R packages is required (default:
+Sys.getenv("GITHUB_PAT"))}
 }
 \value{
 installs multiple GitHub R packages into one R library
@@ -38,13 +41,12 @@ Install GitHub Packages
 remotes::install_github("kwb-r/pkgmeta") 
 pkgs <- pkgmeta::get_github_packages()
 paths_list <- list(
-r_version = kwb.packages::getRVersionMajorMinor(),
-lib_linux = "/usr/lib/R/site-library",
-lib_win = "<win_root_dir>/kwbran/<r_version>"
+  r_version = kwb.packages::getRVersionMajorMinor(),
+  lib_linux = "/usr/lib/R/site-library",
+  lib_win = "<win_root_dir>/kwbran/<r_version>"
 )
 
-paths <- kwb.utils::resolve(paths_list,
-win_root_dir = fs::path(tempdir())) 
+paths <- kwb.utils::resolve(paths_list, win_root_dir = tempdir())
 
 pkgs <- pkgmeta::get_github_packages()
 

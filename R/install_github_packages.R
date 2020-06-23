@@ -27,7 +27,6 @@ getRVersionMajorMinor <- function()
 #'   Sys.getenv("GITHUB_PAT"))
 #' @return installs multiple GitHub R packages into one R library
 #' @export
-#' @importFrom fs dir_create
 #' @importFrom withr with_libpaths
 #' @importFrom remotes install_github
 #' @examples
@@ -35,13 +34,12 @@ getRVersionMajorMinor <- function()
 #' remotes::install_github("kwb-r/pkgmeta") 
 #' pkgs <- pkgmeta::get_github_packages()
 #' paths_list <- list(
-#' r_version = kwb.packages::getRVersionMajorMinor(),
-#' lib_linux = "/usr/lib/R/site-library",
-#' lib_win = "<win_root_dir>/kwbran/<r_version>"
+#'   r_version = kwb.packages::getRVersionMajorMinor(),
+#'   lib_linux = "/usr/lib/R/site-library",
+#'   lib_win = "<win_root_dir>/kwbran/<r_version>"
 #' )
 #' 
-#' paths <- kwb.utils::resolve(paths_list,
-#' win_root_dir = fs::path(tempdir())) 
+#' paths <- kwb.utils::resolve(paths_list, win_root_dir = tempdir())
 #' 
 #' pkgs <- pkgmeta::get_github_packages()
 #' 
@@ -57,8 +55,8 @@ installGithubPackages <- function(
   auth_token = Sys.getenv("GITHUB_PAT")
 )
 {
-  fs::dir_create(lib, recurse = TRUE)
-  
+  kwb.utils::createDirectory(lib, dbg = FALSE)
+
   withr::with_libpaths(new = lib, {
     install.packages("remotes", repos = "https://cran.rstudio.org")
   })
