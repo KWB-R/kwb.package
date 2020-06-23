@@ -20,7 +20,6 @@ Imports:
     mvbutils,
     networkD3,
     remotes,
-    stringr,
     withr
 Suggests: 
     covr,
