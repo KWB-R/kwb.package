@@ -10,19 +10,38 @@
 #' @export
 downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
 {
-  result <- try(
-    remotes:::remote_download(remotes:::github_remote(repo), quiet = FALSE)
-  )
+  # Extract package name from repo string (remove everything before and 
+  # including "/", and everything after and including "@")
+  package <- gsub("^.*/|@[^@]+$", "", repo)
+
+  file_downloaded <- packageInDestdir(package, destdir)
   
-  if (inherits(result, "try-error")) {
-    return(structure(character(0), origin = character(0)))
+  if (file_downloaded) {
+
+    file <- kwb.utils::getAttribute(file_downloaded, "path")
+    origin <- character(0)
+    
+  } else{
+    
+    result <- try(remotes:::remote_download(
+      remotes:::github_remote(repo), 
+      quiet = FALSE
+    ))
+    
+    if (inherits(result, "try-error")) {
+      
+      file <- character(0)
+      origin <- character(0)
+      
+    } else {
+      
+      file <- file.path(destdir, findPackageFilename(tarfile = result)                        )
+      file.copy(result, file, overwrite = TRUE)
+      origin <- result
+    }
   }
   
-  file <- file.path(destdir, findPackageFilename(tarfile = result))
-    
-  file.copy(result, file, overwrite = TRUE)
-  
-  structure(file, origin = result)
+  structure(file, origin = origin)
 }
 
 # findPackageFilename ----------------------------------------------------------

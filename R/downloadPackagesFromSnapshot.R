@@ -15,7 +15,6 @@ downloadPackagesFromSnapshot <- function(
   packages, snapshot_date, destdir = NULL, type = c("source", "win.binary")[1L]
 )
 {
-  #file.path(PATHS$install, type_info[[type]]$archive), 
   stopifnot(is.character(packages))
   
   type <- match.arg(type, c("source", "win.binary"))
@@ -41,16 +40,19 @@ downloadPackagesFromSnapshot <- function(
     
     package <- packages[i]
     
-    kwb.utils::catAndRun(
-      sprintf("Downloading %s package %d/%d: %s", type, i, n, package),
-      utils::download.packages(
-        package, 
-        destdir = destdir, 
-        repos = repos, 
-        type = type
-      ),
-      newLine = 3L
-    )
+    if (! packageInDestdir(package, destdir)) {
+
+      kwb.utils::catAndRun(
+        sprintf("Downloading %s package %d/%d: %s", type, i, n, package),
+        utils::download.packages(
+          package, 
+          destdir = destdir, 
+          repos = repos, 
+          type = type
+        ),
+        newLine = 3L
+      )
+    }
   }
 
   dir(destdir, full.names = TRUE)
