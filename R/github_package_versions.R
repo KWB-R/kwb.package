@@ -1,6 +1,17 @@
 # githubPackageVersions --------------------------------------------------------
-githubPackageVersions <- function(repo)
+githubPackageVersions <- function(
+  repo, 
+  auth_token = remotes:::github_pat()
+)
 {
+  stopifnot(is.character(repo))
+  
+  if (length(repo) > 1L) {
+    return(do.call(rbind, lapply(
+      repo, githubPackageVersions, auth_token = auth_token
+    )))
+  }
+  
   #repo <- "KWB-R/sema.berlin"
 
   # Shortcut
@@ -10,7 +21,7 @@ githubPackageVersions <- function(repo)
     "https://raw.githubusercontent.com/%s/%s/DESCRIPTION", repo, sha
   )
   
-  result <- getGithubReleaseInfo(repo, reduced = FALSE)
+  result <- getGithubReleaseInfo(repo, reduced = FALSE, auth_token = auth_token)
 
   if (is.null(result)) {
     return(NULL)
@@ -19,7 +30,8 @@ githubPackageVersions <- function(repo)
   descriptions <- lapply(
     get(result, "sha"), 
     readGithubPackageDescription,
-    repo = repo
+    repo = repo,
+    auth_token = auth_token
   )
   
   result$package <- basename(result$repo)
