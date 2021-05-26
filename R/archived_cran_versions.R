@@ -1,7 +1,7 @@
-# archived_cran_versions -------------------------------------------------------
-# archived_cran_versions(c("ggplot2", "swmmr", "kwb.hantush"))
-# archived_cran_versions(c("ggplot2", "swmmr", "kwb.hantush"), ref_date= "2012-12-01")
-archived_cran_versions <- function(package, ref_date = NULL)
+# archivedCranVersions ---------------------------------------------------------
+# archivedCranVersions(c("ggplot2", "swmmr", "kwb.hantush"))
+# archivedCranVersions(c("ggplot2", "swmmr", "kwb.hantush"), ref_date= "2012-12-01")
+archivedCranVersions <- function(package, ref_date = NULL)
 {
   archive_url <- function(package) paste0(
     "https://cran.r-project.org/src/contrib/Archive/", package
@@ -39,11 +39,11 @@ archived_cran_versions <- function(package, ref_date = NULL)
     return(version_dates)
   }
   
-  get_last_version_before(version_dates, as.Date(ref_date))
+  getLastVersionBefore(version_dates, as.Date(ref_date))
 }
 
-# get_last_version_before ------------------------------------------------------
-get_last_version_before <- function(version_dates, ref_date)
+# getLastVersionBefore ---------------------------------------------------------
+getLastVersionBefore <- function(version_dates, ref_date)
 {
   X = unname(split(version_dates, version_dates$package))
   
