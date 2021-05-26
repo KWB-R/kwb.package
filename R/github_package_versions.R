@@ -45,7 +45,9 @@ githubPackageVersions <- function(
   result$remote <- sprintf("github::%s@%s", result$repo, result$tag)
   
   result$version <- sapply(descriptions, function(x) {
-    stopifnot("Version" %in% colnames(x))
+    if (! "Version" %in% colnames(x)) {
+      return(NA_character_)
+    }
     unname(x[, "Version"])
   })
 
@@ -120,7 +122,14 @@ readGithubPackageDescription <- function(
   )
 
   endpoint <- description_url(repo, sha)
-  con <- textConnection(gh::gh(endpoint, .token = auth_token)$message)
+  content <- try(gh::gh(endpoint, .token = auth_token), silent = TRUE)
+
+  if (inherits(content, "try-error")) {
+    return(NULL)
+  }
+  
+  con <- textConnection(kwb.utils::selectElements(content, "message"))
   on.exit(close(con))
+  
   read.dcf(con)
 }
