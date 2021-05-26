@@ -13,7 +13,7 @@ archivedCranVersions <- function(package, ref_date = NULL)
 
   if (length(package) > 1L) {
     return(do.call(rbind, lapply(
-      package, archived_cran_versions, ref_date = ref_date
+      package, archivedCranVersions, ref_date = ref_date
     )))
   } 
   
