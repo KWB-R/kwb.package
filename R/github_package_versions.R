@@ -54,7 +54,7 @@ githubPackageVersions <- function(
   result <- kwb.utils::removeColumns(result, c("sha", "repo", "tag", "release"))
   result <- kwb.utils::moveColumnsToFront(result,c("package", "version", "date"))
   
-  result <- result[! is.na(result$date), ]
+  result <- result[! is.na(result$date) & ! is.na(result$version), ]
   
   kwb.utils::orderBy(result, "date")
 }
