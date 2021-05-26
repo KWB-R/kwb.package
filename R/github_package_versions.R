@@ -1,18 +1,24 @@
 # githubPackageVersions --------------------------------------------------------
 githubPackageVersions <- function(
   repo, 
-  auth_token = remotes:::github_pat()
+  auth_token = remotes:::github_pat(),
+  verbose = TRUE
 )
 {
   stopifnot(is.character(repo))
   
   if (length(repo) > 1L) {
     return(do.call(rbind, lapply(
-      repo, githubPackageVersions, auth_token = auth_token
+      repo, 
+      githubPackageVersions, 
+      auth_token = auth_token, 
+      verbose = verbose
     )))
   }
   
-  #repo <- "KWB-R/sema.berlin"
+  if (verbose) {
+    message("Reading ", repo)
+  }
 
   # Shortcut
   get <- kwb.utils::selectColumns
