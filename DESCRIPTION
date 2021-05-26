@@ -15,6 +15,7 @@ Description: DEVELOPMENT VERSION! This package contains some
 License: MIT + file LICENSE
 Imports: 
     devtools,
+    jsonlite,
     kwb.utils (>= 0.5.0),
     mvbutils,
     networkD3,
