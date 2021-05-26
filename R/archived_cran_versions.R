@@ -12,7 +12,9 @@ archived_cran_versions <- function(package, ref_date = NULL)
   )
 
   if (length(package) > 1L) {
-    return(do.call(rbind, lapply(package, archived_cran_versions)))
+    return(do.call(rbind, lapply(
+      package, archived_cran_versions, ref_date = ref_date
+    )))
   } 
   
   url <- archive_url(package)
