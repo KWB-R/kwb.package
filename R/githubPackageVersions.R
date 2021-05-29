@@ -45,11 +45,6 @@ githubPackageVersions <- function(
   key_columns <- c("package", "version", "date")
   extra_columns <- c("sha", "repo", "tag", "release")
   
-  # Endpoint to raw DESCRIPTION file of a certain commit
-  description_url <- function(repo, sha) sprintf(
-    "https://raw.githubusercontent.com/%s/%s/DESCRIPTION", repo, sha
-  )
-
   # Get release information (may be NULL if there are no releases)
   result <- getGithubReleaseInfo(repo, reduced = FALSE, auth_token = auth_token)
 
@@ -146,11 +141,7 @@ readGithubPackageDescription <- function(
   repo, sha, auth_token = remotes:::github_pat()
 )
 {
-  description_url <- function(repo, sha) sprintf(
-    "https://raw.githubusercontent.com/%s/%s/DESCRIPTION", repo, sha
-  )
-
-  endpoint <- description_url(repo, sha)
+  endpoint <- getUrl("github_desc", repo = repo, sha = sha)
   content <- try(gh::gh(endpoint, .token = auth_token), silent = TRUE)
 
   if (inherits(content, "try-error")) {

@@ -8,7 +8,9 @@ getUrl <- function(key, ...)
     cran_archive = "<cran_contrib>/Archive/<package>",
     cran_archive_file = "<cran_archive>/<package_filename>",
     cran_package_file = "<cran_contrib>/<package_filename>",
-    package_filename = "<package>_<version>.tar.gz"
+    package_filename = "<package>_<version>.tar.gz",
+    github_raw = "https://raw.githubusercontent.com",
+    github_desc = "<github_raw>/<repo>/<sha>/DESCRIPTION"
   ))
   
   kwb.utils::selectElements(urls, key)
