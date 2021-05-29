@@ -1,9 +1,26 @@
+# githubVersions ---------------------------------------------------------------
+#' Title
+#'
+#' @param name package name
+#' @param github_user name of github account, default: "KWB-R"
+#'
+#' @return data frame with one row per available version
+#' @export
+#'
+#' @examples
+#' githubVersions("kwb.utils")
+githubVersions <- function(name, github_user = "KWB-R")
+{
+  githubPackageVersions(repo = githubRepo(github_user, name))
+}
+
 # githubPackageVersions --------------------------------------------------------
 # Haukes version of github_packages_versions()
 githubPackageVersions <- function(
   repo,
   auth_token = remotes:::github_pat(),
-  verbose = TRUE
+  verbose = TRUE,
+  reduced = TRUE
 )
 {
   stopifnot(is.character(repo))
@@ -23,7 +40,11 @@ githubPackageVersions <- function(
 
   # Shortcut
   get <- kwb.utils::selectColumns
-
+  
+  # Column sets
+  key_columns <- c("package", "version", "date")
+  extra_columns <- c("sha", "repo", "tag", "release")
+  
   # Endpoint to raw DESCRIPTION file of a certain commit
   description_url <- function(repo, sha) sprintf(
     "https://raw.githubusercontent.com/%s/%s/DESCRIPTION", repo, sha
@@ -56,8 +77,11 @@ githubPackageVersions <- function(
     unname(x[, "Version"])
   })
 
-  result <- kwb.utils::removeColumns(result, c("sha", "repo", "tag", "release"))
-  result <- kwb.utils::moveColumnsToFront(result, c("package", "version", "date"))
+  if (reduced) {
+    result <- kwb.utils::removeColumns(result, extra_columns)
+  }
+
+  result <- kwb.utils::moveColumnsToFront(result, key_columns)
 
   result <- result[! is.na(result$date) & ! is.na(result$version), ]
 
