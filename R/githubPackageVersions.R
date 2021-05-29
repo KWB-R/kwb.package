@@ -23,6 +23,8 @@ githubPackageVersions <- function(
   reduced = TRUE
 )
 {
+  #kwb.utils::assignPackageObjects("kwb.package")
+  #repo = "cran/kwb.hantush";verbose=TRUE;reduced=TRUE
   stopifnot(is.character(repo))
 
   if (length(repo) > 1L) {
@@ -91,21 +93,13 @@ getGithubReleaseInfo <- function(
   # Shortcut
   get <- kwb.utils::selectElements
 
-  releases_url <- function(repo) sprintf(
-    "https://api.github.com/repos/%s/releases", repo
-  )
-
-  tags_url <- function(repo) sprintf(
-    "https://api.github.com/repos/%s/tags", repo
-  )
-
   get_endpoint <- function(endpoint) {
     stopifnot(length(endpoint) == 1L)
     gh::gh(endpoint, .token = auth_token)
   }
 
-  releases <- get_endpoint(endpoint = releases_url(repo))
-  tags <- get_endpoint(endpoint = tags_url(repo))
+  releases <- get_endpoint(getUrl("github_releases", repo = repo))
+  tags <- get_endpoint(getUrl("github_tags", repo = repo))
 
   if (length(tags) == 0L) {
     return(NULL)
@@ -116,12 +110,21 @@ getGithubReleaseInfo <- function(
     sha = sapply(lapply(tags, get, "commit"), get, "sha")
   )
 
-  release_info <- kwb.utils::noFactorDataFrame(
-    tag = sapply(releases, get, "tag_name"),
-    date = as.Date(sapply(releases, get, "published_at")),
-    release = sapply(releases, get, "name"),
-    author = sapply(releases, function(x) get(get(x, "author"), "login"))
-  )
+  release_info <- if (length(releases)) {
+    kwb.utils::noFactorDataFrame(
+      tag = sapply(releases, get, "tag_name"),
+      date = as.Date(sapply(releases, get, "published_at")),
+      release = sapply(releases, get, "name"),
+      author = sapply(releases, function(x) get(get(x, "author"), "login"))
+    )
+  } else {
+    kwb.utils::noFactorDataFrame(
+      tag = character(0L),
+      date = as.Date(character(0L)),
+      release = character(0L),
+      author = character(0L)
+    )
+  }
 
   result <- cbind(
     repo = repo,
