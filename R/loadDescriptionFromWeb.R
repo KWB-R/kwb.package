@@ -4,9 +4,9 @@ loadDescriptionFromWeb <- function(
 )
 {
   #name = "sema.berlin";version = "1.6.1";github_user = "KWB-R"
-  if (isOnCran(name)) {
-    
-    versions <- cranVersions(name)
+  versions <- cranVersions(name, dbg = FALSE)
+
+  if (! is.null(versions)) {
     
     version <- kwb.utils::defaultIfNA(version, rev(versions$version)[1L])
     
