@@ -3,6 +3,7 @@ loadDescriptionFromWeb <- function(
   name, version = NA_character_, github_user = "KWB-R"
 )
 {
+  #name = "sema.berlin";version = "1.6.1";github_user = "KWB-R"
   if (isOnCran(name)) {
     
     versions <- cranVersions(name)

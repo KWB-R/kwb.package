@@ -67,12 +67,7 @@ githubPackageVersions <- function(
 
   result$remote <- sprintf("github::%s@%s", result$repo, result$tag)
 
-  result$version <- sapply(descriptions, function(x) {
-    if (! "Version" %in% colnames(x)) {
-      return(NA_character_)
-    }
-    unname(x[, "Version"])
-  })
+  result$version <- sapply(descriptions, kwb.utils::selectElements, "version")
 
   if (reduced) {
     result <- kwb.utils::removeColumns(result, extra_columns)
@@ -139,20 +134,3 @@ getGithubReleaseInfo <- function(
   kwb.utils::removeColumns(result, "sha")
 }
 
-# readGithubPackageDescription -------------------------------------------------
-readGithubPackageDescription <- function(
-  repo, sha, auth_token = remotes:::github_pat()
-)
-{
-  endpoint <- getUrl("github_desc", repo = repo, sha = sha)
-  content <- try(gh::gh(endpoint, .token = auth_token), silent = TRUE)
-
-  if (inherits(content, "try-error")) {
-    return(NULL)
-  }
-
-  con <- textConnection(kwb.utils::selectElements(content, "message"))
-  on.exit(close(con))
-
-  read.dcf(con)
-}
