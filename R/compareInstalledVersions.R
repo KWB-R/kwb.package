@@ -9,6 +9,8 @@
 #'   respectively), \code{differs} (logical indicating whether the version is
 #'   different in the two libraries)
 #' @export
+#' @importFrom utils installed.packages
+#' @importFrom kwb.utils resetRowNames
 compareInstalledVersions <- function(lib1, lib2)
 {
   installed_versions <- function(x) {

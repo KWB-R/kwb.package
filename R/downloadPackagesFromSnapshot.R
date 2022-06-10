@@ -8,9 +8,8 @@
 #' @param destdir path to download folder
 #' @param type one of \code{c("source", "win.binary")}
 #' @return paths to the downloaded files (vector of character)
-#' @importFrom utils download.packages
 #' @export
-#' 
+#' @importFrom utils download.packages
 downloadPackagesFromSnapshot <- function(
   packages, snapshot_date, destdir = NULL, type = c("source", "win.binary")[1L]
 )

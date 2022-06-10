@@ -8,6 +8,8 @@
 #' @return path to downloaded file in the \code{destdir} folder with attribute 
 #'   "origin" pointing to the original file in \code{tempdir()}.
 #' @export
+#' @importFrom kwb.utils getAttribute
+#' @importFrom remotes github_remote remote_download
 downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
 {
   # Extract package name from repo string (remove everything before and 
@@ -23,8 +25,8 @@ downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
     
   } else{
     
-    result <- try(remotes:::remote_download(
-      remotes:::github_remote(repo), 
+    result <- try(remotes::remote_download(
+      remotes::github_remote(repo), 
       quiet = FALSE
     ))
     
@@ -44,7 +46,11 @@ downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
   structure(file, origin = origin)
 }
 
-# findPackageFilename ----------------------------------------------------------
+#' findPackageFilename ---------------------------------------------------------
+#' @noRd
+#' @noMd
+#' @keywords internal 
+#' @importFrom utils untar
 findPackageFilename <- function(tarfile)
 {
   paths <- utils::untar(tarfile, list = TRUE)

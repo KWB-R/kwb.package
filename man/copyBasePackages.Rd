@@ -8,7 +8,7 @@ copyBasePackages(
   target_lib,
   set_number = 2L,
   system_lib = utils::tail(.libPaths(), 1L),
-  packages = kwb.package::systemPackages(set_number)
+  packages = systemPackages(set_number)
 )
 }
 \arguments{

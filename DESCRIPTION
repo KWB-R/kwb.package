@@ -6,12 +6,13 @@ Authors@R: c(
            role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9134-2871")),
     person("Michael", "Rustler", , "michael.rustler@kompetenz-wasser.de", 
            role = c("ctb"), comment = c(ORCID = "0000-0003-0647-7726")),
+    person("FAKIN", role = c("fnd")),
+    person("OPTIWELLS-2", role = c("fnd")),
     person("Kompetenzzentrum Wasser Berlin gGmbH", role = c("cph")))
-Description: DEVELOPMENT VERSION! This package contains some
-    helper functions for (un-)installing KWB packages and for showing
-    package dependencies. The function of main interest may be
-    updateKwbPackages() that checks for the latest package version on
-    KWB's MEDUSA server and installs the packages from there if required.
+Description: This package contains some helper functions for (un-)installing KWB 
+    packages and for showing package dependencies. The function of main interest 
+    may be updateKwbPackages() that checks for the latest package version on
+    KWB's server and installs the packages from there if required.
 License: MIT + file LICENSE
 Imports: 
     devtools,
@@ -29,6 +30,6 @@ Remotes:
     github::kwb-r/kwb.utils,
     github::kwb-r/pkgmeta
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 URL: https://github.com/kwb-r/kwb.package
 BugReports: https://github.com/kwb-r/kwb.package/issues

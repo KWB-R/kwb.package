@@ -1,4 +1,9 @@
-# readGithubPackageDescription -------------------------------------------------
+#' readGithubPackageDescription ------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom gh gh
+#' @importFrom kwb.utils selectElements
 readGithubPackageDescription <- function(
   repo, sha, auth_token = remotes:::github_pat()
 )

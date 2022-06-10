@@ -152,6 +152,8 @@ gradToRad <- function(grad)
 #' @param r radius of the circle
 #' @param nodeColours colours to be given to the nodes
 #' @param \dots passed to \code{\link{drawDependencies}}
+#' @importFrom grDevices rainbow
+#' @export
 #' 
 plotDependencies <- function(
   nodes, 
@@ -178,7 +180,8 @@ plotDependencies <- function(
 #'   \code{c(-r, r)}
 #' @param col colour used to plot the nodes (default: "red")
 #' @param \dots arguments passed to \code{plot}
-#' 
+#' @export
+#' @importFrom graphics plot 
 plotNodes <- function(nodes, r = 1, col = "red", ...)
 {
   graphics::plot(
@@ -195,7 +198,7 @@ plotNodes <- function(nodes, r = 1, col = "red", ...)
 #' @param cex character expansion factor as given to \code{text}
 #' @param distance.factor expansion factor applied to the x and y coordinates of the nodes to get 
 #'   the coordinates of the labels
-#' 
+#' @export
 addNodeLabels <- function(nodes, cex = 1, distance.factor = 1)
 {
   rowNames <- row.names(nodes)
@@ -229,6 +232,7 @@ addNodeLabels <- function(nodes, cex = 1, distance.factor = 1)
 #'   \code{\link{packageDependencies}}
 #' @param nodeColours colours given to the lines starting at the same start node
 #' @param \dots arguments passed to \code{\link{drawLink}}
+#' @export
 #' 
 drawDependencies <- function(nodes, dependencies, nodeColours, ...)
 {
@@ -258,7 +262,8 @@ drawDependencies <- function(nodes, dependencies, nodeColours, ...)
 #' @param i row index of the start node
 #' @param j row index of the finish node
 #' @param \dots arguments passed to \code{arrows}
-#' 
+#' @export
+#' @importFrom graphics arrows
 drawLink <- function(nodes, i, j, ...) 
 {
   graphics::arrows(

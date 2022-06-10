@@ -30,6 +30,7 @@ getRVersionMajorMinor <- function()
 #' @export
 #' @importFrom withr with_libpaths
 #' @importFrom remotes install_github
+#' @importFrom kwb.utils createDirectory
 #' @examples
 #' \dontrun{
 #' remotes::install_github("kwb-r/pkgmeta") 

@@ -1,4 +1,8 @@
 # loadDescriptionFromArchiveUrl ------------------------------------------------
+#' @noRd
+#' @noMd
+#' @keywords internal 
+#' @importFrom utils download.file
 loadDescriptionFromArchiveUrl <- function(url)
 {
   stopifnot(endsWith(url, ".tar.gz"))
