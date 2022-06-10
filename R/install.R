@@ -51,13 +51,37 @@ updateKwbPackages <- function
   }
 }
 
+
+# getServername ------------------------------------------------------------
+
+#' Get KWB Servername
+#' 
+getServername <- function() {
+  
+  servername <- Sys.getenv("SERVERNAME")
+  
+  if(servername == "") {
+    stop(paste("Enviroment variable servername not defined!",
+               "Please define with Sys.setenv('SERVERNAME' = 'kwb-servername')", 
+               collapse = "\n"))
+  } 
+  
+  servername
+}
+
 # defaultPackageDir ------------------------------------------------------------
 
 #' Default Package Directory
 #' 
 defaultPackageDir <- function()
 {
-  "//medusa/miacso$/REvaluation/RPackages/kwb.packages"
+  
+  servername <- getServername()
+  
+  sprintf("//%s/miacso$/REvaluation/RPackages/kwb.packages",
+          servername
+          )
+
 }
 
 # installPackageIfRequired -----------------------------------------------------
