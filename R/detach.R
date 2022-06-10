@@ -151,7 +151,23 @@ printAndWaitIf <- function(dbg, variables)
 
 # systemPackages --------------------------------------------------------------
 
-systemPackages <- function()
+#' Names of Base R Packages
+#' 
+#' @param set_number integer number specifying a set of packages: 1 or 2.
+#' @return vector of character representing package names
+#' @export
+#' 
+systemPackages <- function(set_number = 1L)
 {
-  c("stats", "graphics", "grDevices", "utils", "datasets", "methods", "base")  
+  common <- c("stats", "graphics", "grDevices", "utils", "methods")
+    
+  if (set_number == 1L) {
+    return(c(common, "datasets", "base"))
+  } 
+  
+  if (set_number == 2L) {
+    return(c(common, "grid", "splines", "tools"))
+  }
+  
+  stop("set_number must be one of 1, 2.")
 }

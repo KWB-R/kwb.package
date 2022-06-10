@@ -5,8 +5,6 @@
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/kwb.package)]()
 [![R-Universe_Status_Badge](https://kwb-r.r-universe.dev/badges/kwb.package)](https://kwb-r.r-universe.dev/)
 
-# kwb.package
-
 This package contains some helper functions for (un-)installing KWB packages and 
 for showing package dependencies. The function of main interest may be
 `updateKwbPackages()` that checks for the latest package version on
@@ -15,26 +13,18 @@ KWB's server and installs the packages from there if required.
 
 ## Installation
 
-For details on how to install KWB-R packages checkout our [installation tutorial](https://kwb-r.github.io/kwb.pkgbuild/articles/install.html).
+For installing the latest release of this R package run the following code below:
 
 ```r
-### Optionally: specify GitHub Personal Access Token (GITHUB_PAT)
-### See here why this might be important for you:
-### https://kwb-r.github.io/kwb.pkgbuild/articles/install.html#set-your-github_pat
+# Enable repository from kwb-r
+options(repos = c(
+  kwbr = 'https://kwb-r.r-universe.dev',
+  CRAN = 'https://cloud.r-project.org'))
 
-# Sys.setenv(GITHUB_PAT = "mysecret_access_token")
+# Download and install kwb.package in R
+install.packages('kwb.package')
 
-# Install package "remotes" from CRAN
-if (! require("remotes")) {
-  install.packages("remotes", repos = "https://cloud.r-project.org")
-}
+# Browse the kwb.package manual pages
+help(package = 'kwb.package')
 
-# Install KWB package 'kwb.package' from GitHub
-remotes::install_github("KWB-R/kwb.package")
 ```
-
-## Documentation
-
-Release: [https://kwb-r.github.io/kwb.package](https://kwb-r.github.io/kwb.package)
-
-Development: [https://kwb-r.github.io/kwb.package/dev](https://kwb-r.github.io/kwb.package/dev)

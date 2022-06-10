@@ -4,8 +4,11 @@
 \alias{provideInLocalCRAN}
 \title{Provide a Source Package in the Local Cran}
 \usage{
-provideInLocalCRAN(package, rebuild = TRUE,
-  local_cran = defaultLocalCRAN(drive_letter = TRUE))
+provideInLocalCRAN(
+  package,
+  rebuild = TRUE,
+  local_cran = defaultLocalCRAN(drive_letter = TRUE)
+)
 }
 \arguments{
 \item{package}{name of the package to be looked up in either of these

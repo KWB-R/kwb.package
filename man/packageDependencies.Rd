@@ -4,8 +4,7 @@
 \alias{packageDependencies}
 \title{Package Dependencies}
 \usage{
-packageDependencies(packages = NULL, recursive = TRUE,
-  reverse = FALSE)
+packageDependencies(packages = NULL, recursive = TRUE, reverse = FALSE)
 }
 \arguments{
 \item{packages}{passed to \code{\link[tools]{package_dependencies}}}
