@@ -95,6 +95,7 @@ sortedDependencies <- function(package, dbg = FALSE)
     # Extract the "leaves" from the dependencies
     leaves <- names(dependencies)[isLeaf]
 
+    # Remove the names of the leaf packages from the dependency tree
     dependencies <- sapply(
       dependencies[!isLeaf], 
       FUN = setdiff,
