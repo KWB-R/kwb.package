@@ -4,12 +4,10 @@
 \alias{sortedDependencies}
 \title{Sorted Package Dependencies}
 \usage{
-sortedDependencies(package, pattern = ".*", dbg = FALSE)
+sortedDependencies(package, dbg = FALSE)
 }
 \arguments{
 \item{package}{name of package of which dependencies are to be found}
-
-\item{pattern}{pattern matching the names of packages to be considered}
 
 \item{dbg}{if \code{TRUE}, debug messages are shown}
 }

@@ -64,7 +64,6 @@ detachRecursively <- function(package, pattern = ".*", dbg = FALSE)
 #' Names of depending packages in the order of their dependency
 #' 
 #' @param package name of package of which dependencies are to be found
-#' @param pattern pattern matching the names of packages to be considered
 #' @param dbg if \code{TRUE}, debug messages are shown
 #' 
 #' @return vector of package names. The first element is the package itself,
@@ -72,13 +71,9 @@ detachRecursively <- function(package, pattern = ".*", dbg = FALSE)
 #'   the packages in this order without any "package ... is required by ..."
 #'   error
 #'   
-sortedDependencies <- function(package, pattern = ".*", dbg = FALSE) 
+sortedDependencies <- function(package, dbg = FALSE)
 {
-  dependingOn <- grep(
-    pattern, 
-    packageDependencies(package, recursive = TRUE)[[1]], 
-    value = TRUE
-  )
+  dependingOn <- packageDependencies(package, recursive = TRUE)[[1]]
   
   dependencies <- packageDependencies(dependingOn, recursive = FALSE)  
   
@@ -86,9 +81,7 @@ sortedDependencies <- function(package, pattern = ".*", dbg = FALSE)
   
   while (length(dependencies) > 0) {
     
-    nDependencies <- sapply(dependencies, FUN = function(x) {
-      length(grep(pattern, x))
-    })
+    nDependencies <- lengths(dependencies)
     
     printAndWaitIf(dbg, list(
       dependencies = dependencies,
