@@ -80,7 +80,7 @@ sortedDependencies <- function(package, dbg = FALSE)
   
   allLeaves <- character()
   
-  while (length(dependencies) > 0) {
+  while (length(dependencies)) {
     
     nDependencies <- lengths(dependencies)
     
