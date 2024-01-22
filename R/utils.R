@@ -1,3 +1,9 @@
+# dirPackageZips ---------------------------------------------------------------
+dirPackageZips <- function(package, path) 
+{
+  dir(path, paste0("^", package, "_"), full.names = TRUE)
+}
+
 # getUrl -----------------------------------------------------------------------
 #' @noMd
 #' @noRd
@@ -17,7 +23,8 @@ getUrl <- function(key, ...)
     github_api = "https://api.github.com/repos/<repo>",
     github_desc = "<github_raw>/<sha>/DESCRIPTION",
     github_releases = "<github_api>/releases",
-    github_tags = "<github_api>/tags"
+    github_tags = "<github_api>/tags",
+    cached_desc = "DESCRIPTION_<package>_<version>.txt"
   ))
   
   kwb.utils::selectElements(urls, key)
@@ -47,6 +54,18 @@ packageInDestdir <- function(package, destdir, verbose = TRUE)
   structure(file_exists, path = if (file_exists) kwb.utils::lastElement(files))
 }
 
+# remotes_github_pat -----------------------------------------------------------
+remotes_github_pat <- getFromNamespace("github_pat", "remotes")
+
+# remotes_parse_deps -----------------------------------------------------------
+remotes_parse_deps <- getFromNamespace("untar_description", "remotes")
+
+# remotes_read_dcf -------------------------------------------------------------
+remotes_read_dcf <- getFromNamespace("read_dcf", "remotes")
+
+# remotes_untar_description ----------------------------------------------------
+remotes_untar_description <- getFromNamespace("untar_description", "remotes")
+
 # readLinesFromUrl -------------------------------------------------------------
 readLinesFromUrl <- function(url, silent = TRUE)
 {
@@ -65,8 +84,3 @@ stop_ <- function(...)
   stop(..., call. = FALSE)
 }
 
-# dirPackageZips ---------------------------------------------------------------
-dirPackageZips <- function(package, path) 
-{
-  dir(path, paste0("^", package, "_"), full.names = TRUE)
-}

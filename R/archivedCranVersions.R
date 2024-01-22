@@ -5,16 +5,23 @@ isOnCran <- function(name)
 }
 
 # cranVersions -----------------------------------------------------------------
+
 #' @noMd
 #' @noRd
 #' @keywords internal
 #' @importFrom kwb.utils removeColumns safeRowBind
-cranVersions <- function(name)
+cranVersions <- function(name, dbg = TRUE)
 {
   current <- currentCranVersion(name)
     
   if (nrow(current) == 0L) {
-    message(sprintf("Package '%s' does not seem to be on CRAN.", name))
+    
+    if (dbg) {
+      message(sprintf(
+        "Package '%s' does not seem to be on CRAN.", name
+      ))
+    }
+    
     return(NULL)
   }
 
@@ -43,7 +50,9 @@ currentCranVersion <- function(name)
 {
   src <- readLinesFromUrl(getUrl("cran_package", package = name))
   
-  if (is.null(src)) {
+  was_removed_pattern <- "was removed from the CRAN repository"
+  
+  if (is.null(src) || any(grepl(was_removed_pattern, src))) {
     return(kwb.utils::noFactorDataFrame(
       package = character(0L),
       version = character(0L),
