@@ -5,12 +5,31 @@
 #' @importFrom kwb.utils defaultIfNA selectColumns
 #' @importFrom gh gh 
 loadDescriptionFromWeb <- function(
-  name, version = NA_character_, github_user = "KWB-R"
+  name, 
+  version = NA, 
+  github_user = "KWB-R", 
+  destdir = tempdir(),
+  cache = list(descriptions = list(), versions = list())
 )
 {
+  # Try to load DESCRIPTION from cache
   #name = "sema.berlin";version = "1.6.1";github_user = "KWB-R"
-  versions <- cranVersions(name, dbg = FALSE)
-
+  key <- paste(name, version, sep = ":")
+  description <- cache$descriptions[[key]]
+  
+  if (! is.null(description)) {
+    return(description)
+  }
+  
+  # Try to load package versions from cache
+  versions <- cache$versions[[name]]
+  
+  if (! is.null(versions)) {
+    description <- select_version(cran_versions)
+  } else {
+    cran_versions <- cranVersions(name, dbg = FALSE)
+  }
+  
   if (! is.null(versions)) {
     
     version <- kwb.utils::defaultIfNA(version, rev(versions$version)[1L])
@@ -21,7 +40,7 @@ loadDescriptionFromWeb <- function(
     
     url <- versions$package_source_url[versions$version == version]
     
-    return(loadDescriptionFromArchiveUrl(url))
+    return(loadDescriptionFromArchiveUrl(url, path))
   }
   
   # Look on KWB's Github account
