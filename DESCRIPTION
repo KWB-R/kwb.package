@@ -19,9 +19,7 @@ License: MIT + file LICENSE
 URL: https://github.com/kwb-r/kwb.package
 BugReports: https://github.com/kwb-r/kwb.package/issues
 Imports: 
-    devtools,
     gh,
-    jsonlite,
     kwb.utils (>= 0.5.0),
     mvbutils,
     networkD3,
