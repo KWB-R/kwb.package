@@ -32,4 +32,4 @@ Remotes:
     github::kwb-r/kwb.utils,
     github::kwb-r/pkgmeta
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.0
