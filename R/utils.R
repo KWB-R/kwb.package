@@ -1,3 +1,9 @@
+# dirPackageZips ---------------------------------------------------------------
+dirPackageZips <- function(package, path) 
+{
+  dir(path, paste0("^", package, "_"), full.names = TRUE)
+}
+
 # getUrl -----------------------------------------------------------------------
 #' @noMd
 #' @noRd
@@ -66,8 +72,3 @@ stop_ <- function(...)
   stop(..., call. = FALSE)
 }
 
-# dirPackageZips ---------------------------------------------------------------
-dirPackageZips <- function(package, path) 
-{
-  dir(path, paste0("^", package, "_"), full.names = TRUE)
-}
