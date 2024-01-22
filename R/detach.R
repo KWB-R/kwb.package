@@ -88,10 +88,13 @@ sortedDependencies <- function(package, dbg = FALSE)
       dependencies = dependencies,
       nDependencies = nDependencies
     ))
-      
+
+    # Which dependency is a "leaf" (i.e. does not have further dependencies)?
+    isLeaf <- nDependencies == 0L
+    
     # Extract the "leaves" from the dependencies
-    leaves <- names(dependencies)[nDependencies == 0]
-    dependencies <- dependencies[nDependencies > 0]
+    leaves <- names(dependencies)[isLeaf]
+    dependencies <- dependencies[!isLeaf]
     
     dependencies <- sapply(
       dependencies, 
