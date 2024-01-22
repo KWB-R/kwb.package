@@ -94,11 +94,11 @@ sortedDependencies <- function(package, dbg = FALSE)
     
     # Extract the "leaves" from the dependencies
     leaves <- names(dependencies)[isLeaf]
-    dependencies <- dependencies[!isLeaf]
-    
+
     dependencies <- sapply(
-      dependencies, 
-      function(x) {setdiff(x, leaves)},
+      dependencies[!isLeaf], 
+      FUN = setdiff,
+      y = leaves,
       simplify = FALSE
     )
     
