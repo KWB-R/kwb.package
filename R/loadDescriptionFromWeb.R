@@ -8,12 +8,15 @@ loadDescriptionFromWeb <- function(
   name, 
   version = NA, 
   github_user = "KWB-R", 
-  destdir = tempdir(),
+  path = tempdir(),
   cache = list(descriptions = list(), versions = list())
 )
 {
-  # Try to load DESCRIPTION from cache
+  #kwb.utils::assignPackageObjects("kwb.package")
+  #kwb.utils::assignArgumentDefaults(loadDescriptionFromWeb)
   #name = "sema.berlin";version = "1.6.1";github_user = "KWB-R"
+  
+  # Try to load DESCRIPTION from cache
   key <- paste(name, version, sep = ":")
   description <- cache$descriptions[[key]]
   
@@ -25,9 +28,10 @@ loadDescriptionFromWeb <- function(
   versions <- cache$versions[[name]]
   
   if (! is.null(versions)) {
-    description <- select_version(cran_versions)
+    stop("loadDescriptionFromWeb(): !is.null(versions) not implemented!")
+    #description <- select_version(cran_versions)
   } else {
-    cran_versions <- cranVersions(name, dbg = FALSE)
+    versions <- cranVersions(name, dbg = FALSE)
   }
   
   if (! is.null(versions)) {
