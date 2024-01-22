@@ -82,34 +82,34 @@ sortedDependencies <- function(package, pattern = ".*", dbg = FALSE)
   
   dependencies <- packageDependencies(dependingOn, recursive = FALSE)  
   
-  allLeafs <- character()
+  allLeaves <- character()
   
   while (length(dependencies) > 0) {
     
-    numberOfDependencies <- sapply(dependencies, FUN = function(x) {
+    nDependencies <- sapply(dependencies, FUN = function(x) {
       length(grep(pattern, x))
     })
     
     printAndWaitIf(dbg, list(
       dependencies = dependencies,
-      numberOfDependencies = numberOfDependencies
+      nDependencies = nDependencies
     ))
       
-    # Extract the "leafs" from the dependencies
-    leafs <- names(dependencies)[numberOfDependencies == 0]
-    dependencies <- dependencies[numberOfDependencies > 0]
+    # Extract the "leaves" from the dependencies
+    leaves <- names(dependencies)[nDependencies == 0]
+    dependencies <- dependencies[nDependencies > 0]
     
     dependencies <- sapply(
       dependencies, 
-      function(x) {setdiff(x, leafs)},
+      function(x) {setdiff(x, leaves)},
       simplify = FALSE
     )
     
-    # Add the leafs at the beginning of the vector of all leafs
-    allLeafs <- c(leafs, allLeafs)
+    # Add the leaves at the beginning of the vector of all leaves
+    allLeaves <- c(leaves, allLeaves)
   }
 
-  c(package, allLeafs)
+  c(package, allLeaves)
 }
 
 # packageDependencies ----------------------------------------------------------
