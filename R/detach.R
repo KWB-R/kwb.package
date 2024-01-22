@@ -33,7 +33,7 @@ detachAllNonSystemPackages <- function()
 #' 
 #' @param package name of package to be detached
 #' @param pattern pattern matching the names of depending packages that are
-#'   acutally to be detached, e.g. use pattern = "^kwb\\." to only detach kwb
+#'   actually to be detached, e.g. use pattern = "^kwb\\." to only detach kwb
 #'   packages. Default: ".*" (matching all package names)
 #' @param dbg if \code{TRUE}, debug messages are shown
 #' 
@@ -41,9 +41,10 @@ detachAllNonSystemPackages <- function()
 #' 
 detachRecursively <- function(package, pattern = ".*", dbg = FALSE)
 {
-  sortedPackages <- sortedDependencies(package, pattern = pattern, dbg = dbg)
+  packages <- sortedDependencies(package, dbg = dbg)
+  packages <- grep(pattern, packages, value = TRUE)
   
-  nonSystemPackages <- setdiff(sortedPackages, systemPackages())
+  nonSystemPackages <- setdiff(packages, systemPackages())
                           
   namesToDetach <- intersect(search(), packageString(nonSystemPackages))
   
