@@ -6,7 +6,7 @@
 #'
 #' @return data frame with one row per available version
 #' @export
-#'
+#' @importFrom kwb.utils moveColumnsToFront removeColumns selectColumns orderBy
 #' @examples
 #' githubVersions("kwb.utils")
 githubVersions <- function(name, github_user = "KWB-R")
@@ -81,6 +81,11 @@ githubPackageVersions <- function(
 }
 
 # getGithubReleaseInfo ---------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils noFactorDataFrame removeColumns selectElements
+#' @importFrom gh gh 
 getGithubReleaseInfo <- function(
   repo, reduced = TRUE, auth_token = remotes:::github_pat()
 )

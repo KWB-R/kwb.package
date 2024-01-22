@@ -7,7 +7,8 @@
 #' @param \dots additional arguments passed to \code{\link[mvbutils]{foodweb}}
 #' 
 #' @export
-#' 
+#' @importFrom mvbutils foodweb
+#' @importFrom networkD3 sankeyNetwork
 plotSankeyNetwork <- function(functionName, where = 1, ...)
 {
   relationInfo <- mvbutils::foodweb(
@@ -44,7 +45,11 @@ packageString <- function(package)
   paste0("package:", package)
 }
 
-# exampleLinksAndNodes ---------------------------------------------------------
+# exampleLinksAndNodes --------------------------------------------------------
+#' Example Links and Nodes
+#' 
+#' @export
+#' @importFrom utils read.table
 
 exampleLinksAndNodes <- function()
 {
@@ -84,7 +89,7 @@ exampleLinksAndNodes <- function()
 #'   (data frame with column \code{name})
 #'
 #' @export
-#' 
+#' @importFrom kwb.utils defaultIfNA selectElements
 #' @examples 
 #' kwb.package:::toLinksAndNodes(list(
 #'   source = c("s1", "s1"), target = c("t1", "t2")
@@ -109,7 +114,10 @@ toLinksAndNodes <- function(links)
 }
 
 # toSourceTarget ---------------------------------------------------------------
-
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils hsRenameColumns
 toSourceTarget <- function(x)
 {
   x$target <- paste0(x$source, "@", x$f)
@@ -142,7 +150,10 @@ includeExclude <- function(x, exclude = NULL)
 }
 
 # relationMatrixToSourceTarget -------------------------------------------------
-
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils rbindAll
 relationMatrixToSourceTarget <- function(x)
 {
   kwb.utils::rbindAll(lapply(rownames(x), function(rowname) {

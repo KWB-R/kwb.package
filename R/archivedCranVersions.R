@@ -5,6 +5,11 @@ isOnCran <- function(name)
 }
 
 # cranVersions -----------------------------------------------------------------
+
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils removeColumns safeRowBind
 cranVersions <- function(name, dbg = TRUE)
 {
   current <- currentCranVersion(name)
@@ -37,6 +42,10 @@ cranVersions <- function(name, dbg = TRUE)
 }
 
 # currentCranVersion -----------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils noFactorDataFrame
 currentCranVersion <- function(name)
 {
   src <- readLinesFromUrl(getUrl("cran_package", package = name))
@@ -64,10 +73,17 @@ currentCranVersion <- function(name)
   )
 }
 
-# archivedCranVersions ---------------------------------------------------------
-# packages <- c("ggplot2", "swmmr", "kwb.hantush")
-# archivedCranVersions(packages)
-# archivedCranVersions(packages, ref_date= "2012-12-01")
+#' archivedCranVersions --------------------------------------------------------
+#' Archived CRAN versions
+#' 
+#' @param package package name
+#' @param ref_date  default: NULL
+#' @export
+#' @importFrom kwb.utils extractSubstring noFactorDataFrame
+#' @examples 
+#' packages <- c("ggplot2", "swmmr", "kwb.hantush")
+#' archivedCranVersions(packages)
+#' archivedCranVersions(packages, ref_date= "2012-12-01")
 archivedCranVersions <- function(package, ref_date = NULL)
 {
   if (length(package) > 1L) {
@@ -113,6 +129,11 @@ archivedCranVersions <- function(package, ref_date = NULL)
 }
 
 # getLastVersionBefore ---------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom utils tail
+#' @importFrom kwb.utils resetRowNames
 getLastVersionBefore <- function(version_dates, ref_date)
 {
   X = unname(split(version_dates, version_dates$package))

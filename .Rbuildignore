@@ -9,3 +9,4 @@
 ^.gitlab-ci\.yml$
 ^README\.md$
 ^\.github$
+^index\.md$

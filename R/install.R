@@ -51,13 +51,37 @@ updateKwbPackages <- function
   }
 }
 
+
+# getServername ------------------------------------------------------------
+
+#' Get KWB Servername
+#' 
+getServername <- function() {
+  
+  servername <- Sys.getenv("SERVERNAME")
+  
+  if(servername == "") {
+    stop(paste("Enviroment variable servername not defined!",
+               "Please define with Sys.setenv('SERVERNAME' = 'kwb-servername')", 
+               collapse = "\n"))
+  } 
+  
+  servername
+}
+
 # defaultPackageDir ------------------------------------------------------------
 
 #' Default Package Directory
 #' 
 defaultPackageDir <- function()
 {
-  "//medusa/miacso$/REvaluation/RPackages/kwb.packages"
+  
+  servername <- getServername()
+  
+  sprintf("//%s/miacso$/REvaluation/RPackages/kwb.packages",
+          servername
+          )
+
 }
 
 # installPackageIfRequired -----------------------------------------------------
@@ -77,7 +101,11 @@ installPackageIfRequired <- function(packageName, package.dir, skip, ...)
   }
 }
 
-# shallBeInstalled -------------------------------------------------------------
+#' shallBeInstalled ------------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom utils installed.packages
 
 shallBeInstalled <- function(packageName, skip)
 {
@@ -92,8 +120,13 @@ shallBeInstalled <- function(packageName, skip)
   ! toBeSkipped && (isKwbPackage(packageName) || ! installed)
 }
 
-# installPackage ---------------------------------------------------------------
-
+#' installPackage --------------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom utils install.packages
+#' @importFrom kwb.utils assignPackageObjects
+#' @importFrom remotes install_github
 installPackage <- function(
   packageName, package.dir = defaultPackageDir(), quiet = TRUE, type = NULL, 
   dbg = FALSE
@@ -117,7 +150,7 @@ installPackage <- function(
         "Trying to find it at github... "
       )
       
-      try(devtools::install_github(paste0("kwb-r/", packageName)))
+      try(remotes::install_github(paste0("kwb-r/", packageName)))
       
     } else if (length(packageFile) > 1) {
       
@@ -177,7 +210,7 @@ installPackage <- function(
 #'   the available package files
 #'   
 #' @export
-#' 
+#' @importFrom kwb.utils assignPackageObjects
 getPackageFilesToInstall <- function(
   package.dir = defaultPackageDir(), packageNames = NULL, filepattern = "",
   full.names = TRUE, dbg = FALSE, warn = TRUE
@@ -275,7 +308,7 @@ sortPackageFiles <- function(packageFiles)
 #' @return vector of names of installed kwb-packages
 #' 
 #' @export
-#' 
+#' @importFrom utils installed.packages
 installedKwbPackages <- function()
 {
   packageNames <- utils::installed.packages()[, "Package"]

@@ -1,4 +1,9 @@
 # loadDescriptionFromWeb -------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils defaultIfNA selectColumns
+#' @importFrom gh gh 
 loadDescriptionFromWeb <- function(
   name, version = NA_character_, github_user = "KWB-R"
 )

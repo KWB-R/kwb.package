@@ -9,6 +9,8 @@
 #' @importFrom kwb.utils selectElements
 #' @importFrom utils installed.packages
 #' @export
+#' @importFrom kwb.utils selectElements
+#' @importFrom utils installed.packages
 #' @examples 
 #' installedDependencies(package = "kwb.package")
 #' installedDependencies(package = "kwb.package", recursive = FALSE)

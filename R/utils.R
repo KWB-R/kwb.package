@@ -1,4 +1,8 @@
 # getUrl -----------------------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils selectElements
 getUrl <- function(key, ...)
 {
   urls <- kwb.utils::resolve(..., x = list(
@@ -26,6 +30,10 @@ githubRepo <- function(github_user, name)
 }
 
 # packageInDestdir -------------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils safePath
 packageInDestdir <- function(package, destdir, verbose = TRUE)
 {
   files <- dirPackageZips(package, kwb.utils::safePath(destdir))

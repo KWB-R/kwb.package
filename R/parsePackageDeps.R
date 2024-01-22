@@ -1,4 +1,8 @@
-# parsePackageDeps -------------------------------------------------------------
+#' parsePackageDeps ------------------------------------------------------------
+#' @noMd
+#' @noRd
+#' @keywords internal
+#' @importFrom kwb.utils rbindAll
 parsePackageDeps <- function(pkg, dependencies = NA) 
 {
   deps <- tolower(remotes::standardise_dep(dependencies))
