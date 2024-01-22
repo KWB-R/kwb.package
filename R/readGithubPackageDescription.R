@@ -5,7 +5,7 @@
 #' @importFrom gh gh
 #' @importFrom kwb.utils selectElements
 readGithubPackageDescription <- function(
-  repo, sha, auth_token = remotes:::github_pat(), destdir = tempdir()
+  repo, sha, auth_token = remotes_github_pat(), destdir = tempdir()
 )
 {
   endpoint <- getUrl("github_desc", repo = repo, sha = sha)
@@ -22,7 +22,7 @@ readGithubPackageDescription <- function(
   writeLines(kwb.utils::selectElements(content, "message"), file)
   
   # Read local DESCRIPTION file
-  desc <- remotes:::read_dcf(file)
+  desc <- remotes_read_dcf(file)
 
   # Use package name and version to generate a name for the cached
   # DESCRIPTION file. Copy the DESCRITPION file to a file of that name.

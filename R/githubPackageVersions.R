@@ -18,7 +18,7 @@ githubVersions <- function(name, github_user = "KWB-R")
 # Haukes version of github_packages_versions()
 githubPackageVersions <- function(
   repo,
-  auth_token = remotes:::github_pat(),
+  auth_token = remotes_github_pat(),
   verbose = TRUE,
   reduced = TRUE
 )
@@ -87,7 +87,7 @@ githubPackageVersions <- function(
 #' @importFrom kwb.utils noFactorDataFrame removeColumns selectElements
 #' @importFrom gh gh 
 getGithubReleaseInfo <- function(
-  repo, reduced = TRUE, auth_token = remotes:::github_pat()
+  repo, reduced = TRUE, auth_token = remotes_github_pat()
 )
 {
   # Shortcut

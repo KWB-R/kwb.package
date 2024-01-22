@@ -9,7 +9,7 @@ loadDescriptionFromArchiveUrl <- function(url, path = tempfile())
   untarDescriptionFromUrl(url, path)
 
   # see remotes:::load_pkg_description
-  desc <- remotes:::read_dcf(path)
+  desc <- remotes_read_dcf(path)
   names(desc) <- tolower(names(desc))
   desc$path <- path
   
@@ -31,7 +31,7 @@ untarDescriptionFromUrl <- function(url, target = NULL, destdir = tempdir())
   # Extract DESCRIPTION from downloaded .tar.gz file
   # see remotes:::load_pkg_description
   dir <- tempfile()
-  target_tmp <- remotes:::untar_description(destfile, dir = dir)
+  target_tmp <- remotes_untar_description(destfile, dir = dir)
   on.exit(unlink(dir, recursive = TRUE), add = TRUE)
   
   # Keep only the DESCRIPTION in a .tar.gz.DESCRIPTION file
