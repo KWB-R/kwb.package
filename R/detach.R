@@ -64,19 +64,28 @@ detachRecursively <- function(package, pattern = ".*", dbg = FALSE)
 #' 
 #' Names of depending packages in the order of their dependency
 #' 
-#' @param package name of package of which dependencies are to be found
-#' @param dbg if \code{TRUE}, debug messages are shown
-#' 
+#' @param package name of package(s) of which dependencies are to be found
+#' @param dbg if \code{TRUE}, debug messages are shown and the user is asked
+#'   to press Enter each time the body of the main loop is passed!
 #' @return vector of package names. The first element is the package itself,
 #'   followed by the names of depending packages. You should be able to detach
 #'   the packages in this order without any "package ... is required by ..."
 #'   error
-#'   
+#' @export
 sortedDependencies <- function(package, dbg = FALSE)
 {
-  dependingOn <- packageDependencies(package, recursive = TRUE)[[1]]
+  fullDependencies <- packageDependencies(package, recursive = TRUE)
   
-  dependencies <- packageDependencies(dependingOn, recursive = FALSE)  
+  # Put all unique package names from the dependency tree into a vector
+  packages <- unique(unname(unlist(fullDependencies)))
+  
+  # Get sorted vector of unique package names (including those in package)
+  packages <- sort(unique(c(packages, package)))
+
+  #packages <- fullDependencies[[1]]
+
+  # Get the "direct" (non-recursive) dependencies for each package
+  dependencies <- packageDependencies(packages, recursive = FALSE)  
   
   allLeaves <- character()
   
@@ -107,7 +116,7 @@ sortedDependencies <- function(package, dbg = FALSE)
     allLeaves <- c(leaves, allLeaves)
   }
 
-  c(package, allLeaves)
+  allLeaves
 }
 
 # packageDependencies ----------------------------------------------------------
