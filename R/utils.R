@@ -17,7 +17,8 @@ getUrl <- function(key, ...)
     github_api = "https://api.github.com/repos/<repo>",
     github_desc = "<github_raw>/<sha>/DESCRIPTION",
     github_releases = "<github_api>/releases",
-    github_tags = "<github_api>/tags"
+    github_tags = "<github_api>/tags",
+    cached_desc = "DESCRIPTION_<package>_<version>.txt"
   ))
   
   kwb.utils::selectElements(urls, key)
