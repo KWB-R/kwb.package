@@ -27,9 +27,12 @@ Imports:
     withr
 Suggests: 
     covr,
-    pkgmeta
+    knitr,
+    pkgmeta,
+    rmarkdown
 Remotes: 
     github::kwb-r/kwb.utils,
     github::kwb-r/pkgmeta
 Encoding: UTF-8
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
+VignetteBuilder: knitr
