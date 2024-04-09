@@ -1,4 +1,6 @@
 # plot.package_versions --------------------------------------------------------
+
+#' @export
 plot.package_versions <- function(
   versions, r_range = c(1, 10), rmax = 1.1 * r_range[2L], dphi = NULL, 
   ticklen = 1
