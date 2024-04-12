@@ -9,14 +9,13 @@
 #' @param packages vector of names of packages to be copied
 #' @export
 #' @importFrom utils tail
-#' @importFrom kwb.utils catAndRun
 copyBasePackages <- function(
   target_lib, 
   set_number = 2L,
   system_lib = utils::tail(.libPaths(), 1L), 
   packages = systemPackages(set_number))
 {
-  kwb.utils::catAndRun(paste("Copying base R packages to", target_lib), {
+  catAndRun(paste("Copying base R packages to", target_lib), {
     file.copy(
       from = file.path(system_lib, packages), 
       to = target_lib, 

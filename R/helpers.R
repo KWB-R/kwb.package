@@ -8,10 +8,9 @@ dirPackageZips <- function(package, path)
 #' @noMd
 #' @noRd
 #' @keywords internal
-#' @importFrom kwb.utils selectElements
 getUrl <- function(key, ...)
 {
-  urls <- kwb.utils::resolve(..., x = list(
+  urls <- resolve(..., x = list(
     cran = "https://cran.r-project.org",
     cran_rstudio = "https://cran.rstudio.org",
     mran_snapshot = "https://mran.microsoft.com/snapshot/<date>",
@@ -29,7 +28,7 @@ getUrl <- function(key, ...)
     cached_desc = "DESCRIPTION_<package>_<version>.txt"
   ))
   
-  kwb.utils::selectElements(urls, key)
+  selectElements(urls, key)
 }
 
 # githubRepo -------------------------------------------------------------------
@@ -42,10 +41,9 @@ githubRepo <- function(github_user, name)
 #' @noMd
 #' @noRd
 #' @keywords internal
-#' @importFrom kwb.utils safePath
 packageInDestdir <- function(package, destdir, verbose = TRUE)
 {
-  files <- dirPackageZips(package, kwb.utils::safePath(destdir))
+  files <- dirPackageZips(package, safePath(destdir))
   
   file_exists <- length(files) > 0L
   
@@ -53,6 +51,6 @@ packageInDestdir <- function(package, destdir, verbose = TRUE)
     message("Skipping already downloaded package '", package, "'")
   }
   
-  structure(file_exists, path = if (file_exists) kwb.utils::lastElement(files))
+  structure(file_exists, path = if (file_exists) lastElement(files))
 }
 

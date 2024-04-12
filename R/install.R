@@ -1,15 +1,3 @@
-# catIf ------------------------------------------------------------------------
-
-#' Copy of kwb.utils::catIf
-#' 
-#' @param condition see \code{kwb.utils::catIf}
-#' @param \dots see \code{kwb.utils::catIf}
-#' 
-catIf <- function(condition, ...) 
-{
-  if (condition) cat(...)
-}
-
 # updateKwbPackages ------------------------------------------------------------
 
 #' Update or Install KWB-Packages
@@ -63,7 +51,7 @@ getServername <- function()
   servername <- Sys.getenv(variable)
   
   if (servername == "") {
-    kwb.utils::stopFormatted(
+    stopFormatted(
       paste(
         "Enviroment variable '%s' not defined!",
         "Please define with Sys.setenv(%s = 'kwb-servername')", 
@@ -133,18 +121,15 @@ shallBeInstalled <- function(packageName, skip)
 #' @noRd
 #' @keywords internal
 #' @importFrom utils install.packages
-#' @importFrom kwb.utils assignPackageObjects
 #' @importFrom remotes install_github
 installPackage <- function(
   packageName, package.dir = defaultPackageDir(), quiet = TRUE, type = NULL, 
   dbg = FALSE
 )
 {
-  if (FALSE) {
-    kwb.utils::assignPackageObjects("kwb.package")
-    package.dir = defaultPackageDir(); quiet = TRUE; type = NULL; dbg = FALSE
-  }
-  
+  #kwb.utils::assignPackageObjects("kwb.package")
+  #package.dir = defaultPackageDir(); quiet = TRUE; type = NULL; dbg = FALSE
+
   if (isKwbPackage(packageName)) {
 
     packageFile <- getPackageFilesToInstall(
@@ -218,17 +203,14 @@ installPackage <- function(
 #'   the available package files
 #'   
 #' @export
-#' @importFrom kwb.utils assignPackageObjects
 getPackageFilesToInstall <- function(
   package.dir = defaultPackageDir(), packageNames = NULL, filepattern = "",
   full.names = TRUE, dbg = FALSE, warn = TRUE
 )
 {
-  if (FALSE) {
-    kwb.utils::assignPackageObjects("kwb.package")
-    package.dir = defaultPackageDir(); packageNames = NULL; filepattern = "";
-    full.names = TRUE; dbg = TRUE; warn = TRUE  
-  }
+  #kwb.utils::assignPackageObjects("kwb.package")
+  #package.dir = defaultPackageDir(); packageNames = NULL; filepattern = "";
+  #full.names = TRUE; dbg = TRUE; warn = TRUE  
   
   catIf(
     dbg, "Looking for available package files in '", package.dir, "'...\n"

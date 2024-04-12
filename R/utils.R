@@ -1,3 +1,62 @@
+# catAndRun --------------------------------------------------------------------
+
+#' @importFrom kwb.utils catAndRun  
+catAndRun <- kwb.utils::catAndRun
+
+# catIf ------------------------------------------------------------------------
+
+#' @importFrom kwb.utils catIf
+catIf <- kwb.utils::catIf
+
+# cleanStop --------------------------------------------------------------------
+cleanStop <- function(...)
+{
+  stop(..., call. = FALSE)
+}
+
+# defaultIfNa ------------------------------------------------------------------
+#' @importFrom kwb.utils defaultIfNA
+defaultIfNa <- kwb.utils::defaultIfNA
+
+# defaultIfNull ----------------------------------------------------------------
+#' @importFrom kwb.utils defaultIfNULL
+defaultIfNull <- kwb.utils::defaultIfNULL
+
+# excludeNull ------------------------------------------------------------------
+#' @importFrom kwb.utils excludeNULL
+excludeNull <- kwb.utils::excludeNULL
+
+# extractSubstring -------------------------------------------------------------
+#' @importFrom kwb.utils extractSubstring
+extractSubstring <- kwb.utils::extractSubstring
+
+# getAttribute -----------------------------------------------------------------
+#' @importFrom kwb.utils getAttribute
+getAttribute <- kwb.utils::getAttribute
+
+# getHomedir -------------------------------------------------------------------
+#' @importFrom kwb.utils get_homedir
+getHomedir <- kwb.utils::get_homedir
+
+# moveColumnsToFront -----------------------------------------------------------
+moveColumnsToFront <- kwb.utils::moveColumnsToFront
+
+# noFactorDataFrame ------------------------------------------------------------
+#' @importFrom kwb.utils noFactorDataFrame
+noFactorDataFrame <- kwb.utils::noFactorDataFrame
+
+# noSuchElements ---------------------------------------------------------------
+#' @importFrom kwb.utils noSuchElements
+noSuchElements <- kwb.utils::noSuchElements
+
+# orderBy ----------------------------------------------------------------------
+#' @importFrom kwb.utils orderBy
+orderBy <- kwb.utils::orderBy
+
+# rbindAll ---------------------------------------------------------------------
+#' @importFrom kwb.utils rbindAll
+rbindAll <- kwb.utils::rbindAll
+
 # readLinesFromUrl -------------------------------------------------------------
 readLinesFromUrl <- function(url, silent = TRUE)
 {
@@ -10,8 +69,38 @@ readLinesFromUrl <- function(url, silent = TRUE)
   result
 }
 
-# cleanStop --------------------------------------------------------------------
-cleanStop <- function(...)
-{
-  stop(..., call. = FALSE)
-}
+# removeColumns ----------------------------------------------------------------
+#' @importFrom kwb.utils removeColumns
+removeColumns <- kwb.utils::removeColumns
+
+# resetRowNames ----------------------------------------------------------------
+#' @importFrom kwb.utils resetRowNames
+resetRowNames <- kwb.utils::resetRowNames
+
+# restoreAttributes ------------------------------------------------------------
+#' @importFrom kwb.utils hsRestoreAttributes
+restoreAttributes <- kwb.utils::hsRestoreAttributes
+
+# runInDirectory ---------------------------------------------------------------
+#' @importFrom kwb.utils runInDirectory
+kwb.utils::runInDirectory
+
+# safePath ---------------------------------------------------------------------
+#' @importFrom kwb.utils safePath
+kwb.utils::safePath
+
+# safeRowBind ------------------------------------------------------------------
+#' @importFrom kwb.utils safeRowBind
+safeRowBind <- kwb.utils::safeRowBind
+
+# selectElements ---------------------------------------------------------------
+#' @importFrom kwb.utils selectElements
+selectColumns <- kwb.utils::selectColumns
+
+# stopFormatted ----------------------------------------------------------------
+#' @importFrom kwb.utils stopFormatted
+stopFormatted <- kwb.utils::stopFormatted
+
+# removeColumns ----------------------------------------------------------------
+#' @importFrom kwb.utils removeColumns
+removeColumns <- kwb.utils::removeColumns

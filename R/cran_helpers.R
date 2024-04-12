@@ -3,7 +3,6 @@
 #' @noMd
 #' @noRd
 #' @keywords internal
-#' @importFrom kwb.utils noFactorDataFrame
 currentCranVersion <- function(name)
 {
   src <- readLinesFromUrl(getUrl("cran_package", package = name))
@@ -11,7 +10,7 @@ currentCranVersion <- function(name)
   was_removed_pattern <- "was removed from the CRAN repository"
   
   if (is.null(src) || any(grepl(was_removed_pattern, src))) {
-    return(kwb.utils::noFactorDataFrame(
+    return(noFactorDataFrame(
       package = character(0L),
       version = character(0L),
       date = as.Date(character(0L)),
@@ -23,7 +22,7 @@ currentCranVersion <- function(name)
     gsub("<td>|</td>", "", src[grep(sprintf("<td>%s:</td>", x), src) + 1L])
   }
   
-  kwb.utils::noFactorDataFrame(
+  noFactorDataFrame(
     package = name,
     version = extract("Version"),
     date = as.Date(extract("Published")),

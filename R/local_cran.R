@@ -62,7 +62,7 @@ setOptionsForPackrat <- function()
   
   if (! "local" %in% names(repos)) {
     
-    options(repos = kwb.utils::hsRestoreAttributes(
+    options(repos = restoreAttributes(
       x = c(repos, local = paste0("file://", defaultLocalCRAN())), 
       attribs = attributes(repos)
     ))
@@ -93,17 +93,17 @@ provideInLocalCRAN <- function(
   package, rebuild = TRUE, local_cran = defaultLocalCRAN(drive_letter = TRUE)
 )
 {
-  paths <- kwb.utils::resolve(list(
+  paths <- resolve(list(
     packages_1 = "<home>/Documents/R-Development/RPackages",
     packages_2 = "<home>/Desktop/R_Development/RPackages",
     contrib = "<local_cran>/src/contrib",
-    home = kwb.utils::get_homedir(), 
+    home = getHomedir(), 
     local_cran = local_cran
   ))
   
-  package_dir <- kwb.utils::defaultIfNULL(paths$packages_1, paths$packages_2)
+  package_dir <- defaultIfNull(paths$packages_1, paths$packages_2)
   
-  package_dir <- kwb.utils::safePath(package_dir, package)
+  package_dir <- safePath(package_dir, package)
   
   # Add "Repository: moby" to the DESCRIPTION file if required
   desc_file <- file.path(package_dir, "DESCRIPTION")
@@ -122,7 +122,7 @@ provideInLocalCRAN <- function(
   # Go to the package directory and build the package
   if (isTRUE(rebuild)) {
     
-    kwb.utils::runInDirectory(
+    runInDirectory(
       target.dir = dirname(package_dir),
       FUN = system,
       command = paste("R CMD build", package)
@@ -134,13 +134,12 @@ provideInLocalCRAN <- function(
   
   files <- dir(dirname(package_dir), pattern, full.names = TRUE)
   
-  file.copy(files, kwb.utils::safePath(paths$contrib))
+  file.copy(files, safePath(paths$contrib))
   
   # Write the PACKAGE files
   tools::write_PACKAGES(paths$contrib, type = "source")
   
-  for (path in getBinaryPaths(kwb.utils::safePath(paths$local_cran))) {
-    
+  for (path in getBinaryPaths(safePath(paths$local_cran))) {
     tools::write_PACKAGES(path)
   }
 }

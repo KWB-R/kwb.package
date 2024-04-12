@@ -1,9 +1,7 @@
 # cranVersions -----------------------------------------------------------------
 
-#' @noMd
-#' @noRd
-#' @keywords internal
-#' @importFrom kwb.utils removeColumns safeRowBind
+#' Get versions of CRAN packages
+#' 
 cranVersions <- function(name, dbg = TRUE)
 {
   current <- currentCranVersion(name)
@@ -35,7 +33,7 @@ cranVersions <- function(name, dbg = TRUE)
   
   archived$package_source_url <- sprintf(urlPattern = archived$archive_file)
   
-  result <- kwb.utils::safeRowBind(archived, current)
+  result <- safeRowBind(archived, current)
   
-  kwb.utils::removeColumns(result, "archive_file")
+  removeColumns(result, "archive_file")
 }

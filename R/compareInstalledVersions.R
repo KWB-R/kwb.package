@@ -10,12 +10,11 @@
 #'   different in the two libraries)
 #' @export
 #' @importFrom utils installed.packages
-#' @importFrom kwb.utils resetRowNames
 compareInstalledVersions <- function(lib1, lib2)
 {
   installed_versions <- function(x) {
     versions <- utils::installed.packages(path.expand(x))
-    kwb.utils::resetRowNames(kwb.utils::noFactorDataFrame(
+    resetRowNames(noFactorDataFrame(
       name = rownames(versions), 
       version = versions[, "Version", drop = FALSE]
     ))

@@ -41,7 +41,7 @@ downloadPackagesFromSnapshot <- function(
     
     if (! packageInDestdir(package, destdir)) {
 
-      kwb.utils::catAndRun(
+      catAndRun(
         sprintf("Downloading %s package %d/%d: %s", type, i, n, package),
         utils::download.packages(
           package, 

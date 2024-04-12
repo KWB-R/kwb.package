@@ -35,7 +35,7 @@ untarDescriptionFromUrl <- function(url, target = NULL, destdir = tempdir())
   on.exit(unlink(dir, recursive = TRUE), add = TRUE)
   
   # Keep only the DESCRIPTION in a .tar.gz.DESCRIPTION file
-  target <- kwb.utils::defaultIfNULL(target, pathDescription(tarname, destdir))
+  target <- defaultIfNull(target, pathDescription(tarname, destdir))
 
   file.copy(target_tmp, target)
   

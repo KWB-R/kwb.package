@@ -31,7 +31,7 @@ allDeps <- function(
     allDeps(deps$name[i], deps$version[i], depth + 1L, max_depth)
   })
   
-  child_deps <- kwb.utils::excludeNULL(child_deps, dbg = FALSE)
+  child_deps <- excludeNull(child_deps, dbg = FALSE)
   
   if (length(child_deps) > 0L) {
     deps <- rbind(deps, do.call(rbind, child_deps))

@@ -2,7 +2,6 @@
 #' @noMd
 #' @noRd
 #' @keywords internal
-#' @importFrom kwb.utils defaultIfNA selectColumns
 #' @importFrom gh gh 
 loadDescriptionFromWeb <- function(
   name, 
@@ -36,10 +35,10 @@ loadDescriptionFromWeb <- function(
   
   if (! is.null(versions)) {
     
-    version <- kwb.utils::defaultIfNA(version, rev(versions$version)[1L])
+    version <- defaultIfNa(version, rev(versions$version)[1L])
     
     if (! version %in% versions$version) {
-      cleanStop(kwb.utils::noSuchElements(version, versions$version, "version"))
+      cleanStop(noSuchElements(version, versions$version, "version"))
     }
     
     url <- versions$package_source_url[versions$version == version]
@@ -57,10 +56,10 @@ loadDescriptionFromWeb <- function(
   } else {
     
     versions <- githubPackageVersions(repo, reduced = FALSE)
-    shas <- kwb.utils::selectColumns(versions, c("version", "sha"))
+    shas <- selectColumns(versions, c("version", "sha"))
     
     if (! version %in% shas$version) {
-      cleanStop(kwb.utils::noSuchElements(version, shas$version, "version"))
+      cleanStop(noSuchElements(version, shas$version, "version"))
     }
     
     shas$sha[shas$version == version]

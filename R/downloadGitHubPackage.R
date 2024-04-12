@@ -8,7 +8,6 @@
 #' @return path to downloaded file in the \code{destdir} folder with attribute 
 #'   "origin" pointing to the original file in \code{tempdir()}.
 #' @export
-#' @importFrom kwb.utils getAttribute
 #' @importFrom remotes github_remote remote_download
 downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
 {
@@ -19,8 +18,8 @@ downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
   file_downloaded <- packageInDestdir(package, destdir)
   
   if (file_downloaded) {
-
-    file <- kwb.utils::getAttribute(file_downloaded, "path")
+    
+    file <- getAttribute(file_downloaded, "path")
     origin <- character(0)
     
   } else{

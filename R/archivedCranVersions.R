@@ -5,7 +5,6 @@
 #' @param package package name
 #' @param ref_date  default: NULL
 #' @export
-#' @importFrom kwb.utils extractSubstring noFactorDataFrame
 #' @examples 
 #' packages <- c("ggplot2", "swmmr", "kwb.hantush")
 #' archivedCranVersions(packages)
@@ -21,7 +20,7 @@ archivedCranVersions <- function(package, ref_date = NULL)
   src <- readLinesFromUrl(getUrl("cran_archive", package = package))
 
   if (is.null(src)) {
-    return(kwb.utils::noFactorDataFrame(
+    return(noFactorDataFrame(
       package = character(0L),
       version = character(0L),
       date = as.Date(character(0L)),
@@ -34,7 +33,7 @@ archivedCranVersions <- function(package, ref_date = NULL)
     "href=\"(%s_(.*)\\.tar\\.gz)\".*(\\d{4}-\\d{2}-\\d{2}) ", package
   )
   
-  versions <- cbind(package = package, kwb.utils::extractSubstring(
+  versions <- cbind(package = package, extractSubstring(
     pattern = pattern,
     x = grep(pattern, src, value = TRUE), 
     index = c(
@@ -59,12 +58,11 @@ archivedCranVersions <- function(package, ref_date = NULL)
 #' @noRd
 #' @keywords internal
 #' @importFrom utils tail
-#' @importFrom kwb.utils resetRowNames
 getLastVersionBefore <- function(version_dates, ref_date)
 {
   X = unname(split(version_dates, version_dates$package))
   
   last_before <- function(x) utils::tail(x[x$date <= ref_date, ], 1L)
   
-  kwb.utils::resetRowNames(do.call(rbind, lapply(X, last_before)))
+  resetRowNames(do.call(rbind, lapply(X, last_before)))
 }

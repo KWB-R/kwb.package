@@ -30,7 +30,6 @@ getRVersionMajorMinor <- function()
 #' @export
 #' @importFrom withr with_libpaths
 #' @importFrom remotes install_github
-#' @importFrom kwb.utils createDirectory
 #' @examples
 #' \dontrun{
 #' remotes::install_github("kwb-r/pkgmeta") 
@@ -57,7 +56,7 @@ installGithubPackages <- function(
   auth_token = Sys.getenv("GITHUB_PAT")
 )
 {
-  withr::with_libpaths(kwb.utils::createDirectory(lib, dbg = FALSE), code = {
+  withr::with_libpaths(createDirectory(lib, dbg = FALSE), code = {
     
     install.packages("remotes", repos = getPath("cran_rstudio"))
     

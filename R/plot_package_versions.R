@@ -16,11 +16,11 @@ plotPackageVersions <- function(
   on.exit(graphics::par(old_par))
 
   versions$r <- map_to_range(
-    x = as.integer(kwb.utils::selectColumns(versions, "date")), 
+    x = as.integer(selectColumns(versions, "date")), 
     y_range = r_range
   )
 
-  X <- split(versions, kwb.utils::selectColumns(versions, "package"))
+  X <- split(versions, selectColumns(versions, "package"))
   
   phis <- seq_rad_len(length(X))
 
@@ -30,7 +30,7 @@ plotPackageVersions <- function(
   # Draw circles around the centre
   draw_circles(r = r_range, n_corners = length(X))
 
-  dphi <- kwb.utils::defaultIfNULL(dphi, seq_rad_len(3 * length(X))[2L])
+  dphi <- defaultIfNull(dphi, seq_rad_len(3 * length(X))[2L])
   
   for (i in seq_along(X)) {
     x <- X[[i]]
