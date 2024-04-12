@@ -108,9 +108,14 @@ kwb.utils::safePath
 #' @importFrom kwb.utils safeRowBind
 safeRowBind <- kwb.utils::safeRowBind
 
+# selectColumns ---------------------------------------------------------------
+#' @importFrom kwb.utils selectColumns
+selectColumns <- kwb.utils::selectColumns
+
+
 # selectElements ---------------------------------------------------------------
 #' @importFrom kwb.utils selectElements
-selectColumns <- kwb.utils::selectColumns
+selectElements <- kwb.utils::selectElements
 
 # stopFormatted ----------------------------------------------------------------
 #' @importFrom kwb.utils stopFormatted
