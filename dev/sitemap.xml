@@ -31,13 +31,13 @@
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/archivedCranVersions.html</loc>
   </url>
   <url>
-    <loc>https://kwb-r.github.io/kwb.package/dev/reference/catIf.html</loc>
-  </url>
-  <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/compareInstalledVersions.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/copyBasePackages.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/cranVersions.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/defaultPackageDir.html</loc>
