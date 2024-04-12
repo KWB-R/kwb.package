@@ -156,7 +156,7 @@ printAndWaitIf <- function(dbg, variables)
   }
 }
 
-# systemPackages --------------------------------------------------------------
+# systemPackages ---------------------------------------------------------------
 
 #' Names of Base R Packages
 #' 
