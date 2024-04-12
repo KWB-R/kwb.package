@@ -13,6 +13,8 @@ getUrl <- function(key, ...)
 {
   urls <- kwb.utils::resolve(..., x = list(
     cran = "https://cran.r-project.org",
+    cran_rstudio = "https://cran.rstudio.org",
+    mran_snapshot = "https://mran.microsoft.com/snapshot/<date>",
     cran_contrib = "<cran>/src/contrib",
     cran_package = "<cran>/web/packages/<package>",
     cran_archive = "<cran_contrib>/Archive/<package>",

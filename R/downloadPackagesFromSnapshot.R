@@ -24,7 +24,7 @@ downloadPackagesFromSnapshot <- function(
     return(character(0))
   }
   
-  repos <- paste0("https://mran.microsoft.com/snapshot/", snapshot_date)
+  repos <- getPath("mran_snapshot", date = snapshot_date)
 
   if (is.null(destdir)) {
     
