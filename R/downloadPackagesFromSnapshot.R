@@ -24,7 +24,7 @@ downloadPackagesFromSnapshot <- function(
     return(character(0))
   }
   
-  repos <- getPath("mran_snapshot", date = snapshot_date)
+  repos <- getUrl("mran_snapshot", date = snapshot_date)
 
   if (is.null(destdir)) {
     

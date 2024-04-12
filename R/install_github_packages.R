@@ -58,7 +58,7 @@ installGithubPackages <- function(
 {
   withr::with_libpaths(createDirectory(lib, dbg = FALSE), code = {
     
-    install.packages("remotes", repos = getPath("cran_rstudio"))
+    install.packages("remotes", repos = getUrl("cran_rstudio"))
     
     for (repo in repos) {
       

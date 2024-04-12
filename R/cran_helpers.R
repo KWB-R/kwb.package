@@ -37,7 +37,7 @@ currentCranVersion <- function(name)
 #' @export
 getCranPackageDatabase <- function()
 {
-  readRDS(file(getPath("cran_packages", package = "packages.rds")))
+  readRDS(file(getUrl("cran_packages", package = "packages.rds")))
 }
 
 # isOnCran ---------------------------------------------------------------------
