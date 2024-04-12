@@ -56,15 +56,23 @@ updateKwbPackages <- function
 
 #' Get KWB Servername
 #' 
-getServername <- function() {
+getServername <- function()
+{
+  variable <- "SERVERNAME"
   
-  servername <- Sys.getenv("SERVERNAME")
+  servername <- Sys.getenv(variable)
   
-  if(servername == "") {
-    stop(paste("Enviroment variable servername not defined!",
-               "Please define with Sys.setenv('SERVERNAME' = 'kwb-servername')", 
-               collapse = "\n"))
-  } 
+  if (servername == "") {
+    kwb.utils::stopFormatted(
+      paste(
+        "Enviroment variable '%s' not defined!",
+        "Please define with Sys.setenv(%s = 'kwb-servername')", 
+        sep = "\n"
+      ),
+      variable,
+      variable
+    )
+  }
   
   servername
 }
