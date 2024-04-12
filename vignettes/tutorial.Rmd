@@ -92,3 +92,15 @@ kwb.package::plotAllDependencies(dependencies, for.each = FALSE)
 ```
 
 There are some packages that are used by both, "wasserportal" and "kwb.dwd".
+
+### Which versions of CRAN packages exist?
+
+```{r}
+kwb.package::cranVersions("magrittr")
+```
+
+### Which versions of R packages on GitHub exist?
+
+```{r}
+kwb.package::githubVersions(name = "kwb.utils")
+```
