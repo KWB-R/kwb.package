@@ -104,3 +104,9 @@ kwb.package::cranVersions("magrittr")
 ```{r}
 kwb.package::githubVersions(name = "kwb.utils")
 ```
+
+### What licences are specified for (installed) packages?
+
+```{r}
+kwb.package::getPackageLicences(c("magrittr", "dplyr", "shiny"))
+```
