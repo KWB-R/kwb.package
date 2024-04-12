@@ -14,6 +14,10 @@ cleanStop <- function(...)
   stop(..., call. = FALSE)
 }
 
+# createDirectory --------------------------------------------------------------
+#' @importFrom kwb.utils createDirectory
+createDirectory <- kwb.utils::createDirectory
+
 # defaultIfNa ------------------------------------------------------------------
 #' @importFrom kwb.utils defaultIfNA
 defaultIfNa <- kwb.utils::defaultIfNA
@@ -37,6 +41,10 @@ getAttribute <- kwb.utils::getAttribute
 # getHomedir -------------------------------------------------------------------
 #' @importFrom kwb.utils get_homedir
 getHomedir <- kwb.utils::get_homedir
+
+# lastElement ------------------------------------------------------------------
+#' @importFrom kwb.utils lastElement
+lastElement <- kwb.utils::lastElement
 
 # moveColumnsToFront -----------------------------------------------------------
 moveColumnsToFront <- kwb.utils::moveColumnsToFront
@@ -73,9 +81,16 @@ readLinesFromUrl <- function(url, silent = TRUE)
 #' @importFrom kwb.utils removeColumns
 removeColumns <- kwb.utils::removeColumns
 
+# renameColumns ----------------------------------------------------------------
+#' @importFrom kwb.utils renameColumns
+renameColumns <- kwb.utils::renameColumns
 # resetRowNames ----------------------------------------------------------------
 #' @importFrom kwb.utils resetRowNames
 resetRowNames <- kwb.utils::resetRowNames
+
+# resolve ----------------------------------------------------------------------
+#' @importFrom kwb.utils resolve
+resolve <- kwb.utils::resolve
 
 # restoreAttributes ------------------------------------------------------------
 #' @importFrom kwb.utils hsRestoreAttributes
