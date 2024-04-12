@@ -183,6 +183,47 @@ I am curious, for example which of my packages are depending on the
 <p>There are some packages that are used by both, “wasserportal” and
 “kwb.dwd”.</p>
 </div>
+<div class="section level3">
+<h3 id="which-versions-of-cran-packages-exist">Which versions of CRAN packages exist?<a class="anchor" aria-label="anchor" href="#which-versions-of-cran-packages-exist"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">kwb.package</span><span class="fu">::</span><span class="fu"><a href="../reference/cranVersions.html">cranVersions</a></span><span class="op">(</span><span class="st">"magrittr"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    package version       date     date_type</span></span>
+<span><span class="co">#&gt; 1 magrittr   1.0.0 2014-02-25 last_modified</span></span>
+<span><span class="co">#&gt; 2 magrittr   1.0.1 2014-05-15 last_modified</span></span>
+<span><span class="co">#&gt; 3 magrittr     1.5 2014-11-22 last_modified</span></span>
+<span><span class="co">#&gt; 4 magrittr   2.0.1 2020-11-17 last_modified</span></span>
+<span><span class="co">#&gt; 5 magrittr   2.0.2 2022-01-26 last_modified</span></span>
+<span><span class="co">#&gt; 6 magrittr   2.0.3 2022-03-30     published</span></span>
+<span><span class="co">#&gt;                                                              package_source_url</span></span>
+<span><span class="co">#&gt; 1 https://cran.r-project.org/src/contrib/Archive/magrittr/magrittr_1.0.0.tar.gz</span></span>
+<span><span class="co">#&gt; 2 https://cran.r-project.org/src/contrib/Archive/magrittr/magrittr_1.0.1.tar.gz</span></span>
+<span><span class="co">#&gt; 3   https://cran.r-project.org/src/contrib/Archive/magrittr/magrittr_1.5.tar.gz</span></span>
+<span><span class="co">#&gt; 4 https://cran.r-project.org/src/contrib/Archive/magrittr/magrittr_2.0.1.tar.gz</span></span>
+<span><span class="co">#&gt; 5 https://cran.r-project.org/src/contrib/Archive/magrittr/magrittr_2.0.2.tar.gz</span></span>
+<span><span class="co">#&gt; 6                  https://cran.r-project.org/src/contrib/magrittr_2.0.3.tar.gz</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="which-versions-of-r-packages-on-github-exist">Which versions of R packages on GitHub exist?<a class="anchor" aria-label="anchor" href="#which-versions-of-r-packages-on-github-exist"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">kwb.package</span><span class="fu">::</span><span class="fu"><a href="../reference/githubVersions.html">githubVersions</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"kwb.utils"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Reading KWB-R/kwb.utils</span></span>
+<span><span class="co">#&gt;      package    version       date author                          remote</span></span>
+<span><span class="co">#&gt; 1  kwb.utils      0.2.1 2016-09-06 mrustl github::KWB-R/kwb.utils@v.0.2.1</span></span>
+<span><span class="co">#&gt; 2  kwb.utils 0.4.0.9000 2018-11-19 hsonne  github::KWB-R/kwb.utils@v0.4.0</span></span>
+<span><span class="co">#&gt; 3  kwb.utils      0.4.4 2019-09-10 mrustl  github::KWB-R/kwb.utils@v0.4.4</span></span>
+<span><span class="co">#&gt; 4  kwb.utils      0.5.0 2019-12-17 hsonne  github::KWB-R/kwb.utils@v0.5.0</span></span>
+<span><span class="co">#&gt; 5  kwb.utils      0.5.1 2020-04-29 hsonne  github::KWB-R/kwb.utils@v0.5.1</span></span>
+<span><span class="co">#&gt; 6  kwb.utils      0.6.0 2020-06-02 hsonne  github::KWB-R/kwb.utils@v0.6.0</span></span>
+<span><span class="co">#&gt; 7  kwb.utils      0.7.0 2020-07-31 hsonne  github::KWB-R/kwb.utils@v0.7.0</span></span>
+<span><span class="co">#&gt; 8  kwb.utils      0.8.0 2021-02-19 hsonne  github::KWB-R/kwb.utils@v0.8.0</span></span>
+<span><span class="co">#&gt; 9  kwb.utils     0.10.0 2022-01-19 hsonne github::KWB-R/kwb.utils@v0.10.0</span></span>
+<span><span class="co">#&gt; 10 kwb.utils     0.11.0 2022-01-24 hsonne github::KWB-R/kwb.utils@v0.11.0</span></span>
+<span><span class="co">#&gt; 11 kwb.utils     0.12.0 2022-05-28 hsonne github::KWB-R/kwb.utils@v0.12.0</span></span>
+<span><span class="co">#&gt; 12 kwb.utils     0.13.0 2023-04-15 hsonne github::KWB-R/kwb.utils@v0.14.0</span></span>
+<span><span class="co">#&gt; 13 kwb.utils     0.15.0 2024-03-28 hsonne github::KWB-R/kwb.utils@v0.15.0</span></span></code></pre></div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

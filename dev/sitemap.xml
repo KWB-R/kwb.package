@@ -67,6 +67,9 @@
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/exampleLinksAndNodes.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/getCranPackageDatabase.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/getPackageFilesToInstall.html</loc>
   </url>
   <url>
@@ -122,6 +125,12 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/provideInLocalCRAN.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/readGithubPackageDescription.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/setOptionsForPackrat.html</loc>
