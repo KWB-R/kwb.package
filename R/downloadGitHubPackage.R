@@ -58,7 +58,7 @@ findPackageFilename <- function(tarfile)
   desc_file <- grep("/DESCRIPTION$", paths, value = TRUE)
   
   if (length(desc_file) == 0L) {
-    stop("No DESCRIPTION found in ", tarfile)
+    cleanStop("No DESCRIPTION found in ", tarfile)
   }
   
   utils::untar(tarfile, files = desc_file, exdir = tempdir())

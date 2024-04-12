@@ -10,9 +10,8 @@ readLinesFromUrl <- function(url, silent = TRUE)
   result
 }
 
-# stop_ ------------------------------------------------------------------------
-stop_ <- function(...)
+# cleanStop --------------------------------------------------------------------
+cleanStop <- function(...)
 {
   stop(..., call. = FALSE)
 }
-

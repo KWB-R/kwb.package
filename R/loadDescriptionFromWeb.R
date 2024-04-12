@@ -28,7 +28,7 @@ loadDescriptionFromWeb <- function(
   versions <- cache$versions[[name]]
   
   if (! is.null(versions)) {
-    stop("loadDescriptionFromWeb(): !is.null(versions) not implemented!")
+    cleanStop("loadDescriptionFromWeb(): !is.null(versions) not implemented!")
     #description <- select_version(cran_versions)
   } else {
     versions <- cranVersions(name, dbg = FALSE)
@@ -39,7 +39,7 @@ loadDescriptionFromWeb <- function(
     version <- kwb.utils::defaultIfNA(version, rev(versions$version)[1L])
     
     if (! version %in% versions$version) {
-      stop_(kwb.utils::noSuchElements(version, versions$version, "version"))
+      cleanStop(kwb.utils::noSuchElements(version, versions$version, "version"))
     }
     
     url <- versions$package_source_url[versions$version == version]
@@ -60,7 +60,7 @@ loadDescriptionFromWeb <- function(
     shas <- kwb.utils::selectColumns(versions, c("version", "sha"))
     
     if (! version %in% shas$version) {
-      stop_(kwb.utils::noSuchElements(version, shas$version, "version"))
+      cleanStop(kwb.utils::noSuchElements(version, shas$version, "version"))
     }
     
     shas$sha[shas$version == version]

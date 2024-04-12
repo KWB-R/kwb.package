@@ -176,5 +176,5 @@ systemPackages <- function(set_number = 1L)
     return(c(common, "grid", "splines", "tools"))
   }
   
-  stop("set_number must be one of 1, 2.")
+  cleanStop("set_number must be one of 1, 2.")
 }
