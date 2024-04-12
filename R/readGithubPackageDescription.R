@@ -1,7 +1,12 @@
 #' readGithubPackageDescription ------------------------------------------------
-#' @noMd
-#' @noRd
-#' @keywords internal
+#' 
+#' Read DESCRIPTION File for R Package on GitHub
+#' 
+#' @param repo GitHub repository, e.g. "kwb-r/kwb.utils"
+#' @param sha SHA (hash) of the commit 
+#' @param auth_token GitHub token
+#' @param destdir path to destination directory, i.e. directory to which the
+#'   DESCRIPTION file is copied. Default: \code{tempdir()}
 #' @importFrom gh gh
 readGithubPackageDescription <- function(
   repo, sha, auth_token = remotes_github_pat(), destdir = tempdir()
