@@ -16,6 +16,7 @@ readGithubPackageDescription <- function(
   content <- try(gh::gh(endpoint, .token = auth_token), silent = TRUE)
   
   if (inherits(content, "try-error")) {
+    message("Error: ", content)
     return(NULL)
   }
 
@@ -23,7 +24,9 @@ readGithubPackageDescription <- function(
   file <- tempfile()
   on.exit(unlink(file))
   
-  writeLines(selectElements(content, "message"), file)
+  contentLines <- strsplit(selectElements(content, "message"), "\r?\n")[[1L]]
+                           
+  writeLines(contentLines, file)
   
   # Read local DESCRIPTION file
   desc <- remotes_read_dcf(file)
@@ -33,8 +36,8 @@ readGithubPackageDescription <- function(
   
   file.copy(file, file.path(destdir, getUrl(
     "cached_desc", 
-    package = selectColumns("Package"), 
-    version = selectColumns("Version")
+    package = selectElements(desc, "Package"), 
+    version = selectElements(desc, "Version")
   )))
   
   # See remotes:::load_pkg_description
