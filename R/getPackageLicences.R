@@ -21,7 +21,10 @@ getPackageLicences <- function(packages)
 # readDescription --------------------------------------------------------------
 readDescription <- function(package)
 {
-  description <- read.dcf(system.file("DESCRIPTION", package = package))
+  description <- "DESCRIPTION" %>% 
+    system.file(package = package, mustWork = TRUE) %>% 
+    read.dcf()
+  
   colnames(description) <- tolower(colnames(description))
   description
 }
