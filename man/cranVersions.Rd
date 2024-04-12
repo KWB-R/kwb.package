@@ -6,6 +6,12 @@
 \usage{
 cranVersions(name, dbg = TRUE)
 }
+\arguments{
+\item{name}{package name}
+
+\item{dbg}{logical indicating whether or not to show debug messages. Default: 
+\code{TRUE}}
+}
 \description{
 Get versions of CRAN packages
 }

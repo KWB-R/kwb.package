@@ -2,6 +2,10 @@
 
 #' Get versions of CRAN packages
 #' 
+#' @param name package name
+#' @param dbg logical indicating whether or not to show debug messages. Default: 
+#'   \code{TRUE}
+#' @export
 cranVersions <- function(name, dbg = TRUE)
 {
   current <- currentCranVersion(name)
@@ -31,7 +35,7 @@ cranVersions <- function(name, dbg = TRUE)
     package_filename = "%s"
   )
   
-  archived$package_source_url <- sprintf(urlPattern = archived$archive_file)
+  archived$package_source_url <- sprintf(urlPattern, archived$archive_file)
   
   result <- safeRowBind(archived, current)
   
