@@ -125,11 +125,11 @@ function <code><a href="../reference/packageDependencies.html">packageDependenci
 <span><span class="co"># What packages does the package "kwb.package" itself depend on?</span></span>
 <span><span class="fu">kwb.package</span><span class="fu">::</span><span class="fu"><a href="../reference/packageDependencies.html">packageDependencies</a></span><span class="op">(</span><span class="st">"kwb.package"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $kwb.package</span></span>
-<span><span class="co">#&gt;  [1] "gh"          "kwb.utils"   "mvbutils"    "networkD3"   "remotes"    </span></span>
-<span><span class="co">#&gt;  [6] "withr"       "cli"         "gitcreds"    "glue"        "httr2"      </span></span>
-<span><span class="co">#&gt; [11] "ini"         "jsonlite"    "lifecycle"   "rlang"       "methods"    </span></span>
-<span><span class="co">#&gt; [16] "utils"       "tools"       "stats"       "graphics"    "htmlwidgets"</span></span>
-<span><span class="co">#&gt; [21] "igraph"      "magrittr"    "grDevices"   "htmltools"   "knitr"      </span></span>
+<span><span class="co">#&gt;  [1] "gh"          "kwb.utils"   "magrittr"    "mvbutils"    "networkD3"  </span></span>
+<span><span class="co">#&gt;  [6] "remotes"     "withr"       "cli"         "gitcreds"    "glue"       </span></span>
+<span><span class="co">#&gt; [11] "httr2"       "ini"         "jsonlite"    "lifecycle"   "rlang"      </span></span>
+<span><span class="co">#&gt; [16] "methods"     "utils"       "tools"       "stats"       "graphics"   </span></span>
+<span><span class="co">#&gt; [21] "htmlwidgets" "igraph"      "grDevices"   "htmltools"   "knitr"      </span></span>
 <span><span class="co">#&gt; [26] "rmarkdown"   "yaml"        "curl"        "openssl"     "R6"         </span></span>
 <span><span class="co">#&gt; [31] "rappdirs"    "vctrs"       "Matrix"      "pkgconfig"   "cpp11"      </span></span>
 <span><span class="co">#&gt; [36] "base64enc"   "digest"      "fastmap"     "evaluate"    "highr"      </span></span>
@@ -142,7 +142,8 @@ function <code><a href="../reference/packageDependencies.html">packageDependenci
 <span><span class="co"># What are the direct dependencies, without its sub-dependencies?</span></span>
 <span><span class="fu">kwb.package</span><span class="fu">::</span><span class="fu"><a href="../reference/packageDependencies.html">packageDependencies</a></span><span class="op">(</span><span class="st">"kwb.package"</span>, recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $kwb.package</span></span>
-<span><span class="co">#&gt; [1] "gh"        "kwb.utils" "mvbutils"  "networkD3" "remotes"   "withr"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "gh"        "kwb.utils" "magrittr"  "mvbutils"  "networkD3" "remotes"  </span></span>
+<span><span class="co">#&gt; [7] "withr"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="by-what-other-installed-packages-a-package-is-used">By what other (installed) packages a package is used?<a class="anchor" aria-label="anchor" href="#by-what-other-installed-packages-a-package-is-used"></a>
@@ -223,6 +224,12 @@ I am curious, for example which of my packages are depending on the
 <span><span class="co">#&gt; 11 kwb.utils     0.12.0 2022-05-28 hsonne github::KWB-R/kwb.utils@v0.12.0</span></span>
 <span><span class="co">#&gt; 12 kwb.utils     0.13.0 2023-04-15 hsonne github::KWB-R/kwb.utils@v0.14.0</span></span>
 <span><span class="co">#&gt; 13 kwb.utils     0.15.0 2024-03-28 hsonne github::KWB-R/kwb.utils@v0.15.0</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="what-licences-are-specified-for-installed-packages">What licences are specified for (installed) packages?<a class="anchor" aria-label="anchor" href="#what-licences-are-specified-for-installed-packages"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">kwb.package</span><span class="fu">::</span><span class="fu"><a href="../reference/getPackageLicences.html">getPackageLicences</a></span><span class="op">(</span><span class="fu">kwb.package</span><span class="fu">::</span><span class="fu"><a href="../reference/systemPackages.html">systemPackages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -73,6 +73,9 @@
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/getPackageFilesToInstall.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/getPackageLicences.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/getRVersionMajorMinor.html</loc>
   </url>
   <url>
@@ -107,6 +110,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/packageString.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/pipe.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/plotAllDependencies.html</loc>
