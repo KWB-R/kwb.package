@@ -30,7 +30,6 @@ currentCranVersion <- function(name)
   )
 }
 
-
 # getCranPackageDatabase -------------------------------------------------------
 
 #' Get Matrix with Information on All CRAN Packages
