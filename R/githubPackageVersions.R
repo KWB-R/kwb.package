@@ -1,5 +1,6 @@
 # githubVersions ---------------------------------------------------------------
-#' Title
+
+#' Get Versions of Packages on GitHub
 #'
 #' @param name package name
 #' @param github_user name of github account, default: "KWB-R"
@@ -24,6 +25,7 @@ githubPackageVersions <- function(
 {
   #kwb.utils::assignPackageObjects("kwb.package")
   #repo = "cran/kwb.hantush";verbose=TRUE;reduced=TRUE
+  
   stopifnot(is.character(repo))
 
   if (length(repo) > 1L) {
@@ -133,4 +135,3 @@ getGithubReleaseInfo <- function(
 
   removeColumns(result, "sha")
 }
-
