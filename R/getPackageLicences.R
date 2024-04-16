@@ -18,14 +18,3 @@ getPackageLicences <- function(packages)
     kwb.utils::rbindAll(nameColumn = "package", namesAsFactor = FALSE) %>% 
     kwb.utils::moveColumnsToFront("package")
 }
-
-# readDescription --------------------------------------------------------------
-readDescription <- function(package)
-{
-  description <- "DESCRIPTION" %>% 
-    system.file(package = package, mustWork = TRUE) %>% 
-    read.dcf()
-  
-  colnames(description) <- tolower(colnames(description))
-  description
-}

@@ -54,3 +54,14 @@ packageInDestdir <- function(package, destdir, verbose = TRUE)
   structure(file_exists, path = if (file_exists) lastElement(files))
 }
 
+
+# readDescription --------------------------------------------------------------
+readDescription <- function(package)
+{
+  description <- "DESCRIPTION" %>% 
+    system.file(package = package, mustWork = TRUE) %>% 
+    read.dcf()
+  
+  colnames(description) <- tolower(colnames(description))
+  description
+}
