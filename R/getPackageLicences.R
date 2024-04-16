@@ -4,6 +4,7 @@
 #' 
 #' @param packages names of (installed) packages
 #' @return data frame
+#' @importFrom kwb.utils moveColumnsToFront rbindAll
 #' @export
 getPackageLicences <- function(packages)
 {
@@ -14,8 +15,8 @@ getPackageLicences <- function(packages)
     as.data.frame(description[, columns, drop = FALSE])
   }) %>%
     stats::setNames(packages) %>%
-    rbindAll(nameColumn = "package") %>% 
-    moveColumnsToFront("package")
+    kwb.utils::rbindAll(nameColumn = "package", namesAsFactor = FALSE) %>% 
+    kwb.utils::moveColumnsToFront("package")
 }
 
 # readDescription --------------------------------------------------------------
