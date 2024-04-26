@@ -98,11 +98,11 @@ restoreAttributes <- kwb.utils::hsRestoreAttributes
 
 # runInDirectory ---------------------------------------------------------------
 #' @importFrom kwb.utils runInDirectory
-kwb.utils::runInDirectory
+runInDirectory <- kwb.utils::runInDirectory
 
 # safePath ---------------------------------------------------------------------
 #' @importFrom kwb.utils safePath
-kwb.utils::safePath
+safePath <- kwb.utils::safePath
 
 # safeRowBind ------------------------------------------------------------------
 #' @importFrom kwb.utils safeRowBind

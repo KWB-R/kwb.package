@@ -184,7 +184,8 @@ packageDependenciesByType <- function(
         reverse = reverse, 
         verbose = verbose
       ) %>% 
-        do.call(what = rbind)
+        do.call(what = rbind) %>% 
+        resetRowNames()
     )
   }
   
@@ -209,14 +210,14 @@ packageDependenciesByType <- function(
         ) %>% 
           cbind(
             getPackageLicences(dependencies) %>% 
-              kwb.utils::renameColumns(list(package = "dependency"))
+              renameColumns(list(package = "dependency"))
           )
       } # else NULL
     }) %>% 
     stats::setNames(which) %>% 
-    kwb.utils::excludeNULL(dbg = FALSE) %>% 
+    excludeNULL(dbg = FALSE) %>% 
     do.call(what = rbind.data.frame) %>% 
-    kwb.utils::resetRowNames()
+    resetRowNames()
 }
 
 # printAndWaitIf ---------------------------------------------------------------

@@ -47,7 +47,7 @@ githubRepo <- function(github_user, name)
 hasGplLicence <- function(packages)
 {
   getPackageLicences(packages) %>% 
-    kwb.utils::selectColumns("licence") %>% 
+    selectColumns("licence") %>% 
     grep(pattern = "GPL", ignore.case = TRUE)
 }
 
@@ -75,7 +75,7 @@ readDescription <- function(package)
   stopIfNotInstalled(package)
   
   description <- system.file("DESCRIPTION", package = package) %>% 
-    kwb.utils::safePath() %>% 
+    safePath() %>% 
     read.dcf()
   
   colnames(description) <- tolower(colnames(description))
@@ -95,6 +95,6 @@ stopIfNotInstalled <- function(package)
   available <- rownames(installed.packages())
                         
   if (!package %in% available) {
-    kwb.utils::stopFormatted("The package '%s' is not installed.", package)
+    stopFormatted("The package '%s' is not installed.", package)
   }
 }

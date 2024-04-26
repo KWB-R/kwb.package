@@ -13,11 +13,11 @@ getPackageLicences <- function(packages)
     fields <- c("licence", "license")
     columns <- intersect(colnames(description), fields)
     as.data.frame(description[, columns, drop = FALSE]) %>%
-      kwb.utils::renameColumns(list(
+      renameColumns(list(
         license = "licence"
       ))
   }) %>%
     stats::setNames(packages) %>%
-    kwb.utils::rbindAll(nameColumn = "package", namesAsFactor = FALSE) %>% 
-    kwb.utils::moveColumnsToFront("package")
+    rbindAll(nameColumn = "package", namesAsFactor = FALSE) %>% 
+    moveColumnsToFront("package")
 }
