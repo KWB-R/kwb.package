@@ -37,6 +37,20 @@ githubRepo <- function(github_user, name)
   paste(github_user, name, sep = "/")
 }
 
+# hasGplLicence ----------------------------------------------------------------
+
+#' Do Packages have a GPL Licence?
+#' 
+#' @param packages package name(s) as a vector of character
+#' @returns vector of logical 
+#' @export
+hasGplLicence <- function(packages)
+{
+  getPackageLicences(packages) %>% 
+    kwb.utils::selectColumns("licence") %>% 
+    grep(pattern = "GPL", ignore.case = TRUE)
+}
+
 # packageInDestdir -------------------------------------------------------------
 #' @noMd
 #' @noRd
