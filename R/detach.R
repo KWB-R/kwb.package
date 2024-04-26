@@ -122,12 +122,11 @@ sortedDependencies <- function(package, dbg = FALSE)
 # packageDependencies ----------------------------------------------------------
 
 #' Package Dependencies
+#'
+#' This is just a wrapper around \code{\link[tools]{package_dependencies}} with
+#' some defaults defined.
 #' 
 #' @inheritParams tools::package_dependencies
-#' @param \dots further arguments passed to 
-#'   \code{\link[tools]{package_dependencies}}
-#' @param by.type logical indicating whether or not to split the dependencies
-#'   by type i.e. by the elements given in \code{which}
 #' @export
 packageDependencies <- function(
   packages = NULL, 
@@ -135,40 +134,65 @@ packageDependencies <- function(
   which = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")[1:3],
   recursive = TRUE, 
   reverse = FALSE, 
-  ...,
-  by.type = FALSE
+  verbose = FALSE
 )
 {
-  if (!by.type) {
-    return(tools::package_dependencies(
-      packages, 
-      db = db, 
-      which = which,
-      recursive = recursive, 
-      reverse = reverse,
-      ...
-    ))
+  tools::package_dependencies(
+    packages, 
+    db = db, 
+    which = which,
+    recursive = recursive, 
+    reverse = reverse,
+    verbose = verbose
+  )
+}
+
+# packageDependenciesByType ----------------------------------------------------
+
+#' Package Dependencies by Type
+#' 
+#' @inheritParams tools::package_dependencies
+#' @export
+packageDependenciesByType <- function(
+    packages = NULL, 
+    db = utils::installed.packages(),
+    which = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")[1:3],
+    recursive = TRUE, 
+    reverse = FALSE, 
+    verbose = FALSE
+)
+{
+  #kwb.utils::assignPackageObjects("kwb.package");`%>%` <- magrittr::`%>%`
+  #packages <- c("kwb.utils", "kwb.plot")
+  
+  n_packages <- length(packages)
+  
+  if (n_packages == 0L) {
+    return(NULL)
   }
   
-  # Package dependencies by type
-  
-  if (length(packages) < 1L) {
-    # Recursive call for each package
-    return(lapply(
-      X = packages, 
-      FUN = packageDependencies, 
-      db = db,
-      which = which,
-      recursive = recursive, 
-      reverse = reverse, 
-      ...,
-      by.type = by.type
-    ))
+  if (n_packages > 1L) {
+    
+    # Call this function recursively for each package
+    return(
+      lapply(
+        X = stats::setNames(nm = packages), 
+        FUN = packageDependenciesByType, 
+        db = db,
+        which = which,
+        recursive = recursive, 
+        reverse = reverse, 
+        verbose = verbose
+      ) %>% 
+        do.call(what = rbind)
+    )
   }
   
-  stats::setNames(nm = which) %>% 
+  stopifnot(n_packages == 1L)
+  
+  which %>% 
     lapply(function(which.one) {
-      #which.one <- "Depends"
+      #which.one <- "Imports"
       #print(which.one)
       dependencies <- tools::package_dependencies(
         packages, 
@@ -176,17 +200,20 @@ packageDependencies <- function(
         which = which.one,
         recursive = recursive,
         reverse = reverse,
-        ...
+        verbose = verbose
       )[[1L]]
       if (length(dependencies)) {
         data.frame(
-          type = rep(which.one, length(dependencies)),
-          dependency = dependencies,
-          getPackageLicences(dependencies) %>% 
-            kwb.utils::selectColumns("license", drop = FALSE)
-        )
+          package = packages,
+          type = rep(which.one, length(dependencies))
+        ) %>% 
+          cbind(
+            getPackageLicences(dependencies) %>% 
+              kwb.utils::renameColumns(list(package = "dependency"))
+          )
       } # else NULL
     }) %>% 
+    stats::setNames(which) %>% 
     kwb.utils::excludeNULL(dbg = FALSE) %>% 
     do.call(what = rbind.data.frame) %>% 
     kwb.utils::resetRowNames()
