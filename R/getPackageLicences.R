@@ -12,7 +12,10 @@ getPackageLicences <- function(packages)
     description <- readDescription(package)
     fields <- c("licence", "license")
     columns <- intersect(colnames(description), fields)
-    as.data.frame(description[, columns, drop = FALSE])
+    as.data.frame(description[, columns, drop = FALSE]) %>%
+      kwb.utils::renameColumns(list(
+        license = "licence"
+      ))
   }) %>%
     stats::setNames(packages) %>%
     kwb.utils::rbindAll(nameColumn = "package", namesAsFactor = FALSE) %>% 
