@@ -58,10 +58,29 @@ packageInDestdir <- function(package, destdir, verbose = TRUE)
 # readDescription --------------------------------------------------------------
 readDescription <- function(package)
 {
-  description <- "DESCRIPTION" %>% 
-    system.file(package = package, mustWork = TRUE) %>% 
+  stopIfNotInstalled(package)
+  
+  description <- system.file("DESCRIPTION", package = package) %>% 
+    kwb.utils::safePath() %>% 
     read.dcf()
   
   colnames(description) <- tolower(colnames(description))
   description
+}
+
+# stopIfNotInstalled -----------------------------------------------------------
+
+#' Is a Package Installed?
+#' 
+#' @param package package name (character vector of length one)
+#' @export
+stopIfNotInstalled <- function(package)
+{
+  stopifnot(is.character(package), length(package) == 1L)
+  
+  available <- rownames(installed.packages())
+                        
+  if (!package %in% available) {
+    kwb.utils::stopFormatted("The package '%s' is not installed.", package)
+  }
 }
