@@ -91,6 +91,9 @@
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/gradToRad.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/hasGplLicence.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/index.html</loc>
   </url>
   <url>
@@ -110,6 +113,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/packageDependencies.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/packageDependenciesByType.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/packageString.html</loc>
@@ -146,6 +152,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/sortedDependencies.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/stopIfNotInstalled.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/systemPackages.html</loc>
