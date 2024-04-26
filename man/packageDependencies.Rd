@@ -4,14 +4,49 @@
 \alias{packageDependencies}
 \title{Package Dependencies}
 \usage{
-packageDependencies(packages = NULL, recursive = TRUE, reverse = FALSE)
+packageDependencies(
+  packages = NULL,
+  db = utils::installed.packages(),
+  which = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")[1:3],
+  recursive = TRUE,
+  reverse = FALSE,
+  ...,
+  by.type = FALSE
+)
 }
 \arguments{
-\item{packages}{passed to \code{\link[tools]{package_dependencies}}}
+\item{packages}{a character vector of package names.}
 
-\item{recursive}{passed to \code{\link[tools]{package_dependencies}}}
+\item{db}{character matrix as from \code{\link{available.packages}()}
+    (with the default \code{NULL} the results of this call)
+    or data frame variants thereof.  Alternatively, a package database
+    like the one available from
+    \url{https://cran.r-project.org/web/packages/packages.rds}.
+  }
 
-\item{reverse}{passed to \code{\link[tools]{package_dependencies}}}
+\item{which}{a character vector listing the types of
+    dependencies, a subset of
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+    Character string \code{"all"} is shorthand for that vector,
+    character string \code{"most"} for the same vector without
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
+  }
+
+\item{recursive}{a logical indicating whether (reverse) dependencies
+    of (reverse) dependencies (and so on) should be included, or a
+    character vector like \code{which} indicating the type of (reverse)
+    dependencies to be added recursively.}
+
+\item{reverse}{logical: if \code{FALSE} (default), regular
+    dependencies are calculated, otherwise reverse dependencies.}
+
+\item{\dots}{further arguments passed to 
+\code{\link[tools]{package_dependencies}}}
+
+\item{by.type}{logical indicating whether or not to split the dependencies
+by type i.e. by the elements given in \code{which}}
 }
 \description{
 Package Dependencies

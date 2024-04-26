@@ -123,26 +123,76 @@ sortedDependencies <- function(package, dbg = FALSE)
 
 #' Package Dependencies
 #' 
-#' @param packages passed to \code{\link[tools]{package_dependencies}}
-#' @param recursive passed to \code{\link[tools]{package_dependencies}}
-#' @param reverse passed to \code{\link[tools]{package_dependencies}}
-#' 
+#' @inheritParams tools::package_dependencies
+#' @param \dots further arguments passed to 
+#'   \code{\link[tools]{package_dependencies}}
+#' @param by.type logical indicating whether or not to split the dependencies
+#'   by type i.e. by the elements given in \code{which}
 #' @export
-#'  
 packageDependencies <- function(
-  packages = NULL, recursive = TRUE, reverse = FALSE
+  packages = NULL, 
+  db = utils::installed.packages(),
+  which = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")[1:3],
+  recursive = TRUE, 
+  reverse = FALSE, 
+  ...,
+  by.type = FALSE
 )
 {
-  tools::package_dependencies(
-    packages, 
-    db = utils::installed.packages(), 
-    recursive = recursive, 
-    reverse = reverse
-  )
+  if (!by.type) {
+    return(tools::package_dependencies(
+      packages, 
+      db = db, 
+      which = which,
+      recursive = recursive, 
+      reverse = reverse,
+      ...
+    ))
+  }
+  
+  # Package dependencies by type
+  
+  if (length(packages) < 1L) {
+    # Recursive call for each package
+    return(lapply(
+      X = packages, 
+      FUN = packageDependencies, 
+      db = db,
+      which = which,
+      recursive = recursive, 
+      reverse = reverse, 
+      ...,
+      by.type = by.type
+    ))
+  }
+  
+  stats::setNames(nm = which) %>% 
+    lapply(function(which.one) {
+      #which.one <- "Depends"
+      #print(which.one)
+      dependencies <- tools::package_dependencies(
+        packages, 
+        db = db,
+        which = which.one,
+        recursive = recursive,
+        reverse = reverse,
+        ...
+      )[[1L]]
+      if (length(dependencies)) {
+        data.frame(
+          type = rep(which.one, length(dependencies)),
+          dependency = dependencies,
+          getPackageLicences(dependencies) %>% 
+            kwb.utils::selectColumns("license", drop = FALSE)
+        )
+      } # else NULL
+    }) %>% 
+    kwb.utils::excludeNULL(dbg = FALSE) %>% 
+    do.call(what = rbind.data.frame) %>% 
+    kwb.utils::resetRowNames()
 }
 
 # printAndWaitIf ---------------------------------------------------------------
-
 printAndWaitIf <- function(dbg, variables) 
 {
   if (dbg) {
