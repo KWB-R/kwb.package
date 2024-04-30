@@ -57,13 +57,19 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getPackageLicences</span><span class="op">(</span><span class="va">packages</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getPackageLicences</span><span class="op">(</span><span class="va">packages</span>, db <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>packages</dt>
 <dd><p>names of (installed) packages</p></dd>
+
+
+<dt>db</dt>
+<dd><p>optional. Package database, similar to what is returned by
+<code><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></code>. Default:
+<code>as.data.frame(installed.packages())</code></p></dd>
 
 </dl></div>
     <div class="section level2">
