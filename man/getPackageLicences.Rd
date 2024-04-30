@@ -4,7 +4,7 @@
 \alias{getPackageLicences}
 \title{Which Licences are Specified for the Packages?}
 \usage{
-getPackageLicences(packages)
+getPackageLicences(packages, stop.on.error = FALSE)
 }
 \arguments{
 \item{packages}{names of (installed) packages}

@@ -70,16 +70,21 @@ packageInDestdir <- function(package, destdir, verbose = TRUE)
 
 
 # readDescription --------------------------------------------------------------
-readDescription <- function(package)
+readDescription <- function(package, stop.on.error = TRUE)
 {
-  stopIfNotInstalled(package)
+  if (stop.on.error) {
+    stopIfNotInstalled(package)
+  }
   
-  description <- system.file("DESCRIPTION", package = package) %>% 
-    safePath() %>% 
-    read.dcf()
+  file <- system.file("DESCRIPTION", package = package)
   
-  colnames(description) <- tolower(colnames(description))
-  description
+  if (!file.exists(file) ) {
+    return(NULL)
+  }
+  
+  file %>% 
+    read.dcf() %>% 
+    `colnames<-`(tolower(colnames(.)))
 }
 
 # stopIfNotInstalled -----------------------------------------------------------

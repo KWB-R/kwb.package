@@ -6,16 +6,18 @@
 #' @return data frame
 #' @importFrom kwb.utils moveColumnsToFront rbindAll
 #' @export
-getPackageLicences <- function(packages)
+getPackageLicences <- function(packages, stop.on.error = FALSE)
 {
   lapply(packages, function(package) {
-    description <- readDescription(package)
-    fields <- c("licence", "license")
-    columns <- intersect(colnames(description), fields)
-    as.data.frame(description[, columns, drop = FALSE]) %>%
-      renameColumns(list(
-        license = "licence"
-      ))
+    description <- readDescription(package, stop.on.error = stop.on.error)
+    if (is.null(description)) {
+      data.frame(licence = "<not_found>")
+    } else {
+      columns <- intersect(colnames(description), c("licence", "license"))
+      description[, columns, drop = FALSE] %>%
+        as.data.frame() %>% 
+        renameColumns(list(license = "licence"))
+    } # else NULL
   }) %>%
     stats::setNames(packages) %>%
     rbindAll(nameColumn = "package", namesAsFactor = FALSE) %>% 
