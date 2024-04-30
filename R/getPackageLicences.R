@@ -3,23 +3,41 @@
 #' Which Licences are Specified for the Packages?
 #' 
 #' @param packages names of (installed) packages
+#' @param db optional. Package database, similar to what is returned by
+#'   \code{\link[utils]{installed.packages}}. Default:
+#'   \code{as.data.frame(installed.packages())}
 #' @return data frame
-#' @importFrom kwb.utils moveColumnsToFront rbindAll
+#' @importFrom utils installed.packages
 #' @export
-getPackageLicences <- function(packages, stop.on.error = FALSE)
+getPackageLicences <- function(
+    packages, 
+    db = as.data.frame(utils::installed.packages())
+)
 {
-  lapply(packages, function(package) {
-    description <- readDescription(package, stop.on.error = stop.on.error)
-    if (is.null(description)) {
-      data.frame(licence = "<not_found>")
-    } else {
-      columns <- intersect(colnames(description), c("licence", "license"))
-      description[, columns, drop = FALSE] %>%
-        as.data.frame() %>% 
-        renameColumns(list(license = "licence"))
-    } # else NULL
-  }) %>%
-    stats::setNames(packages) %>%
-    rbindAll(nameColumn = "package", namesAsFactor = FALSE) %>% 
-    moveColumnsToFront("package")
+  #kwb.utils::assignPackageObjects("kwb.package");stop.on.error = FALSE
+  #`%>%` <- magrittr::`%>%`
+  #db <- kwb.utils:::get_cached("package_db")
+  #packages <- db$Package
+
+  colnames(db) <- tolower(colnames(db))
+  licence_fields <- intersect(colnames(db), c("licence", "license"))
+  stopifnot(length(licence_fields) == 1L)
+
+  backbone <- data.frame(
+    package = packages, 
+    stringsAsFactors = FALSE
+  )
+  
+  result <- backbone %>% 
+    merge(
+      y = db[, c("package", licence_fields)], 
+      by = "package", 
+      all.x = TRUE
+    ) %>% 
+    renameColumns(list(license = "licence")) %>% 
+    orderBy("package")
+  
+  result[["licence"]] <- defaultIfNa(result[["licence"]], "<not_found>")
+  
+  result
 }

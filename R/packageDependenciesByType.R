@@ -60,7 +60,7 @@ packageDependenciesByType <- function(
           type = rep(type, length(dependencies))
         ) %>% 
           cbind(
-            getPackageLicences(dependencies) %>% 
+            getPackageLicences(dependencies, db = db) %>% 
               renameColumns(list(package = "dependency"))
           )
       } # else NULL

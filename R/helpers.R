@@ -82,9 +82,11 @@ readDescription <- function(package, stop.on.error = TRUE)
     return(NULL)
   }
   
-  file %>% 
-    read.dcf() %>% 
-    `colnames<-`(tolower(colnames(.)))
+  result <- read.dcf(file)
+  
+  colnames(result) <- tolower(colnames(result))
+  
+  result
 }
 
 # stopIfNotInstalled -----------------------------------------------------------
@@ -92,12 +94,13 @@ readDescription <- function(package, stop.on.error = TRUE)
 #' Is a Package Installed?
 #' 
 #' @param package package name (character vector of length one)
+#' @importFrom utils installed.packages
 #' @export
 stopIfNotInstalled <- function(package)
 {
   stopifnot(is.character(package), length(package) == 1L)
   
-  available <- rownames(installed.packages())
+  available <- rownames(utils::installed.packages())
                         
   if (!package %in% available) {
     stopFormatted("The package '%s' is not installed.", package)
