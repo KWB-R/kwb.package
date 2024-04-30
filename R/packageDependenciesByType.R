@@ -43,13 +43,13 @@ packageDependenciesByType <- function(
   stopifnot(n_packages == 1L)
   
   which %>% 
-    lapply(function(which.one) {
-      #which.one <- "Imports"
-      #print(which.one)
+    lapply(function(type) {
+      #type <- "Imports"
+      #print(type)
       dependencies <- tools::package_dependencies(
         packages, 
         db = db,
-        which = which.one,
+        which = type,
         recursive = recursive,
         reverse = reverse,
         verbose = verbose
@@ -57,7 +57,7 @@ packageDependenciesByType <- function(
       if (length(dependencies)) {
         data.frame(
           package = packages,
-          type = rep(which.one, length(dependencies))
+          type = rep(type, length(dependencies))
         ) %>% 
           cbind(
             getPackageLicences(dependencies) %>% 
