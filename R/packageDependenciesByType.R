@@ -44,8 +44,7 @@ packageDependenciesByType <- function(
   
   which %>% 
     lapply(function(type) {
-      #type <- "Imports"
-      #print(type)
+
       dependencies <- tools::package_dependencies(
         packages, 
         db = db,
@@ -54,19 +53,17 @@ packageDependenciesByType <- function(
         reverse = reverse,
         verbose = verbose
       )[[1L]]
+      
       if (length(dependencies)) {
         data.frame(
           package = packages,
           type = rep(type, length(dependencies))
-        ) %>% 
-          cbind(
-            getPackageLicences(dependencies, db = db) %>% 
-              renameColumns(list(package = "dependency"))
-          )
-      } # else NULL
+        )
+      }
+      
     }) %>% 
     stats::setNames(which) %>% 
     excludeNULL(dbg = FALSE) %>% 
-    do.call(what = rbind.data.frame) %>% 
+    do.call(what = rbind) %>% 
     resetRowNames()
 }
