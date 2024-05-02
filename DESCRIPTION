@@ -30,10 +30,12 @@ Suggests:
     covr,
     knitr,
     pkgmeta,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 Remotes: 
     github::kwb-r/kwb.utils,
     github::kwb-r/pkgmeta
 Encoding: UTF-8
 RoxygenNote: 7.3.1
 VignetteBuilder: knitr
+Config/testthat/edition: 3

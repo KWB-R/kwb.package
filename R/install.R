@@ -39,7 +39,6 @@ updateKwbPackages <- function
   }
 }
 
-
 # getServername ------------------------------------------------------------
 
 #' Get KWB Servername
