@@ -37,7 +37,14 @@ currentCranVersion <- function(name)
 #' @export
 getCranPackageDatabase <- function()
 {
-  readRDS(file(getUrl("cran_packages", package = "packages.rds")))
+  url <- getUrl("cran_package", package = "packages.rds")
+  
+  system.time(db1 <- as.data.frame(readRDS(file(url))))
+  
+  #system.time(db2 <- tools::CRAN_package_db())
+  #stopifnot(identical(db1, db2))
+
+  db1
 }
 
 # isOnCran ---------------------------------------------------------------------
