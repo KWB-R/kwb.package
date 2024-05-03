@@ -84,6 +84,7 @@ removeColumns <- kwb.utils::removeColumns
 # renameColumns ----------------------------------------------------------------
 #' @importFrom kwb.utils renameColumns
 renameColumns <- kwb.utils::renameColumns
+
 # resetRowNames ----------------------------------------------------------------
 #' @importFrom kwb.utils resetRowNames
 resetRowNames <- kwb.utils::resetRowNames
@@ -108,10 +109,9 @@ safePath <- kwb.utils::safePath
 #' @importFrom kwb.utils safeRowBind
 safeRowBind <- kwb.utils::safeRowBind
 
-# selectColumns ---------------------------------------------------------------
+# selectColumns ----------------------------------------------------------------
 #' @importFrom kwb.utils selectColumns
 selectColumns <- kwb.utils::selectColumns
-
 
 # selectElements ---------------------------------------------------------------
 #' @importFrom kwb.utils selectElements
