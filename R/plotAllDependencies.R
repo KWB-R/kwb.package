@@ -181,12 +181,12 @@ drawDependencies <- function(nodes, dependencies, nodeColours, ...)
   
   for (startNode in startNodes) {
     
-    stopNodes <- dependencies[[startNode]]        
+    endNodes <- dependencies[[startNode]]        
     
-    for (stopNode in stopNodes) {
+    for (endNode in endNodes) {
       
       drawLink(
-        nodes, startNode, stopNode, col = nodeColours[startNode == nodeNames],
+        nodes, startNode, endNode, col = nodeColours[startNode == nodeNames],
         ...
       )
     }    
