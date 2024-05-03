@@ -71,9 +71,7 @@ plotAllDependencies <- function(dependencies, r = 1.5, for.each = TRUE, ...)
 #'   
 toNodes <- function(nodeNames)
 {
-  n_nodes <- length(nodeNames)
-  
-  nodes <- anglesToPoints(equidistantAngles(n_nodes))
+  nodes <- anglesToPoints(equidistantAngles(length(nodeNames)))
   
   rownames(nodes) <- nodeNames
   
