@@ -93,12 +93,12 @@ toNodes <- function(nodeNames)
 #' @export
 #' 
 plotDependencies <- function(
-  nodes, 
-  dependencies,
-  main = "", 
-  r = 1.5, 
-  nodeColours = grDevices::rainbow(nrow(nodes)),
-  ...
+    nodes, 
+    dependencies,
+    main = "", 
+    r = 1.5, 
+    nodeColours = grDevices::rainbow(nrow(nodes)),
+    ...
 )
 {
   col <- rep(nodeColours, length.out = nrow(nodes))
@@ -168,43 +168,21 @@ addNodeLabels <- function(nodes, cex = 1, distance.factor = 1)
 #' @param dependencies list of package dependencies as returned by 
 #'   \code{\link{packageDependencies}}
 #' @param nodeColours colours given to the lines starting at the same start node
-#' @param \dots arguments passed to \code{\link{drawLink}}
+#' @param \dots arguments passed to \code{\link[graphics]{arrows}}
+#' @importFrom graphics arrows
 #' @export
-#' 
 drawDependencies <- function(nodes, dependencies, nodeColours, ...)
 {
-  nodeNames <- rownames(nodes)
-  
-  startNodes <- names(dependencies)  
-  
-  for (startNode in startNodes) {
-    
-    endNodes <- dependencies[[startNode]]        
-    
-    for (endNode in endNodes) {
-      
-      drawLink(
-        nodes, startNode, endNode, col = nodeColours[startNode == nodeNames],
+  for (startNode in names(dependencies)) {
+    for (endNode in dependencies[[startNode]]) {
+      graphics::arrows(
+        nodes[startNode, "x"], 
+        nodes[startNode, "y"], 
+        nodes[endNode, "x"], 
+        nodes[endNode, "y"], 
+        col = nodeColours[startNode == rownames(nodes)],
         ...
       )
     }    
   }  
-}
-
-# drawLink ---------------------------------------------------------------------
-
-#' Draw a Link Between a Pair of Nodes
-#' 
-#' @param nodes data frame as returned by \code{\link{toNodes}}
-#' @param i row index of the start node
-#' @param j row index of the finish node
-#' @param \dots arguments passed to \code{arrows}
-#' @export
-#' @importFrom graphics arrows
-drawLink <- function(nodes, i, j, ...) 
-{
-  graphics::arrows(
-    x0 = nodes[i, "x"], y0 = nodes[i, "y"], 
-    x1 = nodes[j, "x"], y1 = nodes[j, "y"], ...
-  )
 }

@@ -16,6 +16,10 @@ The following public functions were modified:
 
 - packageDependencies: add arguments "db", "which", "verbose"
 
+The following public functions were deleted:
+
+- drawLink(): It was a one-liner and only used once within the package
+
 The following private functions were added:
 
 - allDeps()

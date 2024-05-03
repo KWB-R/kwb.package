@@ -14,7 +14,7 @@ drawDependencies(nodes, dependencies, nodeColours, ...)
 
 \item{nodeColours}{colours given to the lines starting at the same start node}
 
-\item{\dots}{arguments passed to \code{\link{drawLink}}}
+\item{\dots}{arguments passed to \code{\link[graphics]{arrows}}}
 }
 \description{
 Draw Lines between Nodes
