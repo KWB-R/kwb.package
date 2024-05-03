@@ -96,9 +96,8 @@ draw_circles <- function(r, n_corners = 36L, col = "lightgrey")
 }
 
 # polar_to_xy ------------------------------------------------------------------
-polar_to_xy <- function(phi, r)
+polar_to_xy <- function(phi, r = 1)
 {
-  data <- c(cos(phi) * r, sin(phi) * r)
-  
+  data <- r * c(cos(phi), sin(phi))
   matrix(data, ncol = 2L, dimnames = list(NULL, c("x", "y")))
 }
