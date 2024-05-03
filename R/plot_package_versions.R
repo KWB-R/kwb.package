@@ -81,7 +81,7 @@ map_to_range <- function(x, y_range, x_range = range(x))
 # seq_rad_len ------------------------------------------------------------------
 seq_rad_len <- function(n)
 {
-  kwb.package::gradToRad(kwb.package::equidistantAngles(n))
+  gradToRad(equidistantAngles(n))
 }
 
 # draw_circles -----------------------------------------------------------------
