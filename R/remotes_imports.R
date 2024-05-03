@@ -2,7 +2,7 @@
 remotes_github_pat <- getFromNamespace("github_pat", "remotes")
 
 # remotes_parse_deps -----------------------------------------------------------
-remotes_parse_deps <- getFromNamespace("remotes_parse_deps", "remotes")
+remotes_parse_deps <- getFromNamespace("parse_deps", "remotes")
 
 # remotes_read_dcf -------------------------------------------------------------
 remotes_read_dcf <- getFromNamespace("read_dcf", "remotes")

@@ -1,4 +1,5 @@
-# plot.package_versions --------------------------------------------------------
+# plotPackageVersions ----------------------------------------------------------
+
 #' Plot Package Versions
 #' @param versions versions
 #' @param r_range r_range (default: c(1, 10))
@@ -7,7 +8,10 @@
 #' @param ticklen ticklen (default: 1)
 #' @export
 plotPackageVersions <- function(
-  versions, r_range = c(1, 10), rmax = 1.1 * r_range[2L], dphi = NULL, 
+  versions, 
+  r_range = c(1, 10), 
+  rmax = 1.1 * r_range[2L], 
+  dphi = NULL, 
   ticklen = 1
 )
 {
