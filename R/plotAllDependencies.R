@@ -103,11 +103,11 @@ plotDependencies <- function(
   ...
 )
 {
-  nodeColours <- rep(nodeColours, length.out = nrow(nodes))
+  col <- rep(nodeColours, length.out = nrow(nodes))
   
-  plotNodes(nodes, r = r, col = nodeColours, main = main)
+  plotNodes(nodes, r = r, col = col, main = main)
   addNodeLabels(nodes, cex = 0.8, distance.factor = 1.03)
-  drawDependencies(nodes, dependencies, nodeColours, ...)
+  drawDependencies(nodes, dependencies, col, ...)
 }
 
 # plotNodes --------------------------------------------------------------------
