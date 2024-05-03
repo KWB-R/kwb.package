@@ -74,6 +74,10 @@ excludeNull <- kwb.utils::excludeNULL
 #' @importFrom kwb.utils extractSubstring
 extractSubstring <- kwb.utils::extractSubstring
 
+# fullySorted ------------------------------------------------------------------
+#' @importFrom kwb.utils fullySorted
+fullySorted <- kwb.utils::fullySorted
+
 # getAttribute -----------------------------------------------------------------
 #' @importFrom kwb.utils getAttribute
 getAttribute <- kwb.utils::getAttribute

@@ -4,6 +4,7 @@ The following public functions were added:
 
 - getAuthors()
 - getCranPackageDatabase()
+- getDependencyData()
 - getPackageLicences()
 - hasGplLicence()
 - packageDependenciesByType()
