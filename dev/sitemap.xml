@@ -70,6 +70,9 @@
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/getCranPackageDatabase.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/dev/reference/getDependencyData.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/dev/reference/getPackageFilesToInstall.html</loc>
   </url>
   <url>
