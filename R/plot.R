@@ -80,67 +80,6 @@ toNodes <- function(nodeNames)
   nodes
 }
 
-# equidistantAngles ------------------------------------------------------------
-
-#' Equidistantly Distributed Angles in Degrees Between 0 and 360
-#' 
-#' @param n number of angles to be returned
-#' @param from start angle in degrees. Default: 0
-#' 
-#' @export
-#' 
-#' @examples 
-#' x <- equidistantAngles(90)
-#' 
-#' plot(x, sin(gradToRad(x)), xlab = "angle in degree", ylab = "sin(angle)")
-#' 
-equidistantAngles <- function(n, from = 0)
-{
-  seq(from = from, by = 360/n, length.out = n)
-}
-
-# anglesToPoints ---------------------------------------------------------------
-
-#' Angle in Unit Circle to Point Coordinate
-#' 
-#' Convert angles in a unit circle to point coordinates (x, y)
-#' 
-#' @param angles.grad vector of angles in degree
-#' 
-#' @return matrix with columns \emph{x} and \emph{y} containing the coordinates
-#'   of points corresponding to the given angles in a unit circle
-#'
-#' @export
-#' 
-#' @examples 
-#' plot(anglesToPoints(equidistantAngles(n = 10)), type = "b")
-#'   
-anglesToPoints <- function(angles.grad)
-{
-  angles.rad <- gradToRad(angles.grad)
-  
-  M <- matrix(c(cos(angles.rad), sin(angles.rad)), ncol = 2, byrow = FALSE)
-  colnames(M) <- c("x", "y")
-  
-  M
-}
-
-# gradToRad --------------------------------------------------------------------
-
-#' Angle in Degree to Angle in rad
-#' 
-#' @param grad vector of angles in degrees
-#'
-#' @export
-#'  
-#' @examples 
-#' gradToRad(c(0, 90, 180, 270, 360)) / pi
-#' 
-gradToRad <- function(grad)
-{
-  grad/180 * pi
-}
-
 # plotDependencies -------------------------------------------------------------
 
 #' Plot Dependencies Between Nodes on a Circle Line
