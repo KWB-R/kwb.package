@@ -16,12 +16,7 @@
 #'   
 anglesToPoints <- function(angles.grad)
 {
-  angles.rad <- gradToRad(angles.grad)
-  
-  M <- matrix(c(cos(angles.rad), sin(angles.rad)), ncol = 2, byrow = FALSE)
-  colnames(M) <- c("x", "y")
-  
-  M
+  polar_to_xy(gradToRad(angles.grad))
 }
 
 # catAndRun --------------------------------------------------------------------
