@@ -24,9 +24,9 @@
 #' 
 plotAllDependencies <- function(dependencies, r = 1.5, for.each = TRUE, ...)
 {
-  packageNames <- unique(c(names(dependencies), unlist(dependencies)))
+  nodeNames <- unique(c(names(dependencies), unlist(dependencies)))
   
-  nodes <- toNodes(nodeNames = packageNames)  
+  nodes <- toNodes(nodeNames)
   
   plotDependencies(
     nodes, dependencies, 
