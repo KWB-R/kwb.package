@@ -17,15 +17,12 @@ getDependencyData <- function(
   db <- as.data.frame(db)
   packages <- selectColumns(db, "Package")
   
-  deps <- lapply(fields, function(field) {
+  lapply(intersect(fields, names(db)), function(field) {
     catAndRun(
       sprintf("Analysing %s field", field),
       packages %>% 
         toDependencyData(selectColumns(db, field)) %>% 
-        cbind(
-          type = tolower(field),
-          reverse = FALSE
-        )
+        cbind(type = tolower(field))
     )
   }) %>% 
     rbindAll() %>% 
