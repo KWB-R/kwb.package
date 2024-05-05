@@ -5,9 +5,12 @@
 #' @keywords internal
 currentCranVersion <- function(name)
 {
-  src <- readLinesFromUrl(getUrl("cran_package", package = name))
+  text <- readLinesFromUrl(getUrl("cran_package", package = name))
   
-  if (is.null(src) || any(grepl("was removed from the CRAN repository", src))) {
+  if (
+    is.null(text) || 
+    any(grepl("was removed from the CRAN repository", text))
+  ) {
     return(noFactorDataFrame(
       package = character(0L),
       version = character(0L),
@@ -17,7 +20,10 @@ currentCranVersion <- function(name)
   }
   
   extract <- function(x) {
-    gsub("<td>|</td>", "", src[grep(sprintf("<td>%s:</td>", x), src) + 1L])
+    gsub(
+      pattern = "<td>|</td>", 
+      replacement = "", 
+      x = text[grep(sprintf("<td>%s:</td>", x), text) + 1L])
   }
   
   noFactorDataFrame(
