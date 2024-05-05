@@ -1,5 +1,5 @@
-#' readGithubPackageDescription ------------------------------------------------
-#' 
+# readGithubPackageDescription -------------------------------------------------
+ 
 #' Read DESCRIPTION File for R Package on GitHub
 #' 
 #' @param repo GitHub repository, e.g. "kwb-r/kwb.utils"
