@@ -1,5 +1,7 @@
 # Current Development
 
+# [kwb.package 0.4.0](https://github.com/KWB-R/kwb.package/releases/tag/v0.4.0) <small>2024-05-05</small>
+
 The following public functions were added:
 
 - getAuthors()
