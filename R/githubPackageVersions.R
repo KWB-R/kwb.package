@@ -37,9 +37,7 @@ githubPackageVersions <- function(
     )))
   }
 
-  if (verbose) {
-    message("Reading ", repo)
-  }
+  formattedMessageIf(verbose, "Reading %s", repo)
 
   # Column sets
   key_columns <- c("package", "version", "date")

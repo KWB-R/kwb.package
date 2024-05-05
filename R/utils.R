@@ -74,6 +74,14 @@ excludeNull <- kwb.utils::excludeNULL
 #' @importFrom kwb.utils extractSubstring
 extractSubstring <- kwb.utils::extractSubstring
 
+# formattedMessageIf -----------------------------------------------------------
+formattedMessageIf <- function(condition, fmt, ...)
+{
+  if (condition) {
+    sprintf(fmt, ...)
+  }
+}
+
 # fullySorted ------------------------------------------------------------------
 #' @importFrom kwb.utils fullySorted
 fullySorted <- kwb.utils::fullySorted

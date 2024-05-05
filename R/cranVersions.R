@@ -11,13 +11,7 @@ cranVersions <- function(name, dbg = TRUE)
   current <- currentCranVersion(name)
   
   if (nrow(current) == 0L) {
-    
-    if (dbg) {
-      message(sprintf(
-        "Package '%s' does not seem to be on CRAN.", name
-      ))
-    }
-    
+    formattedMessageIf(dbg, "Package '%s' does not seem to be on CRAN.", name)
     return(NULL)
   }
   
