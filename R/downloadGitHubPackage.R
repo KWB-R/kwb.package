@@ -24,28 +24,33 @@ downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
     
   } else{
     
-    result <- try(remotes::remote_download(
+    tarfile <- try(remotes::remote_download(
       remotes::github_remote(repo), 
       quiet = FALSE
     ))
     
-    if (inherits(result, "try-error")) {
+    if (inherits(tarfile, "try-error")) {
       
       file <- character(0)
       origin <- character(0)
       
     } else {
       
-      file <- file.path(destdir, findPackageFilename(tarfile = result)                        )
-      file.copy(result, file, overwrite = TRUE)
-      origin <- result
+      file <- copyFile(
+        from = tarfile, 
+        to = file.path(destdir, findPackageFilename(tarfile = tarfile)), 
+        overwrite = TRUE
+      )
+      
+      origin <- tarfile
     }
   }
   
   structure(file, origin = origin)
 }
 
-#' findPackageFilename ---------------------------------------------------------
+# findPackageFilename ----------------------------------------------------------
+
 #' @noRd
 #' @noMd
 #' @keywords internal 
