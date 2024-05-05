@@ -4,6 +4,12 @@
     <loc>https://kwb-r.github.io/kwb.package/404.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/articles/tutorial.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/authors.html</loc>
   </url>
   <url>
@@ -28,13 +34,13 @@
     <loc>https://kwb-r.github.io/kwb.package/reference/archivedCranVersions.html</loc>
   </url>
   <url>
-    <loc>https://kwb-r.github.io/kwb.package/reference/catIf.html</loc>
-  </url>
-  <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/compareInstalledVersions.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/copyBasePackages.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/cranVersions.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/defaultPackageDir.html</loc>
@@ -55,16 +61,25 @@
     <loc>https://kwb-r.github.io/kwb.package/reference/drawDependencies.html</loc>
   </url>
   <url>
-    <loc>https://kwb-r.github.io/kwb.package/reference/drawLink.html</loc>
-  </url>
-  <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/equidistantAngles.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/exampleLinksAndNodes.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/getAuthors.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/getCranPackageDatabase.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/getDependencyData.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/getPackageFilesToInstall.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/getPackageLicences.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/getRVersionMajorMinor.html</loc>
@@ -77,6 +92,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/gradToRad.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/hasGplLicence.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/index.html</loc>
@@ -100,7 +118,13 @@
     <loc>https://kwb-r.github.io/kwb.package/reference/packageDependencies.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/packageDependenciesByType.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/packageString.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/pipe.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/plotAllDependencies.html</loc>
@@ -112,16 +136,25 @@
     <loc>https://kwb-r.github.io/kwb.package/reference/plotNodes.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/plotPackageVersions.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/plotSankeyNetwork.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/provideInLocalCRAN.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/readGithubPackageDescription.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/setOptionsForPackrat.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/sortedDependencies.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/stopIfNotInstalled.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/systemPackages.html</loc>
