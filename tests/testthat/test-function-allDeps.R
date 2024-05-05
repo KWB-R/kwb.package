@@ -6,5 +6,11 @@ test_that("allDeps() works", {
 
   expect_error(f())
 
-  f("abc")
+  suppressMessages(result <- f(name = "abc", max_depth = 1L))
+  
+  expect_s3_class(result, "data.frame")
+  
+  expect_identical(names(result), c(
+    "name", "compare", "version", "type", "depth", "namever"
+  ))
 })

@@ -4,6 +4,7 @@
 #' 
 #' @param package package name
 #' @param ref_date  default: NULL
+#' @importFrom utils tail
 #' @export
 #' @examples 
 #' packages <- c("ggplot2", "swmmr", "kwb.hantush")
@@ -17,9 +18,10 @@ archivedCranVersions <- function(package, ref_date = NULL)
     )))
   } 
   
-  src <- readLinesFromUrl(getUrl("cran_archive", package = package))
+  text <- getUrl("cran_archive", package = package) %>% 
+    readLinesFromUrl()
   
-  if (is.null(src)) {
+  if (is.null(text)) {
     return(noFactorDataFrame(
       package = character(0L),
       version = character(0L),
@@ -29,20 +31,16 @@ archivedCranVersions <- function(package, ref_date = NULL)
     ))
   }
   
-  pattern <- sprintf(
-    "href=\"(%s_(.*)\\.tar\\.gz)\".*(\\d{4}-\\d{2}-\\d{2}) ", package
-  )
+  filePattern <- paste0(package, "_(.*)\\.tar\\.gz")
+  datePattern <- "\\d{4}-\\d{2}-\\d{2}"
+  pattern <- sprintf("href=\"(%s)\".*(%s) ", filePattern, datePattern)
   
-  versions <- cbind(
+  versions <- cbind.data.frame(
     package = package, 
     extractSubstring(
       pattern = pattern,
-      x = grep(pattern, src, value = TRUE), 
-      index = c(
-        version = 2L, 
-        date = 3L, 
-        archive_file = 1L
-      )
+      x = grep(pattern, text, value = TRUE), 
+      index = c(version = 2L, date = 3L, archive_file = 1L)
     )
   )
   
@@ -53,17 +51,14 @@ archivedCranVersions <- function(package, ref_date = NULL)
     return(versions)
   }
   
-  getLastVersionBefore(versions, as.Date(ref_date))
-}
-
-# getLastVersionBefore ---------------------------------------------------------
-
-#' @importFrom utils tail
-getLastVersionBefore <- function(versions, ref_date)
-{
-  X = unname(splitBy(versions, "package"))
+  # For each package, get the latest version that was from before or from the 
+  # reference date
+  date <- as.Date(ref_date)
   
-  last_before <- function(x) utils::tail(x[x$date <= ref_date, ], 1L)
-  
-  resetRowNames(do.call(rbind, lapply(X, last_before)))
+  versions %>% 
+    splitBy("package") %>% 
+    unname() %>% 
+    lapply(function(x) utils::tail(x[x$date <= date, ], 1L)) %>% 
+    do.call(what = rbind) %>% 
+    resetRowNames()
 }
