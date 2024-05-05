@@ -1,7 +1,6 @@
-#' parsePackageDeps ------------------------------------------------------------
-#' @noMd
-#' @noRd
-#' @keywords internal
+# parsePackageDeps -------------------------------------------------------------
+
+#' @importFrom remotes standardise_dep
 parsePackageDeps <- function(pkg, dependencies = NA) 
 {
   deps <- tolower(remotes::standardise_dep(dependencies))
