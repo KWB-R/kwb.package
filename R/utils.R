@@ -39,9 +39,15 @@ cleanStop <- function(...)
 copyFile <- function(from, to, ...)
 {
   success <- file.copy(from, to, ...)
-  
+
   # Return the path(s) to the target file(s)
-  to
+  paths <- if (length(to) == 1L && file.info(to)$isdir) {
+    file.path(to, basename(from))
+  } else {
+    to
+  }
+  
+  structure(paths, success = success)
 }
 
 # createDirectory --------------------------------------------------------------
