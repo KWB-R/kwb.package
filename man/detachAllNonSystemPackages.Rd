@@ -4,7 +4,10 @@
 \alias{detachAllNonSystemPackages}
 \title{Detach all Non-System Packages}
 \usage{
-detachAllNonSystemPackages()
+detachAllNonSystemPackages(dbg = TRUE)
+}
+\arguments{
+\item{dbg}{logical indicating whether or not to show debug messages}
 }
 \description{
 Detach all Non-System Packages

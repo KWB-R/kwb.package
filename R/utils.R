@@ -159,6 +159,11 @@ noSuchElements <- kwb.utils::noSuchElements
 #' @importFrom kwb.utils orderBy
 orderBy <- kwb.utils::orderBy
 
+# printIf ----------------------------------------------------------------------
+
+#' @importFrom kwb.utils printIf
+printIf <- kwb.utils::printIf
+
 # rbindAll ---------------------------------------------------------------------
 #' @importFrom kwb.utils rbindAll
 rbindAll <- kwb.utils::rbindAll
