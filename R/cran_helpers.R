@@ -7,9 +7,7 @@ currentCranVersion <- function(name)
 {
   src <- readLinesFromUrl(getUrl("cran_package", package = name))
   
-  was_removed_pattern <- "was removed from the CRAN repository"
-  
-  if (is.null(src) || any(grepl(was_removed_pattern, src))) {
+  if (is.null(src) || any(grepl("was removed from the CRAN repository", src))) {
     return(noFactorDataFrame(
       package = character(0L),
       version = character(0L),
