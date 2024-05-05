@@ -1,47 +1,54 @@
 # loadDescriptionFromWeb -------------------------------------------------------
-#' @noMd
-#' @noRd
-#' @keywords internal
-#' @importFrom gh gh 
+
+#' Load Package DESCRIPTION from a File in the Internet
+#' 
+#' @param name package name
+#' @param version version string. Default: NA
+#' @param github_user Default: "KWB-R"
+#' @param path path to local .tar.gz file
+#' @param cache list with elements "descriptions", "versions", used as a cache
+#' @export
 loadDescriptionFromWeb <- function(
-  name, 
-  version = NA, 
-  github_user = "KWB-R", 
-  path = tempdir(),
-  cache = list(descriptions = list(), versions = list())
+    name, 
+    version = NA, 
+    github_user = "KWB-R", 
+    path = tempdir(),
+    cache = list(descriptions = list(), versions = list())
 )
 {
   #kwb.utils::assignPackageObjects("kwb.package")
   #kwb.utils::assignArgumentDefaults(loadDescriptionFromWeb)
-  #name = "sema.berlin";version = "1.6.1";github_user = "KWB-R"
+  #name = "ggplot2";version = "2.1.0";github_user = "KWB-R"
   
   # Try to load DESCRIPTION from cache
   key <- paste(name, version, sep = ":")
-  description <- cache$descriptions[[key]]
+  description <- selectElements(cache, "descriptions")[[key]]
   
-  if (! is.null(description)) {
+  if (!is.null(description)) {
     return(description)
   }
   
   # Try to load package versions from cache
-  versions <- cache$versions[[name]]
+  versions <- selectElements(cache, "versions")[[name]]
   
-  if (! is.null(versions)) {
+  if (!is.null(versions)) {
     cleanStop("loadDescriptionFromWeb(): !is.null(versions) not implemented!")
     #description <- select_version(cran_versions)
   } else {
     versions <- cranVersions(name, dbg = FALSE)
   }
   
-  if (! is.null(versions)) {
+  if (!is.null(versions)) {
     
-    version <- defaultIfNa(version, rev(versions$version)[1L])
+    versionNumbers <- selectColumns(versions, "version")
+    version <- defaultIfNa(version, rev(versionNumbers)[1L])
     
-    if (! version %in% versions$version) {
-      cleanStop(noSuchElements(version, versions$version, "version"))
+    if (!version %in% versionNumbers) {
+      cleanStop(noSuchElements(version, versionNumbers, "version"))
     }
     
-    url <- versions$package_source_url[versions$version == version]
+    isVersion <- versionNumbers == version
+    url <- selectColumns(versions, "package_source_url")[isVersion]
     
     return(loadDescriptionFromArchiveUrl(url, path))
   }
@@ -67,3 +74,4 @@ loadDescriptionFromWeb <- function(
   
   readGithubPackageDescription(repo, sha)
 }
+
