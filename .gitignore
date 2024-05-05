@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 R/\.*
+inst/doc
+tests/testthat/Rplots.pdf

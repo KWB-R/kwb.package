@@ -1,0 +1,112 @@
+---
+title: "Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The package "kwb.package" has been developed when the KWB packages were not yet
+on GitHub but on KWB's internal Subversion server. That time, it was quite
+complicated to install KWB packages, especially when a package was depending
+on further KWB packages. Things got simpler when we moved our packages to 
+GitHub and could use the `install_github()` function from the "remotes" package
+to install our packages. Nevertheless, "kwb.package" contains some useful 
+functions about packages in general, such as functions to analyse or plot 
+package dependencies. I will demonstrate the usage of some of these functions
+here.
+
+## Installation
+
+```{r eval = FALSE}
+# Install the latest "release" from our R-universe server
+install.packages("kwb.package", repos = "https://kwb-r.r-universe.dev")
+
+# Install the development version from GitHub
+remotes::install_github("kwb-r/kwb.package@dev")
+```
+
+## Cook Book Recipes
+
+### What packages does a package depend on?
+
+To find out what packages an R package depends on you may use the function `packageDependencies()`:
+
+```{r}
+# What packages does the package "ggplot2" depend on?
+# (including all sub-dependencies)?
+kwb.package::packageDependencies("ggplot2")
+
+# What packages does the package "kwb.package" itself depend on?
+kwb.package::packageDependencies("kwb.package")
+
+# Oops!
+
+# What are the direct dependencies, without its sub-dependencies?
+kwb.package::packageDependencies("kwb.package", recursive = FALSE)
+```
+
+### By what other (installed) packages a package is used?
+
+For a given package the function `packageDependencies()` can also find out
+what other (installed!) packages are depending on it. I am curious, for example
+which of my packages are depending on the "kwb.utils" package:
+
+```{r}
+kwb.package::packageDependencies("kwb.utils", reverse = TRUE)
+```
+
+Quite a lot!
+Does the `recursive` argument (`TRUE` by default) make any difference here?
+
+```{r}
+kwb.package::packageDependencies("kwb.utils", reverse = TRUE, recursive = FALSE)
+```
+
+No. Is it the case for other packages, e.g. the "dplyr" package?
+
+```{r}
+kwb.package::packageDependencies("dplyr", reverse = TRUE, recursive = TRUE)
+kwb.package::packageDependencies("dplyr", reverse = TRUE, recursive = FALSE)
+```
+
+Yes. 
+
+### How can I visualise package dependencies?
+
+```{r fig.width = 6, fig.height = 6, out.width = "60%"}
+packages <- c("wasserportal", "kwb.dwd")
+dependencies <- kwb.package::packageDependencies(packages, recursive = FALSE)
+par(mar = c(3, 0, 6, 0), xpd = TRUE)
+kwb.package::plotAllDependencies(dependencies, for.each = FALSE)
+```
+
+There are some packages that are used by both, "wasserportal" and "kwb.dwd".
+
+### Which versions of CRAN packages exist?
+
+```{r}
+kwb.package::cranVersions("magrittr")
+```
+
+### Which versions of R packages on GitHub exist?
+
+```{r}
+kwb.package::githubVersions(name = "kwb.utils")
+```
+
+### What licences are specified for (installed) packages?
+
+```{r eval = FALSE}
+kwb.package::getPackageLicences(kwb.package::systemPackages())
+```

@@ -1,51 +1,129 @@
-# getUrl -----------------------------------------------------------------------
-#' @noMd
-#' @noRd
-#' @keywords internal
-#' @importFrom kwb.utils selectElements
-getUrl <- function(key, ...)
+# anglesToPoints ---------------------------------------------------------------
+
+#' Angle in Unit Circle to Point Coordinate
+#' 
+#' Convert angles in a unit circle to point coordinates (x, y)
+#' 
+#' @param angles.grad vector of angles in degree
+#' 
+#' @return matrix with columns \emph{x} and \emph{y} containing the coordinates
+#'   of points corresponding to the given angles in a unit circle
+#'
+#' @export
+#' 
+#' @examples 
+#' plot(anglesToPoints(equidistantAngles(n = 10)), type = "b")
+#'   
+anglesToPoints <- function(angles.grad)
 {
-  urls <- kwb.utils::resolve(..., x = list(
-    cran = "https://cran.r-project.org",
-    cran_contrib = "<cran>/src/contrib",
-    cran_package = "<cran>/web/packages/<package>",
-    cran_archive = "<cran_contrib>/Archive/<package>",
-    cran_archive_file = "<cran_archive>/<package_filename>",
-    cran_package_file = "<cran_contrib>/<package_filename>",
-    package_filename = "<package>_<version>.tar.gz",
-    github_raw = "https://raw.githubusercontent.com/<repo>",
-    github_api = "https://api.github.com/repos/<repo>",
-    github_desc = "<github_raw>/<sha>/DESCRIPTION",
-    github_releases = "<github_api>/releases",
-    github_tags = "<github_api>/tags"
-  ))
-  
-  kwb.utils::selectElements(urls, key)
+  polar_to_xy(gradToRad(angles.grad))
 }
 
-# githubRepo -------------------------------------------------------------------
-githubRepo <- function(github_user, name)
+# catAndRun --------------------------------------------------------------------
+
+#' @importFrom kwb.utils catAndRun  
+catAndRun <- kwb.utils::catAndRun
+
+# catIf ------------------------------------------------------------------------
+
+#' @importFrom kwb.utils catIf
+catIf <- kwb.utils::catIf
+
+# cleanStop --------------------------------------------------------------------
+cleanStop <- function(...)
 {
-  paste(github_user, name, sep = "/")
+  stop(..., call. = FALSE)
 }
 
-# packageInDestdir -------------------------------------------------------------
-#' @noMd
-#' @noRd
-#' @keywords internal
-#' @importFrom kwb.utils safePath
-packageInDestdir <- function(package, destdir, verbose = TRUE)
+# createDirectory --------------------------------------------------------------
+#' @importFrom kwb.utils createDirectory
+createDirectory <- kwb.utils::createDirectory
+
+# defaultIfNa ------------------------------------------------------------------
+#' @importFrom kwb.utils defaultIfNA
+defaultIfNa <- kwb.utils::defaultIfNA
+
+# defaultIfNull ----------------------------------------------------------------
+#' @importFrom kwb.utils defaultIfNULL
+defaultIfNull <- kwb.utils::defaultIfNULL
+
+# equidistantAngles ------------------------------------------------------------
+
+#' Equidistantly Distributed Angles in Degrees Between 0 and 360
+#' 
+#' @param n number of angles to be returned
+#' @param from start angle in degrees. Default: 0
+#' 
+#' @export
+#' 
+#' @examples 
+#' x <- equidistantAngles(90)
+#' 
+#' plot(x, sin(gradToRad(x)), xlab = "angle in degree", ylab = "sin(angle)")
+#' 
+equidistantAngles <- function(n, from = 0)
 {
-  files <- dirPackageZips(package, kwb.utils::safePath(destdir))
-  
-  file_exists <- length(files) > 0L
-  
-  if (verbose && file_exists) {
-    message("Skipping already downloaded package '", package, "'")
-  }
-  
-  structure(file_exists, path = if (file_exists) kwb.utils::lastElement(files))
+  seq(from, by = 360/n, length.out = n)
 }
+
+# excludeNull ------------------------------------------------------------------
+#' @importFrom kwb.utils excludeNULL
+excludeNull <- kwb.utils::excludeNULL
+
+# extractSubstring -------------------------------------------------------------
+#' @importFrom kwb.utils extractSubstring
+extractSubstring <- kwb.utils::extractSubstring
+
+# fullySorted ------------------------------------------------------------------
+#' @importFrom kwb.utils fullySorted
+fullySorted <- kwb.utils::fullySorted
+
+# getAttribute -----------------------------------------------------------------
+#' @importFrom kwb.utils getAttribute
+getAttribute <- kwb.utils::getAttribute
+
+# getHomedir -------------------------------------------------------------------
+#' @importFrom kwb.utils get_homedir
+getHomedir <- kwb.utils::get_homedir
+
+# gradToRad --------------------------------------------------------------------
+
+#' Angle in Degree to Angle in rad
+#' 
+#' @param grad vector of angles in degrees
+#'
+#' @export
+#'  
+#' @examples 
+#' gradToRad(c(0, 90, 180, 270, 360)) / pi
+#' 
+gradToRad <- function(grad)
+{
+  grad/180 * pi
+}
+
+# lastElement ------------------------------------------------------------------
+#' @importFrom kwb.utils lastElement
+lastElement <- kwb.utils::lastElement
+
+# moveColumnsToFront -----------------------------------------------------------
+moveColumnsToFront <- kwb.utils::moveColumnsToFront
+
+# noFactorDataFrame ------------------------------------------------------------
+#' @importFrom kwb.utils noFactorDataFrame
+noFactorDataFrame <- kwb.utils::noFactorDataFrame
+
+# noSuchElements ---------------------------------------------------------------
+#' @importFrom kwb.utils noSuchElements
+noSuchElements <- kwb.utils::noSuchElements
+
+# orderBy ----------------------------------------------------------------------
+#' @importFrom kwb.utils orderBy
+orderBy <- kwb.utils::orderBy
+
+# rbindAll ---------------------------------------------------------------------
+#' @importFrom kwb.utils rbindAll
+rbindAll <- kwb.utils::rbindAll
 
 # readLinesFromUrl -------------------------------------------------------------
 readLinesFromUrl <- function(url, silent = TRUE)
@@ -59,14 +137,51 @@ readLinesFromUrl <- function(url, silent = TRUE)
   result
 }
 
-# stop_ ------------------------------------------------------------------------
-stop_ <- function(...)
-{
-  stop(..., call. = FALSE)
-}
+# removeColumns ----------------------------------------------------------------
+#' @importFrom kwb.utils removeColumns
+removeColumns <- kwb.utils::removeColumns
 
-# dirPackageZips ---------------------------------------------------------------
-dirPackageZips <- function(package, path) 
-{
-  dir(path, paste0("^", package, "_"), full.names = TRUE)
-}
+# renameColumns ----------------------------------------------------------------
+#' @importFrom kwb.utils renameColumns
+renameColumns <- kwb.utils::renameColumns
+
+# resetRowNames ----------------------------------------------------------------
+#' @importFrom kwb.utils resetRowNames
+resetRowNames <- kwb.utils::resetRowNames
+
+# resolve ----------------------------------------------------------------------
+#' @importFrom kwb.utils resolve
+resolve <- kwb.utils::resolve
+
+# restoreAttributes ------------------------------------------------------------
+#' @importFrom kwb.utils hsRestoreAttributes
+restoreAttributes <- kwb.utils::hsRestoreAttributes
+
+# runInDirectory ---------------------------------------------------------------
+#' @importFrom kwb.utils runInDirectory
+runInDirectory <- kwb.utils::runInDirectory
+
+# safePath ---------------------------------------------------------------------
+#' @importFrom kwb.utils safePath
+safePath <- kwb.utils::safePath
+
+# safeRowBind ------------------------------------------------------------------
+#' @importFrom kwb.utils safeRowBind
+safeRowBind <- kwb.utils::safeRowBind
+
+# selectColumns ----------------------------------------------------------------
+#' @importFrom kwb.utils selectColumns
+selectColumns <- kwb.utils::selectColumns
+
+# selectElements ---------------------------------------------------------------
+#' @importFrom kwb.utils selectElements
+selectElements <- kwb.utils::selectElements
+
+# stopFormatted ----------------------------------------------------------------
+#' @importFrom kwb.utils stopFormatted
+stopFormatted <- kwb.utils::stopFormatted
+
+# removeColumns ----------------------------------------------------------------
+#' @importFrom kwb.utils removeColumns
+removeColumns <- kwb.utils::removeColumns
+

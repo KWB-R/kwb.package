@@ -2,7 +2,7 @@
 % Please edit documentation in R/githubPackageVersions.R
 \name{githubVersions}
 \alias{githubVersions}
-\title{Title}
+\title{Get Versions of Packages on GitHub}
 \usage{
 githubVersions(name, github_user = "KWB-R")
 }
@@ -15,7 +15,7 @@ githubVersions(name, github_user = "KWB-R")
 data frame with one row per available version
 }
 \description{
-Title
+Get Versions of Packages on GitHub
 }
 \examples{
 githubVersions("kwb.utils")

@@ -89,7 +89,6 @@ exampleLinksAndNodes <- function()
 #'   (data frame with column \code{name})
 #'
 #' @export
-#' @importFrom kwb.utils defaultIfNA selectElements
 #' @examples 
 #' kwb.package:::toLinksAndNodes(list(
 #'   source = c("s1", "s1"), target = c("t1", "t2")
@@ -97,10 +96,10 @@ exampleLinksAndNodes <- function()
 #' 
 toLinksAndNodes <- function(links)
 {
-  selection <- kwb.utils::selectElements(links, "source")
+  selection <- selectElements(links, "source")
 
-  sources <- as.character(kwb.utils::defaultIfNA(selection, ""))
-  targets <- as.character(kwb.utils::selectElements(links, "target"))
+  sources <- as.character(defaultIfNa(selection, ""))
+  targets <- as.character(selectElements(links, "target"))
 
   nodes <- data.frame(name = unique(c(sources, targets)))
 
@@ -117,7 +116,6 @@ toLinksAndNodes <- function(links)
 #' @noMd
 #' @noRd
 #' @keywords internal
-#' @importFrom kwb.utils hsRenameColumns
 toSourceTarget <- function(x)
 {
   x$target <- paste0(x$source, "@", x$f)
@@ -131,7 +129,7 @@ toSourceTarget <- function(x)
     lastcaller[L] <- x$target[i]
   }
 
-  kwb.utils::hsRenameColumns(x[, c("caller", "target")], list(caller = "source"))
+  renameColumns(x[, c("caller", "target")], list(caller = "source"))
 }
 
 # includeExclude ---------------------------------------------------------------
@@ -153,13 +151,10 @@ includeExclude <- function(x, exclude = NULL)
 #' @noMd
 #' @noRd
 #' @keywords internal
-#' @importFrom kwb.utils rbindAll
 relationMatrixToSourceTarget <- function(x)
 {
-  kwb.utils::rbindAll(lapply(rownames(x), function(rowname) {
-    
+  rbindAll(lapply(rownames(x), function(rowname) {
     if (length(names.x <- names(which(x[rowname, ] == 1)))) {
-      
       data.frame(source = rowname, target = names.x)
     }
   }))

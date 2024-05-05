@@ -2,8 +2,7 @@
 % Please edit documentation in R/archivedCranVersions.R
 \name{archivedCranVersions}
 \alias{archivedCranVersions}
-\title{archivedCranVersions --------------------------------------------------------
-Archived CRAN versions}
+\title{Archived CRAN versions}
 \usage{
 archivedCranVersions(package, ref_date = NULL)
 }
@@ -13,7 +12,6 @@ archivedCranVersions(package, ref_date = NULL)
 \item{ref_date}{default: NULL}
 }
 \description{
-archivedCranVersions --------------------------------------------------------
 Archived CRAN versions
 }
 \examples{

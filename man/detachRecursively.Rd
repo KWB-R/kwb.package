@@ -10,7 +10,7 @@ detachRecursively(package, pattern = ".*", dbg = FALSE)
 \item{package}{name of package to be detached}
 
 \item{pattern}{pattern matching the names of depending packages that are
-acutally to be detached, e.g. use pattern = "^kwb\\." to only detach kwb
+actually to be detached, e.g. use pattern = "^kwb\\." to only detach kwb
 packages. Default: ".*" (matching all package names)}
 
 \item{dbg}{if \code{TRUE}, debug messages are shown}

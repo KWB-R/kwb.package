@@ -33,7 +33,7 @@ detachAllNonSystemPackages <- function()
 #' 
 #' @param package name of package to be detached
 #' @param pattern pattern matching the names of depending packages that are
-#'   acutally to be detached, e.g. use pattern = "^kwb\\." to only detach kwb
+#'   actually to be detached, e.g. use pattern = "^kwb\\." to only detach kwb
 #'   packages. Default: ".*" (matching all package names)
 #' @param dbg if \code{TRUE}, debug messages are shown
 #' 
@@ -41,9 +41,10 @@ detachAllNonSystemPackages <- function()
 #' 
 detachRecursively <- function(package, pattern = ".*", dbg = FALSE)
 {
-  sortedPackages <- sortedDependencies(package, pattern = pattern, dbg = dbg)
+  packages <- sortedDependencies(package, dbg = dbg)
+  packages <- grep(pattern, packages, value = TRUE)
   
-  nonSystemPackages <- setdiff(sortedPackages, systemPackages())
+  nonSystemPackages <- setdiff(packages, systemPackages())
                           
   namesToDetach <- intersect(search(), packageString(nonSystemPackages))
   
@@ -63,79 +64,90 @@ detachRecursively <- function(package, pattern = ".*", dbg = FALSE)
 #' 
 #' Names of depending packages in the order of their dependency
 #' 
-#' @param package name of package of which dependencies are to be found
-#' @param pattern pattern matching the names of packages to be considered
-#' @param dbg if \code{TRUE}, debug messages are shown
-#' 
+#' @param package name of package(s) of which dependencies are to be found
+#' @param dbg if \code{TRUE}, debug messages are shown and the user is asked
+#'   to press Enter each time the body of the main loop is passed!
 #' @return vector of package names. The first element is the package itself,
 #'   followed by the names of depending packages. You should be able to detach
 #'   the packages in this order without any "package ... is required by ..."
 #'   error
-#'   
-sortedDependencies <- function(package, pattern = ".*", dbg = FALSE) 
+#' @export
+sortedDependencies <- function(package, dbg = FALSE)
 {
-  dependingOn <- grep(
-    pattern, 
-    packageDependencies(package, recursive = TRUE)[[1]], 
-    value = TRUE
-  )
+  fullDependencies <- packageDependencies(package, recursive = TRUE)
   
-  dependencies <- packageDependencies(dependingOn, recursive = FALSE)  
+  # Put all unique package names from the dependency tree into a vector
+  packages <- unique(unname(unlist(fullDependencies)))
   
-  allLeafs <- character()
+  # Get sorted vector of unique package names (including those in package)
+  packages <- sort(unique(c(packages, package)))
+
+  #packages <- fullDependencies[[1]]
+
+  # Get the "direct" (non-recursive) dependencies for each package
+  dependencies <- packageDependencies(packages, recursive = FALSE)  
   
-  while (length(dependencies) > 0) {
+  allLeaves <- character()
+  
+  while (length(dependencies)) {
     
-    numberOfDependencies <- sapply(dependencies, FUN = function(x) {
-      length(grep(pattern, x))
-    })
+    nDependencies <- lengths(dependencies)
     
     printAndWaitIf(dbg, list(
       dependencies = dependencies,
-      numberOfDependencies = numberOfDependencies
+      nDependencies = nDependencies
     ))
-      
-    # Extract the "leafs" from the dependencies
-    leafs <- names(dependencies)[numberOfDependencies == 0]
-    dependencies <- dependencies[numberOfDependencies > 0]
+
+    # Which dependency is a "leaf" (i.e. does not have further dependencies)?
+    isLeaf <- nDependencies == 0L
     
+    # Extract the "leaves" from the dependencies
+    leaves <- names(dependencies)[isLeaf]
+
+    # Remove the names of the leaf packages from the dependency tree
     dependencies <- sapply(
-      dependencies, 
-      function(x) {setdiff(x, leafs)},
+      dependencies[!isLeaf], 
+      FUN = setdiff,
+      y = leaves,
       simplify = FALSE
     )
     
-    # Add the leafs at the beginning of the vector of all leafs
-    allLeafs <- c(leafs, allLeafs)
+    # Add the leaves at the beginning of the vector of all leaves
+    allLeaves <- c(leaves, allLeaves)
   }
 
-  c(package, allLeafs)
+  allLeaves
 }
 
 # packageDependencies ----------------------------------------------------------
 
 #' Package Dependencies
+#'
+#' This is just a wrapper around \code{\link[tools]{package_dependencies}} with
+#' some defaults defined.
 #' 
-#' @param packages passed to \code{\link[tools]{package_dependencies}}
-#' @param recursive passed to \code{\link[tools]{package_dependencies}}
-#' @param reverse passed to \code{\link[tools]{package_dependencies}}
-#' 
+#' @inheritParams tools::package_dependencies
 #' @export
-#'  
 packageDependencies <- function(
-  packages = NULL, recursive = TRUE, reverse = FALSE
+  packages = NULL, 
+  db = utils::installed.packages(),
+  which = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")[1:3],
+  recursive = TRUE, 
+  reverse = FALSE, 
+  verbose = FALSE
 )
 {
   tools::package_dependencies(
     packages, 
-    db = utils::installed.packages(), 
+    db = db, 
+    which = which,
     recursive = recursive, 
-    reverse = reverse
+    reverse = reverse,
+    verbose = verbose
   )
 }
 
 # printAndWaitIf ---------------------------------------------------------------
-
 printAndWaitIf <- function(dbg, variables) 
 {
   if (dbg) {
@@ -149,7 +161,7 @@ printAndWaitIf <- function(dbg, variables)
   }
 }
 
-# systemPackages --------------------------------------------------------------
+# systemPackages ---------------------------------------------------------------
 
 #' Names of Base R Packages
 #' 
@@ -169,5 +181,5 @@ systemPackages <- function(set_number = 1L)
     return(c(common, "grid", "splines", "tools"))
   }
   
-  stop("set_number must be one of 1, 2.")
+  cleanStop("set_number must be one of 1, 2.")
 }

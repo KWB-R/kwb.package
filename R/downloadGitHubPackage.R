@@ -8,7 +8,6 @@
 #' @return path to downloaded file in the \code{destdir} folder with attribute 
 #'   "origin" pointing to the original file in \code{tempdir()}.
 #' @export
-#' @importFrom kwb.utils getAttribute
 #' @importFrom remotes github_remote remote_download
 downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
 {
@@ -19,8 +18,8 @@ downloadGitHubPackage <- function(repo, destdir = "~/../Downloads")
   file_downloaded <- packageInDestdir(package, destdir)
   
   if (file_downloaded) {
-
-    file <- kwb.utils::getAttribute(file_downloaded, "path")
+    
+    file <- getAttribute(file_downloaded, "path")
     origin <- character(0)
     
   } else{
@@ -58,7 +57,7 @@ findPackageFilename <- function(tarfile)
   desc_file <- grep("/DESCRIPTION$", paths, value = TRUE)
   
   if (length(desc_file) == 0L) {
-    stop("No DESCRIPTION found in ", tarfile)
+    cleanStop("No DESCRIPTION found in ", tarfile)
   }
   
   utils::untar(tarfile, files = desc_file, exdir = tempdir())

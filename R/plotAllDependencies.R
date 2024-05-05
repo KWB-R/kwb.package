@@ -24,9 +24,9 @@
 #' 
 plotAllDependencies <- function(dependencies, r = 1.5, for.each = TRUE, ...)
 {
-  packageNames <- unique(c(names(dependencies), unlist(dependencies)))
+  nodeNames <- unique(c(names(dependencies), unlist(dependencies)))
   
-  nodes <- toNodes(nodeNames = packageNames)  
+  nodes <- toNodes(nodeNames)
   
   plotDependencies(
     nodes, dependencies, 
@@ -71,74 +71,11 @@ plotAllDependencies <- function(dependencies, r = 1.5, for.each = TRUE, ...)
 #'   
 toNodes <- function(nodeNames)
 {
-  n_nodes <- length(nodeNames)
-  
-  nodes <- anglesToPoints(equidistantAngles(n_nodes))
+  nodes <- anglesToPoints(equidistantAngles(length(nodeNames)))
   
   rownames(nodes) <- nodeNames
   
   nodes
-}
-
-# equidistantAngles ------------------------------------------------------------
-
-#' Equidistantly Distributed Angles in Degrees Between 0 and 360
-#' 
-#' @param n number of angles to be returned
-#' @param from start angle in degrees. Default: 0
-#' 
-#' @export
-#' 
-#' @examples 
-#' x <- equidistantAngles(90)
-#' 
-#' plot(x, sin(gradToRad(x)), xlab = "angle in degree", ylab = "sin(angle)")
-#' 
-equidistantAngles <- function(n, from = 0)
-{
-  seq(from = from, by = 360/n, length.out = n)
-}
-
-# anglesToPoints ---------------------------------------------------------------
-
-#' Angle in Unit Circle to Point Coordinate
-#' 
-#' Convert angles in a unit circle to point coordinates (x, y)
-#' 
-#' @param angles.grad vector of angles in degree
-#' 
-#' @return matrix with columns \emph{x} and \emph{y} containing the coordinates
-#'   of points corresponding to the given angles in a unit circle
-#'
-#' @export
-#' 
-#' @examples 
-#' plot(anglesToPoints(equidistantAngles(n = 10)), type = "b")
-#'   
-anglesToPoints <- function(angles.grad)
-{
-  angles.rad <- gradToRad(angles.grad)
-  
-  M <- matrix(c(cos(angles.rad), sin(angles.rad)), ncol = 2, byrow = FALSE)
-  colnames(M) <- c("x", "y")
-  
-  M
-}
-
-# gradToRad --------------------------------------------------------------------
-
-#' Angle in Degree to Angle in rad
-#' 
-#' @param grad vector of angles in degrees
-#'
-#' @export
-#'  
-#' @examples 
-#' gradToRad(c(0, 90, 180, 270, 360)) / pi
-#' 
-gradToRad <- function(grad)
-{
-  grad/180 * pi
 }
 
 # plotDependencies -------------------------------------------------------------
@@ -156,19 +93,19 @@ gradToRad <- function(grad)
 #' @export
 #' 
 plotDependencies <- function(
-  nodes, 
-  dependencies,
-  main = "", 
-  r = 1.5, 
-  nodeColours = grDevices::rainbow(nrow(nodes)),
-  ...
+    nodes, 
+    dependencies,
+    main = "", 
+    r = 1.5, 
+    nodeColours = grDevices::rainbow(nrow(nodes)),
+    ...
 )
 {
-  nodeColours <- rep(nodeColours, length.out = nrow(nodes))
+  col <- rep(nodeColours, length.out = nrow(nodes))
   
-  plotNodes(nodes, r = r, col = nodeColours, main = main)
+  plotNodes(nodes, r = r, col = col, main = main)
   addNodeLabels(nodes, cex = 0.8, distance.factor = 1.03)
-  drawDependencies(nodes, dependencies, nodeColours, ...)
+  drawDependencies(nodes, dependencies, col, ...)
 }
 
 # plotNodes --------------------------------------------------------------------
@@ -231,43 +168,21 @@ addNodeLabels <- function(nodes, cex = 1, distance.factor = 1)
 #' @param dependencies list of package dependencies as returned by 
 #'   \code{\link{packageDependencies}}
 #' @param nodeColours colours given to the lines starting at the same start node
-#' @param \dots arguments passed to \code{\link{drawLink}}
+#' @param \dots arguments passed to \code{\link[graphics]{arrows}}
+#' @importFrom graphics arrows
 #' @export
-#' 
 drawDependencies <- function(nodes, dependencies, nodeColours, ...)
 {
-  nodeNames <- rownames(nodes)
-  
-  startNodes <- names(dependencies)  
-  
-  for (startNode in startNodes) {
-    
-    stopNodes <- dependencies[[startNode]]        
-    
-    for (stopNode in stopNodes) {
-      
-      drawLink(
-        nodes, startNode, stopNode, col = nodeColours[startNode == nodeNames],
+  for (startNode in names(dependencies)) {
+    for (endNode in dependencies[[startNode]]) {
+      graphics::arrows(
+        nodes[startNode, "x"], 
+        nodes[startNode, "y"], 
+        nodes[endNode, "x"], 
+        nodes[endNode, "y"], 
+        col = nodeColours[startNode == rownames(nodes)],
         ...
       )
     }    
   }  
-}
-
-# drawLink ---------------------------------------------------------------------
-
-#' Draw a Link Between a Pair of Nodes
-#' 
-#' @param nodes data frame as returned by \code{\link{toNodes}}
-#' @param i row index of the start node
-#' @param j row index of the finish node
-#' @param \dots arguments passed to \code{arrows}
-#' @export
-#' @importFrom graphics arrows
-drawLink <- function(nodes, i, j, ...) 
-{
-  graphics::arrows(
-    x0 = nodes[i, "x"], y0 = nodes[i, "y"], 
-    x1 = nodes[j, "x"], y1 = nodes[j, "y"], ...
-  )
 }

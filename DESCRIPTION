@@ -1,6 +1,6 @@
 Package: kwb.package
 Title: Install / Unstall KWB Packages and Show Package Dependencies
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person("Hauke", "Sonnenberg", , "hauke.sonnenberg@kompetenz-wasser.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9134-2871")),
@@ -19,19 +19,23 @@ License: MIT + file LICENSE
 URL: https://github.com/kwb-r/kwb.package
 BugReports: https://github.com/kwb-r/kwb.package/issues
 Imports: 
-    devtools,
     gh,
-    jsonlite,
     kwb.utils (>= 0.5.0),
+    magrittr,
     mvbutils,
     networkD3,
     remotes,
     withr
 Suggests: 
     covr,
-    pkgmeta
+    knitr,
+    pkgmeta,
+    rmarkdown,
+    testthat (>= 3.0.0)
 Remotes: 
     github::kwb-r/kwb.utils,
     github::kwb-r/pkgmeta
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
+VignetteBuilder: knitr
+Config/testthat/edition: 3

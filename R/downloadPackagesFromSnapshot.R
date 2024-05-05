@@ -24,7 +24,7 @@ downloadPackagesFromSnapshot <- function(
     return(character(0))
   }
   
-  repos <- paste0("https://mran.microsoft.com/snapshot/", snapshot_date)
+  repos <- getUrl("mran_snapshot", date = snapshot_date)
 
   if (is.null(destdir)) {
     
@@ -41,7 +41,7 @@ downloadPackagesFromSnapshot <- function(
     
     if (! packageInDestdir(package, destdir)) {
 
-      kwb.utils::catAndRun(
+      catAndRun(
         sprintf("Downloading %s package %d/%d: %s", type, i, n, package),
         utils::download.packages(
           package, 

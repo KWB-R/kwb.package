@@ -2,10 +2,9 @@
 #' @noMd
 #' @noRd
 #' @keywords internal
-#' @importFrom kwb.utils rbindAll
 parsePackageDeps <- function(pkg, dependencies = NA) 
 {
   deps <- tolower(remotes::standardise_dep(dependencies))
-  parsed <- lapply(pkg[intersect(deps, names(pkg))], remotes:::parse_deps)
-  kwb.utils::rbindAll(parsed, nameColumn = "type")
+  parsed <- lapply(pkg[intersect(deps, names(pkg))], remotes_parse_deps)
+  rbindAll(parsed, nameColumn = "type")
 }
