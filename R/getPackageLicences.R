@@ -5,13 +5,13 @@
 #' @param packages names of (installed) packages
 #' @param db optional. Package database, similar to what is returned by
 #'   \code{\link[utils]{installed.packages}}. Default:
-#'   \code{as.data.frame(installed.packages())}
+#'   \code{installed.packages()}
 #' @return data frame
 #' @importFrom utils installed.packages
 #' @export
 getPackageLicences <- function(
     packages, 
-    db = as.data.frame(utils::installed.packages())
+    db = utils::installed.packages()
 )
 {
   #kwb.utils::assignPackageObjects("kwb.package");stop.on.error = FALSE
@@ -19,9 +19,11 @@ getPackageLicences <- function(
   #db <- kwb.utils:::get_cached("package_db")
   #packages <- db$Package
 
-  colnames(db) <- tolower(colnames(db))
-  licence_fields <- intersect(colnames(db), c("licence", "license"))
-  stopifnot(length(licence_fields) == 1L)
+  db <- as.data.frame(db)
+  names(db) <- gsub("license", "licence", tolower(names(db)))
+
+  licence_fields <- grep("^licence", names(db), value = TRUE)
+  stopifnot(length(licence_fields) > 0L)
 
   backbone <- data.frame(
     package = packages, 
@@ -30,7 +32,7 @@ getPackageLicences <- function(
   
   result <- backbone %>% 
     merge(
-      y = db[, c("package", licence_fields)], 
+      y = selectColumns(db, c("package", "version", licence_fields)), 
       by = "package", 
       all.x = TRUE
     ) %>% 

@@ -4,14 +4,14 @@
 \alias{getPackageLicences}
 \title{Which Licences are Specified for the Packages?}
 \usage{
-getPackageLicences(packages, db = as.data.frame(utils::installed.packages()))
+getPackageLicences(packages, db = utils::installed.packages())
 }
 \arguments{
 \item{packages}{names of (installed) packages}
 
 \item{db}{optional. Package database, similar to what is returned by
 \code{\link[utils]{installed.packages}}. Default:
-\code{as.data.frame(installed.packages())}}
+\code{installed.packages()}}
 }
 \value{
 data frame
