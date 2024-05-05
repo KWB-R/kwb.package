@@ -21,28 +21,33 @@ readGithubPackageDescription <- function(
   }
 
   # Save to local DESCRIPTION file
-  file <- tempfile()
-  on.exit(unlink(file))
+  descriptionFile <- tempfile("DESCRIPTION_")
+  on.exit(unlink(descriptionFile))
   
-  contentLines <- strsplit(selectElements(content, "message"), "\r?\n")[[1L]]
-                           
-  writeLines(contentLines, file)
-  
+  writeLines(
+    text = strsplit(selectElements(content, "message"), "\r?\n")[[1L]], 
+    con = descriptionFile
+  )
+    
   # Read local DESCRIPTION file
-  desc <- remotes_read_dcf(file)
-
+  description <- readDescriptionAddingPath(descriptionFile)
+  
   # Use package name and version to generate a name for the cached
   # DESCRIPTION file. Copy the DESCRITPION file to a file of that name.
+  copiedFile <- copyFile(
+    from = descriptionFile, 
+    to = file.path(
+      destdir, 
+      getUrl("cached_desc", package_and_version = sprintf(
+        "%s_%s", 
+        selectElements(description, "package"), 
+        selectElements(description, "version")
+      ))
+    )
+  )
   
-  file.copy(file, file.path(destdir, getUrl(
-    "cached_desc", 
-    package = selectElements(desc, "Package"), 
-    version = selectElements(desc, "Version")
-  )))
+  # Save the URL to the description file in the description object
+  description$url <- endpoint
   
-  # See remotes:::load_pkg_description
-  names(desc) <- tolower(names(desc))
-  desc$path <- endpoint
-  
-  desc
+  description
 }

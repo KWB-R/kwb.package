@@ -25,7 +25,7 @@ getUrl <- function(key, ...)
     github_desc = "<github_raw>/<sha>/DESCRIPTION",
     github_releases = "<github_api>/releases",
     github_tags = "<github_api>/tags",
-    cached_desc = "DESCRIPTION_<package>_<version>.txt"
+    cached_desc = "DESCRIPTION_<package_and_version>.txt"
   ))
   
   selectElements(urls, key)
@@ -87,6 +87,16 @@ readDescription <- function(package, stop.on.error = TRUE)
   colnames(result) <- tolower(colnames(result))
   
   result
+}
+
+# readDescriptionAddingPath ----------------------------------------------------
+readDescriptionAddingPath <- function(descriptionFile)
+{
+  # see remotes:::load_pkg_description
+  description <- remotes_read_dcf(descriptionFile)
+  names(description) <- tolower(names(description))
+  description$path <- descriptionFile
+  description
 }
 
 # stopIfNotInstalled -----------------------------------------------------------
