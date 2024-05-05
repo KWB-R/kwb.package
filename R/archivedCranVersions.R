@@ -18,7 +18,7 @@ archivedCranVersions <- function(package, ref_date = NULL)
   } 
   
   src <- readLinesFromUrl(getUrl("cran_archive", package = package))
-
+  
   if (is.null(src)) {
     return(noFactorDataFrame(
       package = character(0L),
@@ -33,16 +33,19 @@ archivedCranVersions <- function(package, ref_date = NULL)
     "href=\"(%s_(.*)\\.tar\\.gz)\".*(\\d{4}-\\d{2}-\\d{2}) ", package
   )
   
-  versions <- cbind(package = package, extractSubstring(
-    pattern = pattern,
-    x = grep(pattern, src, value = TRUE), 
-    index = c(
-      version = 2L, 
-      date = 3L, 
-      archive_file = 1L
+  versions <- cbind(
+    package = package, 
+    extractSubstring(
+      pattern = pattern,
+      x = grep(pattern, src, value = TRUE), 
+      index = c(
+        version = 2L, 
+        date = 3L, 
+        archive_file = 1L
+      )
     )
-  ))
-
+  )
+  
   versions$date <- as.Date(versions$date)
   versions$date_type <- "last_modified"
   
