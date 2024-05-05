@@ -5,7 +5,8 @@
 #' @keywords internal
 currentCranVersion <- function(name)
 {
-  text <- readLinesFromUrl(getUrl("cran_package", package = name))
+  text <- getUrl("cran_package", package = name) %>% 
+    readLinesFromUrl()
   
   if (
     is.null(text) || 
@@ -20,10 +21,8 @@ currentCranVersion <- function(name)
   }
   
   extract <- function(x) {
-    gsub(
-      pattern = "<td>|</td>", 
-      replacement = "", 
-      x = text[grep(sprintf("<td>%s:</td>", x), text) + 1L])
+    text[grep(sprintf("<td>%s:</td>", x), text) + 1L] %>% 
+    gsub(pattern = "<td>|</td>", replacement = "")
   }
   
   noFactorDataFrame(
