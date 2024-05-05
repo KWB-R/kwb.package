@@ -35,6 +35,15 @@ cleanStop <- function(...)
   stop(..., call. = FALSE)
 }
 
+# copyFile ---------------------------------------------------------------------
+copyFile <- function(from, to, ...)
+{
+  success <- file.copy(from, to, ...)
+  
+  # Return the path(s) to the target file(s)
+  to
+}
+
 # createDirectory --------------------------------------------------------------
 #' @importFrom kwb.utils createDirectory
 createDirectory <- kwb.utils::createDirectory
@@ -46,6 +55,21 @@ defaultIfNa <- kwb.utils::defaultIfNA
 # defaultIfNull ----------------------------------------------------------------
 #' @importFrom kwb.utils defaultIfNULL
 defaultIfNull <- kwb.utils::defaultIfNULL
+
+# downloadFile -----------------------------------------------------------------
+
+#' Downloads File from URL and Returns the Path to the Downloaded File
+#' 
+#' @param url URL to file to be downloaded
+#' @param targetDir path to local target directory
+#' @param quiet passed to \code{\link{download.file}}
+#' @returns path to downloaded file
+downloadFile <- function(url, targetDir = tempdir(), quiet = TRUE)
+{
+  destfile <- file.path(targetDir, basename(url))
+  utils::download.file(url, destfile, quiet = quiet)
+  destfile
+}
 
 # equidistantAngles ------------------------------------------------------------
 
