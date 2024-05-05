@@ -1,9 +1,11 @@
 # parsePackageDeps -------------------------------------------------------------
 
 #' @importFrom remotes standardise_dep
-parsePackageDeps <- function(pkg, dependencies = NA) 
+parsePackageDeps <- function(description, dependencies = NA) 
 {
-  deps <- tolower(remotes::standardise_dep(dependencies))
-  parsed <- lapply(pkg[intersect(deps, names(pkg))], remotes_parse_deps)
-  rbindAll(parsed, nameColumn = "type")
+  types <- tolower(remotes::standardise_dep(dependencies))
+  
+  description[intersect(names(description), types)] %>% 
+    lapply(remotes_parse_deps) %>% 
+    rbindAll(nameColumn = "type")
 }

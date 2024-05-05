@@ -7,11 +7,16 @@ allDeps <- function(
   cache = list()
 )
 {
-  pkg <- loadDescriptionFromWeb(name, version)
+  #kwb.utils::assignPackageObjects("kwb.package");name="abc";version=NA;depth=1L;max_depth=9L;cache=list()
   
-  stopifnot(is.na(version) || identical(version, pkg$version))
+  description <- loadDescriptionFromWeb(name, version)
   
-  deps <- parsePackageDeps(pkg)
+  stopifnot(
+    is.na(version) || 
+      identical(version, selectElements(description, "version"))
+  )
+  
+  deps <- parsePackageDeps(description)
 
   if (inherits(deps, "try-error") || nrow(deps) == 0L) {
     return(NULL)
