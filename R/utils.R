@@ -185,6 +185,12 @@ selectColumns <- kwb.utils::selectColumns
 #' @importFrom kwb.utils selectElements
 selectElements <- kwb.utils::selectElements
 
+# splitBy ----------------------------------------------------------------------
+splitBy <- function(data, column, ...)
+{
+  split(data, selectColumns(data, column), ...)
+}
+
 # stopFormatted ----------------------------------------------------------------
 #' @importFrom kwb.utils stopFormatted
 stopFormatted <- kwb.utils::stopFormatted

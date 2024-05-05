@@ -57,13 +57,11 @@ archivedCranVersions <- function(package, ref_date = NULL)
 }
 
 # getLastVersionBefore ---------------------------------------------------------
-#' @noMd
-#' @noRd
-#' @keywords internal
+
 #' @importFrom utils tail
-getLastVersionBefore <- function(version_dates, ref_date)
+getLastVersionBefore <- function(versions, ref_date)
 {
-  X = unname(split(version_dates, version_dates$package))
+  X = unname(splitBy(versions, "package"))
   
   last_before <- function(x) utils::tail(x[x$date <= ref_date, ], 1L)
   
