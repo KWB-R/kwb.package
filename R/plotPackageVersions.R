@@ -82,12 +82,6 @@ map_to_range <- function(x, y_range, x_range = range(x))
   y_range[1L] + (x - x_range[1L]) / diff(x_range) * diff(y_range)
 }
 
-# seq_rad_len ------------------------------------------------------------------
-seq_rad_len <- function(n)
-{
-  gradToRad(equidistantAngles(n))
-}
-
 # draw_circles -----------------------------------------------------------------
 draw_circles <- function(r, n_corners = 36L, col = "lightgrey")
 {
@@ -97,11 +91,4 @@ draw_circles <- function(r, n_corners = 36L, col = "lightgrey")
     xy <- do.call(rbind, lapply(c(phis, phis[1L]), polar_to_xy, r = ri))
     graphics::lines(xy, col = col)
   }
-}
-
-# polar_to_xy ------------------------------------------------------------------
-polar_to_xy <- function(phi, r = 1)
-{
-  data <- r * c(cos(phi), sin(phi))
-  matrix(data, ncol = 2L, dimnames = list(NULL, c("x", "y")))
 }

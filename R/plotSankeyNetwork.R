@@ -36,18 +36,6 @@ plotSankeyNetwork <- function(functionName, where = 1, ...)
   )
 }
 
-# packageString ----------------------------------------------------------------
-
-#' Package String
-#' 
-#' @param package Package name
-#' @return \code{package}, preceded by \code{package:}
-#' @export
-packageString <- function(package)
-{
-  paste0("package:", package)
-}
-
 # exampleLinksAndNodes ---------------------------------------------------------
 
 #' Example Links and Nodes

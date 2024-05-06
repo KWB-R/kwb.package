@@ -1,16 +1,3 @@
-
-#' Helper: Get R major minor version string 
-#'
-#' @return returns R version major.minor string (e.g. 4.0), used by standard R 
-#' libraries for grouping all R packages into one folder
-#' @export
-#' @examples
-#' getRVersionMajorMinor()
-getRVersionMajorMinor <- function()
-{
-  paste(version$major, strsplit(version$minor, "\\.")[[1L]][1L], sep = ".")
-}
-
 #' Install GitHub Packages 
 #'
 #' @param lib path to R library where packages should be installed

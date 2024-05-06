@@ -110,3 +110,17 @@ kwb.package::githubVersions(name = "kwb.utils")
 ```{r eval = FALSE}
 kwb.package::getPackageLicences(kwb.package::systemPackages())
 ```
+
+### How to download (not install) an R package from GitHub?
+
+The package may be in a private repository. It can then not be installed with
+`remotes::install_github()` unless you have a valid token. You may not want to
+give your token away, i.e. give access to the private repository. You may
+instead provide the package in the form of an archive file (.tar.gz). This
+package contains a function to download an R package that is on GitHub as an
+archive file (.tar.gz). You may specify the version with "@" if there is a 
+corresponding tag defined in the GitHub repo as in the following example:
+
+```{r}
+kwb.package::downloadGitHubPackage("kwb-r/kwb.utils@v0.12.0")
+```

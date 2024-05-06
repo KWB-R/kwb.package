@@ -164,8 +164,14 @@ noSuchElements <- kwb.utils::noSuchElements
 #' @importFrom kwb.utils orderBy
 orderBy <- kwb.utils::orderBy
 
-# printIf ----------------------------------------------------------------------
+# polar_to_xy ------------------------------------------------------------------
+polar_to_xy <- function(phi, r = 1)
+{
+  data <- r * c(cos(phi), sin(phi))
+  matrix(data, ncol = 2L, dimnames = list(NULL, c("x", "y")))
+}
 
+# printIf ----------------------------------------------------------------------
 #' @importFrom kwb.utils printIf
 printIf <- kwb.utils::printIf
 
@@ -190,7 +196,6 @@ readLinesFromUrl <- function(url, silent = TRUE)
 removeColumns <- kwb.utils::removeColumns
 
 # renameAndSelect --------------------------------------------------------------
-
 #' @importFrom kwb.utils renameAndSelect
 renameAndSelect <- kwb.utils::renameAndSelect
 
@@ -230,6 +235,12 @@ selectColumns <- kwb.utils::selectColumns
 #' @importFrom kwb.utils selectElements
 selectElements <- kwb.utils::selectElements
 
+# seq_rad_len ------------------------------------------------------------------
+seq_rad_len <- function(n)
+{
+  gradToRad(equidistantAngles(n))
+}
+
 # splitBy ----------------------------------------------------------------------
 splitBy <- function(data, column, ...)
 {
@@ -239,8 +250,3 @@ splitBy <- function(data, column, ...)
 # stopFormatted ----------------------------------------------------------------
 #' @importFrom kwb.utils stopFormatted
 stopFormatted <- kwb.utils::stopFormatted
-
-# removeColumns ----------------------------------------------------------------
-#' @importFrom kwb.utils removeColumns
-removeColumns <- kwb.utils::removeColumns
-
