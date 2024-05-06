@@ -52,6 +52,9 @@
     <loc>https://kwb-r.github.io/kwb.package/reference/detachRecursively.html</loc>
   </url>
   <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/downloadFile.html</loc>
+  </url>
+  <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/downloadGitHubPackage.html</loc>
   </url>
   <url>
@@ -113,6 +116,9 @@
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/installRemotes.html</loc>
+  </url>
+  <url>
+    <loc>https://kwb-r.github.io/kwb.package/reference/loadDescriptionFromWeb.html</loc>
   </url>
   <url>
     <loc>https://kwb-r.github.io/kwb.package/reference/packageDependencies.html</loc>
