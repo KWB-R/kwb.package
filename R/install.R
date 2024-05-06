@@ -70,13 +70,10 @@ getServername <- function()
 #' 
 defaultPackageDir <- function()
 {
-  
-  servername <- getServername()
-  
-  sprintf("//%s/miacso$/REvaluation/RPackages/kwb.packages",
-          servername
-          )
-
+  sprintf(
+    "//%s/miacso$/REvaluation/RPackages/kwb.packages",
+    getServername()
+  )
 }
 
 # installPackageIfRequired -----------------------------------------------------

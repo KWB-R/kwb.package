@@ -10,7 +10,7 @@ currentCranVersion <- function(name, v = 1L)
   }
 }
 
-# currentCranVersion -----------------------------------------------------------
+# currentCranVersion_v1 --------------------------------------------------------
 currentCranVersion_v1 <- function(name)
 {
   text <- "cran_package" %>% 
@@ -28,7 +28,7 @@ currentCranVersion_v1 <- function(name)
       date_type = character(0L)
     ))
   }
-
+  
   tdOpen <- "<td>"
   tdClose <- "</td>"
   
@@ -78,12 +78,6 @@ getCranPackageDatabase <- function()
   
   #system.time(db2 <- tools::CRAN_package_db())
   #stopifnot(identical(db1, db2))
-
+  
   db_1
-}
-
-# isOnCran ---------------------------------------------------------------------
-isOnCran <- function(name)
-{
-  nrow(currentCranVersion(name)) > 0L
 }

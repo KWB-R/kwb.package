@@ -1,7 +1,88 @@
+# copyBasePackages -------------------------------------------------------------
+
+#' Copy Base R Packages from the System Library to the Target Library
+
+#' @param target_lib path to the target library
+#' @param set_number number defining the base packages to be copied, see
+#'   \code{\link{systemPackages}}
+#' @param system_lib path to the system library from which to copy packages
+#' @param packages vector of names of packages to be copied
+#' @export
+#' @importFrom utils tail
+copyBasePackages <- function(
+    target_lib, 
+    set_number = 2L,
+    system_lib = utils::tail(.libPaths(), 1L), 
+    packages = systemPackages(set_number))
+{
+  catAndRun(paste("Copying base R packages to", target_lib), {
+    copyFile(
+      from = file.path(system_lib, packages), 
+      to = target_lib, 
+      recursive = TRUE
+    )
+  })
+}
+
 # dirPackageZips ---------------------------------------------------------------
 dirPackageZips <- function(package, path) 
 {
   dir(path, paste0("^", package, "_"), full.names = TRUE)
+}
+
+# getAuthors -------------------------------------------------------------------
+
+#' Get Information on Package Authors
+#' 
+#' @param package name of (installed) package
+#' @export
+getAuthors <- function(package)
+{
+  description <- readDescription(package)
+  columns <- colnames(description)
+  columns <- grep("author", columns, value = TRUE, ignore.case = TRUE)
+  description[, columns]
+}
+
+# getPackageLicences -----------------------------------------------------------
+
+#' Which Licences are Specified for the Packages?
+#' 
+#' @param packages names of (installed) packages
+#' @param db optional. Package database, similar to what is returned by
+#'   \code{\link[utils]{installed.packages}}. Default:
+#'   \code{installed.packages()}
+#' @return data frame
+#' @importFrom utils installed.packages
+#' @export
+getPackageLicences <- function(
+    packages, 
+    db = utils::installed.packages()
+)
+{
+  #kwb.utils::assignPackageObjects("kwb.package");stop.on.error = FALSE
+  #`%>%` <- magrittr::`%>%`
+  #db <- kwb.utils:::get_cached("package_db")
+  #packages <- db$Package
+  
+  db <- as.data.frame(db)
+  names(db) <- gsub("license", "licence", tolower(names(db)))
+  
+  licence_fields <- grep("^licence", names(db), value = TRUE)
+  stopifnot(length(licence_fields) > 0L)
+  
+  merge(
+    x = noFactorDataFrame(package = packages),
+    y = selectColumns(db, c("package", "version", licence_fields)), 
+    by = "package", 
+    all.x = TRUE
+  ) %>% 
+    renameColumns(list(license = "licence")) %>% 
+    orderBy("package")
+  
+  result[["licence"]] <- defaultIfNa(result[["licence"]], "<not_found>")
+  
+  result
 }
 
 # getUrl -----------------------------------------------------------------------
@@ -31,6 +112,20 @@ getUrl <- function(key, ...)
   selectElements(urls, key)
 }
 
+# getRVersionMajorMinor --------------------------------------------------------
+
+#' Helper: Get R major minor version string 
+#'
+#' @return returns R version major.minor string (e.g. 4.0), used by standard R 
+#' libraries for grouping all R packages into one folder
+#' @export
+#' @examples
+#' getRVersionMajorMinor()
+getRVersionMajorMinor <- function()
+{
+  paste(version$major, strsplit(version$minor, "\\.")[[1L]][1L], sep = ".")
+}
+
 # githubRepo -------------------------------------------------------------------
 githubRepo <- function(github_user, name)
 {
@@ -51,6 +146,31 @@ hasGplLicence <- function(packages)
     grep(pattern = "GPL", ignore.case = TRUE)
 }
 
+# installRemotes ---------------------------------------------------------------
+
+#' Install the remotes Package to the Given Library
+#' 
+#' @param lib path to the library to which to install the remotes package
+#' @export
+#' @importFrom utils install.packages
+#' 
+installRemotes <- function(lib)
+{
+  package_remotes <- "package:remotes"
+  
+  if (package_remotes %in% search()) {
+    try(detach(package_remotes, unload = TRUE))
+  }
+  
+  utils::install.packages("remotes", lib = lib)
+}
+
+# isOnCran ---------------------------------------------------------------------
+isOnCran <- function(name)
+{
+  nrow(currentCranVersion(name)) > 0L
+}
+
 # packageInDestdir -------------------------------------------------------------
 #' @noMd
 #' @noRd
@@ -68,6 +188,18 @@ packageInDestdir <- function(package, destdir, verbose = TRUE)
   structure(file_exists, path = if (file_exists) lastElement(files))
 }
 
+
+# packageString ----------------------------------------------------------------
+
+#' Package String
+#' 
+#' @param package Package name
+#' @return \code{package}, preceded by \code{package:}
+#' @export
+packageString <- function(package)
+{
+  paste0("package:", package)
+}
 
 # readDescription --------------------------------------------------------------
 readDescription <- function(package, stop.on.error = TRUE)
@@ -115,4 +247,27 @@ stopIfNotInstalled <- function(package)
   if (!package %in% available) {
     stopFormatted("The package '%s' is not installed.", package)
   }
+}
+
+# systemPackages ---------------------------------------------------------------
+
+#' Names of Base R Packages
+#' 
+#' @param set_number integer number specifying a set of packages: 1 or 2.
+#' @return vector of character representing package names
+#' @export
+#' 
+systemPackages <- function(set_number = 1L)
+{
+  common <- c("stats", "graphics", "grDevices", "utils", "methods")
+  
+  if (set_number == 1L) {
+    return(c(common, "datasets", "base"))
+  } 
+  
+  if (set_number == 2L) {
+    return(c(common, "grid", "splines", "tools"))
+  }
+  
+  cleanStop("set_number must be one of 1, 2.")
 }
