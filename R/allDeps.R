@@ -10,11 +10,9 @@ allDeps <- function(
   #kwb.utils::assignPackageObjects("kwb.package");name="abc";version=NA;depth=1L;max_depth=9L;cache=list()
   
   description <- loadDescriptionFromWeb(name, version)
+  versionInDescription <- selectElements(description, "version")
   
-  stopifnot(
-    is.na(version) || 
-      identical(version, selectElements(description, "version"))
-  )
+  stopifnot(is.na(version) || identical(version, versionInDescription))
   
   deps <- parsePackageDeps(description)
 
