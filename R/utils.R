@@ -19,6 +19,11 @@ anglesToPoints <- function(angles.grad)
   polar_to_xy(gradToRad(angles.grad))
 }
 
+# asNoFactorDataFrame ----------------------------------------------------------
+
+#' @importFrom kwb.utils asNoFactorDataFrame
+asNoFactorDataFrame <- kwb.utils::asNoFactorDataFrame
+
 # catAndRun --------------------------------------------------------------------
 
 #' @importFrom kwb.utils catAndRun  
@@ -183,6 +188,11 @@ readLinesFromUrl <- function(url, silent = TRUE)
 # removeColumns ----------------------------------------------------------------
 #' @importFrom kwb.utils removeColumns
 removeColumns <- kwb.utils::removeColumns
+
+# renameAndSelect --------------------------------------------------------------
+
+#' @importFrom kwb.utils renameAndSelect
+renameAndSelect <- kwb.utils::renameAndSelect
 
 # renameColumns ----------------------------------------------------------------
 #' @importFrom kwb.utils renameColumns
