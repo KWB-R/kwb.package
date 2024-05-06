@@ -11,33 +11,26 @@ cranVersions <- function(name, dbg = TRUE)
   current <- currentCranVersion(name)
   
   if (nrow(current) == 0L) {
-    
-    if (dbg) {
-      message(sprintf(
-        "Package '%s' does not seem to be on CRAN.", name
-      ))
-    }
-    
+    formattedMessageIf(dbg, "Package '%s' does not seem to be on CRAN.", name)
     return(NULL)
   }
-  
+
   archived <- archivedCranVersions(name)
   
   current$package_source_url <- getUrl(
     "cran_package_file", 
     package = name, 
-    version = current$version
+    version = selectColumns(current, "version")
   )
-  
-  urlPattern <- getUrl(
+
+  archived$package_source_url <- getUrl(
     "cran_archive_file", 
     package = name, 
     package_filename = "%s"
-  )
+  ) %>% 
+    sprintf(selectColumns(archived, "archive_file"))
   
-  archived$package_source_url <- sprintf(urlPattern, archived$archive_file)
-  
-  result <- safeRowBind(archived, current)
-  
-  removeColumns(result, "archive_file")
+  archived %>% 
+    safeRowBind(current) %>% 
+    removeColumns("archive_file")
 }

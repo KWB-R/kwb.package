@@ -54,12 +54,14 @@ packageDependenciesByType <- function(
         verbose = verbose
       )[[1L]]
       
-      if (length(dependencies)) {
-        data.frame(
-          package = packages,
-          type = rep(type, length(dependencies))
-        )
+      if (length(dependencies) == 0L) {
+        return(NULL)
       }
+      
+      data.frame(
+        package = packages,
+        type = rep(type, length(dependencies))
+      )
       
     }) %>% 
     stats::setNames(which) %>% 

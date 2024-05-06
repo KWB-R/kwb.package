@@ -25,17 +25,12 @@ getPackageLicences <- function(
   licence_fields <- grep("^licence", names(db), value = TRUE)
   stopifnot(length(licence_fields) > 0L)
 
-  backbone <- data.frame(
-    package = packages, 
-    stringsAsFactors = FALSE
-  )
-  
-  result <- backbone %>% 
-    merge(
-      y = selectColumns(db, c("package", "version", licence_fields)), 
-      by = "package", 
-      all.x = TRUE
-    ) %>% 
+  merge(
+    x = noFactorDataFrame(package = packages),
+    y = selectColumns(db, c("package", "version", licence_fields)), 
+    by = "package", 
+    all.x = TRUE
+  ) %>% 
     renameColumns(list(license = "licence")) %>% 
     orderBy("package")
   

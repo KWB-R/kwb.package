@@ -16,7 +16,7 @@ copyBasePackages <- function(
   packages = systemPackages(set_number))
 {
   catAndRun(paste("Copying base R packages to", target_lib), {
-    file.copy(
+    copyFile(
       from = file.path(system_lib, packages), 
       to = target_lib, 
       recursive = TRUE

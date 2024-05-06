@@ -19,6 +19,11 @@ anglesToPoints <- function(angles.grad)
   polar_to_xy(gradToRad(angles.grad))
 }
 
+# asNoFactorDataFrame ----------------------------------------------------------
+
+#' @importFrom kwb.utils asNoFactorDataFrame
+asNoFactorDataFrame <- kwb.utils::asNoFactorDataFrame
+
 # catAndRun --------------------------------------------------------------------
 
 #' @importFrom kwb.utils catAndRun  
@@ -35,6 +40,21 @@ cleanStop <- function(...)
   stop(..., call. = FALSE)
 }
 
+# copyFile ---------------------------------------------------------------------
+copyFile <- function(from, to, ...)
+{
+  success <- file.copy(from, to, ...)
+
+  # Return the path(s) to the target file(s)
+  paths <- if (length(to) == 1L && file.info(to)$isdir) {
+    file.path(to, basename(from))
+  } else {
+    to
+  }
+  
+  structure(paths, success = success)
+}
+
 # createDirectory --------------------------------------------------------------
 #' @importFrom kwb.utils createDirectory
 createDirectory <- kwb.utils::createDirectory
@@ -46,6 +66,21 @@ defaultIfNa <- kwb.utils::defaultIfNA
 # defaultIfNull ----------------------------------------------------------------
 #' @importFrom kwb.utils defaultIfNULL
 defaultIfNull <- kwb.utils::defaultIfNULL
+
+# downloadFile -----------------------------------------------------------------
+
+#' Downloads File from URL and Returns the Path to the Downloaded File
+#' 
+#' @param url URL to file to be downloaded
+#' @param targetDir path to local target directory
+#' @param quiet passed to \code{\link{download.file}}
+#' @returns path to downloaded file
+downloadFile <- function(url, targetDir = tempdir(), quiet = TRUE)
+{
+  destfile <- file.path(targetDir, basename(url))
+  utils::download.file(url, destfile, quiet = quiet)
+  destfile
+}
 
 # equidistantAngles ------------------------------------------------------------
 
@@ -73,6 +108,14 @@ excludeNull <- kwb.utils::excludeNULL
 # extractSubstring -------------------------------------------------------------
 #' @importFrom kwb.utils extractSubstring
 extractSubstring <- kwb.utils::extractSubstring
+
+# formattedMessageIf -----------------------------------------------------------
+formattedMessageIf <- function(condition, fmt, ...)
+{
+  if (condition) {
+    sprintf(fmt, ...)
+  }
+}
 
 # fullySorted ------------------------------------------------------------------
 #' @importFrom kwb.utils fullySorted
@@ -121,6 +164,11 @@ noSuchElements <- kwb.utils::noSuchElements
 #' @importFrom kwb.utils orderBy
 orderBy <- kwb.utils::orderBy
 
+# printIf ----------------------------------------------------------------------
+
+#' @importFrom kwb.utils printIf
+printIf <- kwb.utils::printIf
+
 # rbindAll ---------------------------------------------------------------------
 #' @importFrom kwb.utils rbindAll
 rbindAll <- kwb.utils::rbindAll
@@ -140,6 +188,11 @@ readLinesFromUrl <- function(url, silent = TRUE)
 # removeColumns ----------------------------------------------------------------
 #' @importFrom kwb.utils removeColumns
 removeColumns <- kwb.utils::removeColumns
+
+# renameAndSelect --------------------------------------------------------------
+
+#' @importFrom kwb.utils renameAndSelect
+renameAndSelect <- kwb.utils::renameAndSelect
 
 # renameColumns ----------------------------------------------------------------
 #' @importFrom kwb.utils renameColumns
@@ -176,6 +229,12 @@ selectColumns <- kwb.utils::selectColumns
 # selectElements ---------------------------------------------------------------
 #' @importFrom kwb.utils selectElements
 selectElements <- kwb.utils::selectElements
+
+# splitBy ----------------------------------------------------------------------
+splitBy <- function(data, column, ...)
+{
+  split(data, selectColumns(data, column), ...)
+}
 
 # stopFormatted ----------------------------------------------------------------
 #' @importFrom kwb.utils stopFormatted

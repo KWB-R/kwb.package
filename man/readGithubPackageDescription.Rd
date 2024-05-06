@@ -2,7 +2,7 @@
 % Please edit documentation in R/readGithubPackageDescription.R
 \name{readGithubPackageDescription}
 \alias{readGithubPackageDescription}
-\title{readGithubPackageDescription ------------------------------------------------}
+\title{Read DESCRIPTION File for R Package on GitHub}
 \usage{
 readGithubPackageDescription(
   repo,

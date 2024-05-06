@@ -4,6 +4,7 @@
 #' 
 #' @param package package name
 #' @param ref_date  default: NULL
+#' @importFrom utils tail
 #' @export
 #' @examples 
 #' packages <- c("ggplot2", "swmmr", "kwb.hantush")
@@ -11,15 +12,21 @@
 #' archivedCranVersions(packages, ref_date= "2012-12-01")
 archivedCranVersions <- function(package, ref_date = NULL)
 {
+  #kwb.utils::assignPackageObjects("kwb.package");`%>%` <- magrittr::`%>%`
+  
   if (length(package) > 1L) {
-    return(do.call(rbind, lapply(
-      package, archivedCranVersions, ref_date = ref_date
-    )))
+    return(
+      package %>% 
+        lapply(archivedCranVersions, ref_date = ref_date) %>% 
+        do.call(what = rbind)
+    )
   } 
   
-  src <- readLinesFromUrl(getUrl("cran_archive", package = package))
-
-  if (is.null(src)) {
+  text <- "cran_archive" %>% 
+    getUrl(package = package) %>% 
+    readLinesFromUrl()
+  
+  if (is.null(text)) {
     return(noFactorDataFrame(
       package = character(0L),
       version = character(0L),
@@ -29,20 +36,19 @@ archivedCranVersions <- function(package, ref_date = NULL)
     ))
   }
   
-  pattern <- sprintf(
-    "href=\"(%s_(.*)\\.tar\\.gz)\".*(\\d{4}-\\d{2}-\\d{2}) ", package
+  filePattern <- paste0(package, "_(.*)\\.tar\\.gz")
+  datePattern <- "\\d{4}-\\d{2}-\\d{2}"
+  pattern <- sprintf("href=\"(%s)\".*(%s) ", filePattern, datePattern)
+  
+  versions <- cbind(
+    noFactorDataFrame(package = package), 
+    extractSubstring(
+      pattern = pattern,
+      x = grep(pattern, text, value = TRUE), 
+      index = c(version = 2L, date = 3L, archive_file = 1L)
+    )
   )
   
-  versions <- cbind(package = package, extractSubstring(
-    pattern = pattern,
-    x = grep(pattern, src, value = TRUE), 
-    index = c(
-      version = 2L, 
-      date = 3L, 
-      archive_file = 1L
-    )
-  ))
-
   versions$date <- as.Date(versions$date)
   versions$date_type <- "last_modified"
   
@@ -50,19 +56,14 @@ archivedCranVersions <- function(package, ref_date = NULL)
     return(versions)
   }
   
-  getLastVersionBefore(versions, as.Date(ref_date))
-}
-
-# getLastVersionBefore ---------------------------------------------------------
-#' @noMd
-#' @noRd
-#' @keywords internal
-#' @importFrom utils tail
-getLastVersionBefore <- function(version_dates, ref_date)
-{
-  X = unname(split(version_dates, version_dates$package))
+  # For each package, get the latest version that was from before or from the 
+  # reference date
+  date <- as.Date(ref_date)
   
-  last_before <- function(x) utils::tail(x[x$date <= ref_date, ], 1L)
-  
-  resetRowNames(do.call(rbind, lapply(X, last_before)))
+  versions %>% 
+    splitBy("package") %>% 
+    unname() %>% 
+    lapply(function(x) utils::tail(x[x$date <= date, ], 1L)) %>% 
+    do.call(what = rbind) %>% 
+    resetRowNames()
 }

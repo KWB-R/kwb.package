@@ -6,7 +6,21 @@ test_that("currentCranVersion() works", {
 
   result <- f()
   
-  expect_s3_class(result, "data.frame")
-  expect_identical(names(result), c("package", "version", "date", "date_type"))
+  check_general <- function(x) {
+    expect_s3_class(x, "data.frame")
+    expect_identical(names(x), c("package", "version", "date", "date_type"))
+  }
 
+  check_general(result)
+  
+  result <- f("abc")
+  check_general(result)
+  expect_identical(nrow(result), 1L)
+  expect_true(result$date <= Sys.Date())
+
+  expect_identical(
+    f("dplyr", v = 1L),
+    f("dplyr", v = 2L)
+  )
+  
 })

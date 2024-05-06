@@ -2,25 +2,28 @@
 
 #' Detach all Non-System Packages
 #' 
+#' @param dbg logical indicating whether or not to show debug messages
 #' @export
 #' 
-detachAllNonSystemPackages <- function()
+detachAllNonSystemPackages <- function(dbg = TRUE)
 {
-  attachedNames <- grep("^package:", search(), value = TRUE)
+  attached <- grep("^package:", search(), value = TRUE)
   
-  names <- setdiff(attachedNames, packageString(systemPackages()))
+  names <- setdiff(attached, packageString(systemPackages()))
   
   for (name in names) {
     
     if (name %in% search()) {
       
-      cat("Detaching ", name, "... ")
-      detach(name, unload = TRUE, force = FALSE, character.only = TRUE)  
-      cat("ok.\n")
+      catAndRun(
+        paste("Detaching", name), 
+        detach(name, unload = TRUE, force = FALSE, character.only = TRUE),
+        dbg = dbg
+      )
       
     } else {
       
-      cat(name, "already detached.\n")
+      catIf(dbg, name, "already detached.\n")
     }
   }
 }
@@ -41,20 +44,22 @@ detachAllNonSystemPackages <- function()
 #' 
 detachRecursively <- function(package, pattern = ".*", dbg = FALSE)
 {
-  packages <- sortedDependencies(package, dbg = dbg)
-  packages <- grep(pattern, packages, value = TRUE)
+  #kwb.utils::assignPackageObjects("kwb.package");dbg=TRUE;pattern = ".*"
+  namesToDetach <- package %>% 
+    sortedDependencies() %>% 
+    grep(pattern = pattern, value = TRUE) %>% 
+    setdiff(systemPackages()) %>% 
+    packageString() %>% 
+    intersect(search())
   
-  nonSystemPackages <- setdiff(packages, systemPackages())
-                          
-  namesToDetach <- intersect(search(), packageString(nonSystemPackages))
+  kwb.utils::printIf(dbg, namesToDetach, caption = "*** object names to detach")
   
-  cat("*** object names to detach:\n")
-  print(namesToDetach)
-  
-  for (objectName in namesToDetach) {
-    
-    cat("Detaching", objectName, "...\n")
-    detach(objectName, unload = TRUE, character.only = TRUE)      
+  for (name in namesToDetach) {
+    catAndRun(
+      paste("Detaching", name),
+      detach(name, unload = TRUE, character.only = TRUE),
+      dbg = dbg
+    )
   }  
 }
 
@@ -150,15 +155,16 @@ packageDependencies <- function(
 # printAndWaitIf ---------------------------------------------------------------
 printAndWaitIf <- function(dbg, variables) 
 {
-  if (dbg) {
-    
-    for (variable in names(variables)) {
-      cat("\n", variable, ":\n")
-      print(variables[[variable]])      
-    }
-    
-    readline(prompt = "Press Return to continue...")
+  if (!dbg) {
+    return()
   }
+  
+  for (variable in names(variables)) {
+    cat("\n", variable, ":\n")
+    print(variables[[variable]])      
+  }
+  
+  readline(prompt = "Press Return to continue...")
 }
 
 # systemPackages ---------------------------------------------------------------

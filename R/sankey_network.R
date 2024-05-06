@@ -23,9 +23,15 @@ plotSankeyNetwork <- function(functionName, where = 1, ...)
   network <- toLinksAndNodes(relationMatrixToSourceTarget(x = relations))
 
   networkD3::sankeyNetwork(
-    network$links, network$nodes, Source = "source", Target = "target",
-    Value = "value", NodeID = "name", NodeGroup = "name",
-    nodeWidth = 10, nodePadding = 25,
+    network$links, 
+    network$nodes, 
+    Source = "source", 
+    Target = "target",
+    Value = "value", 
+    NodeID = "name", 
+    NodeGroup = "name",
+    nodeWidth = 10, 
+    nodePadding = 25,
     fontSize = 10
   )
 }
@@ -35,22 +41,19 @@ plotSankeyNetwork <- function(functionName, where = 1, ...)
 #' Package String
 #' 
 #' @param package Package name
-#' 
 #' @return \code{package}, preceded by \code{package:}
-#' 
 #' @export
-#' 
 packageString <- function(package)
 {
   paste0("package:", package)
 }
 
-# exampleLinksAndNodes --------------------------------------------------------
+# exampleLinksAndNodes ---------------------------------------------------------
+
 #' Example Links and Nodes
 #' 
 #' @export
 #' @importFrom utils read.table
-
 exampleLinksAndNodes <- function()
 {
   list(
@@ -113,6 +116,7 @@ toLinksAndNodes <- function(links)
 }
 
 # toSourceTarget ---------------------------------------------------------------
+
 #' @noMd
 #' @noRd
 #' @keywords internal
@@ -123,17 +127,16 @@ toSourceTarget <- function(x)
   lastcaller <- character()
 
   for (i in seq_len(nrow(x))) {
-    
     L <- x$level[i]
     x$caller[i] <- if (L > 1) lastcaller[L - 1] else NA
     lastcaller[L] <- x$target[i]
   }
 
-  renameColumns(x[, c("caller", "target")], list(caller = "source"))
+  x[, c("caller", "target")] %>% 
+    renameColumns(list(caller = "source"))
 }
 
 # includeExclude ---------------------------------------------------------------
-
 includeExclude <- function(x, exclude = NULL)
 {
   if (! is.null(exclude)) {
@@ -148,14 +151,22 @@ includeExclude <- function(x, exclude = NULL)
 }
 
 # relationMatrixToSourceTarget -------------------------------------------------
+
 #' @noMd
 #' @noRd
 #' @keywords internal
 relationMatrixToSourceTarget <- function(x)
 {
-  rbindAll(lapply(rownames(x), function(rowname) {
-    if (length(names.x <- names(which(x[rowname, ] == 1)))) {
-      data.frame(source = rowname, target = names.x)
-    }
-  }))
+  rownames(x) %>% 
+    lapply(function(rowname) {
+      names.x <- names(which(x[rowname, ] == 1))
+      if (length(names.x) == 0L) {
+        return(NULL)
+      }
+      data.frame(
+        source = rowname, 
+        target = names.x
+      )
+    }) %>% 
+    rbindAll()
 }

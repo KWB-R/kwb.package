@@ -7,11 +7,14 @@ allDeps <- function(
   cache = list()
 )
 {
-  pkg <- loadDescriptionFromWeb(name, version)
+  #kwb.utils::assignPackageObjects("kwb.package");name="abc";version=NA;depth=1L;max_depth=9L;cache=list()
   
-  stopifnot(is.na(version) || identical(version, pkg$version))
+  description <- loadDescriptionFromWeb(name, version)
+  versionInDescription <- selectElements(description, "version")
   
-  deps <- parsePackageDeps(pkg)
+  stopifnot(is.na(version) || identical(version, versionInDescription))
+  
+  deps <- parsePackageDeps(description)
 
   if (inherits(deps, "try-error") || nrow(deps) == 0L) {
     return(NULL)
@@ -23,15 +26,15 @@ allDeps <- function(
   deps$namever <- paste(name, version, sep = ":")
   
   if (depth == max_depth) {
-    message("maximum depth (", max_depth, ") reached.")
+    message(sprintf("maximum depth (%s) reached.", max_depth))
     return(deps)
   }
   
-  child_deps <- lapply(seq_len(nrow(deps)), function(i) {
-    allDeps(deps$name[i], deps$version[i], depth + 1L, max_depth)
-  })
-  
-  child_deps <- excludeNull(child_deps, dbg = FALSE)
+  child_deps <- seq_len(nrow(deps)) %>% 
+    lapply(function(i) {
+      allDeps(deps$name[i], deps$version[i], depth + 1L, max_depth)
+    }) %>% 
+    excludeNull(dbg = FALSE)
   
   if (length(child_deps) > 0L) {
     deps <- rbind(deps, do.call(rbind, child_deps))

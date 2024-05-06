@@ -12,12 +12,17 @@
 #' @importFrom utils installed.packages
 compareInstalledVersions <- function(lib1, lib2)
 {
+  #kwb.utils::assignPackageObjects("kwb.package")
+  #x <- "~/../Downloads/S/sema-plus-simulatoren/SEMA_Datenvorbereiter_v1.1.0/lib"
   installed_versions <- function(x) {
-    versions <- utils::installed.packages(path.expand(x))
-    resetRowNames(noFactorDataFrame(
-      name = rownames(versions), 
-      version = versions[, "Version", drop = FALSE]
-    ))
+    path.expand(x) %>% 
+      utils::installed.packages() %>% 
+      asNoFactorDataFrame() %>% 
+      renameAndSelect(list(
+        Package = "name", 
+        Version = "version"
+      )) %>% 
+      resetRowNames()
   }
   
   versions <- merge(
