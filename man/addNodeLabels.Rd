@@ -11,8 +11,8 @@ addNodeLabels(nodes, cex = 1, distance.factor = 1)
 
 \item{cex}{character expansion factor as given to \code{text}}
 
-\item{distance.factor}{expansion factor applied to the x and y coordinates of the nodes to get 
-the coordinates of the labels}
+\item{distance.factor}{expansion factor applied to the x and y coordinates of
+the nodes to get the coordinates of the labels}
 }
 \description{
 Add Labels to the Nodes Drawn on a Circle Line

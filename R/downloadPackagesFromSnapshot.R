@@ -27,11 +27,9 @@ downloadPackagesFromSnapshot <- function(
   repos <- getUrl("mran_snapshot", date = snapshot_date)
 
   if (is.null(destdir)) {
-    
-    success <- dir.create(destdir <- tempfile("snapshot_"))
-    
+    destdir <- tempfile("snapshot_")
+    success <- dir.create(destdir)
   } else {
-    
     stopifnot(file.exists(destdir))
   }
   

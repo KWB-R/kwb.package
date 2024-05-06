@@ -133,8 +133,8 @@ plotNodes <- function(nodes, r = 1, col = "red", ...)
 #' 
 #' @param nodes data frame as returned by \code{\link{toNodes}}
 #' @param cex character expansion factor as given to \code{text}
-#' @param distance.factor expansion factor applied to the x and y coordinates of the nodes to get 
-#'   the coordinates of the labels
+#' @param distance.factor expansion factor applied to the x and y coordinates of
+#'   the nodes to get the coordinates of the labels
 #' @export
 addNodeLabels <- function(nodes, cex = 1, distance.factor = 1)
 {

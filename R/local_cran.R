@@ -25,7 +25,10 @@ defaultLocalCRAN <- function(drive_letter = FALSE)
   # Since there are problems with the network path //moby/miacso$ we need to
   # map this network path to a drive letter (here: U:)
   servername <- getServername()
-  file.path(ifelse(drive_letter, "U:", sprintf("\\\\%s/miacso$", servername)), "local-cran")
+  file.path(
+    ifelse(drive_letter, "U:", sprintf("\\\\%s/miacso$", servername)), 
+    "local-cran"
+  )
 }
 
 # getBinaryPaths ---------------------------------------------------------------
