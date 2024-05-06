@@ -18,4 +18,9 @@ test_that("currentCranVersion() works", {
   expect_identical(nrow(result), 1L)
   expect_true(result$date <= Sys.Date())
 
+  expect_identical(
+    f("dplyr", v = 1L),
+    f("dplyr", v = 2L)
+  )
+  
 })
