@@ -12,13 +12,18 @@
 #' archivedCranVersions(packages, ref_date= "2012-12-01")
 archivedCranVersions <- function(package, ref_date = NULL)
 {
+  #kwb.utils::assignPackageObjects("kwb.package");`%>%` <- magrittr::`%>%`
+  
   if (length(package) > 1L) {
-    return(do.call(rbind, lapply(
-      package, archivedCranVersions, ref_date = ref_date
-    )))
+    return(
+      package %>% 
+        lapply(archivedCranVersions, ref_date = ref_date) %>% 
+        do.call(what = rbind)
+    )
   } 
   
-  text <- getUrl("cran_archive", package = package) %>% 
+  text <- "cran_archive" %>% 
+    getUrl(package = package) %>% 
     readLinesFromUrl()
   
   if (is.null(text)) {
