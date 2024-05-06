@@ -40,8 +40,8 @@ archivedCranVersions <- function(package, ref_date = NULL)
   datePattern <- "\\d{4}-\\d{2}-\\d{2}"
   pattern <- sprintf("href=\"(%s)\".*(%s) ", filePattern, datePattern)
   
-  versions <- cbind.data.frame(
-    package = package, 
+  versions <- cbind(
+    noFactorDataFrame(package = package), 
     extractSubstring(
       pattern = pattern,
       x = grep(pattern, text, value = TRUE), 
