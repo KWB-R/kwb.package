@@ -26,15 +26,15 @@ allDeps <- function(
   deps$namever <- paste(name, version, sep = ":")
   
   if (depth == max_depth) {
-    message("maximum depth (", max_depth, ") reached.")
+    message(sprintf("maximum depth (%s) reached.", max_depth))
     return(deps)
   }
   
-  child_deps <- lapply(seq_len(nrow(deps)), function(i) {
-    allDeps(deps$name[i], deps$version[i], depth + 1L, max_depth)
-  })
-  
-  child_deps <- excludeNull(child_deps, dbg = FALSE)
+  child_deps <- seq_len(nrow(deps)) %>% 
+    lapply(function(i) {
+      allDeps(deps$name[i], deps$version[i], depth + 1L, max_depth)
+    }) %>% 
+    excludeNull(dbg = FALSE)
   
   if (length(child_deps) > 0L) {
     deps <- rbind(deps, do.call(rbind, child_deps))
