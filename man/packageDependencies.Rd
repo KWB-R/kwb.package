@@ -28,11 +28,15 @@ packageDependencies(
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
     Character string \code{"all"} is shorthand for that vector,
     character string \code{"most"} for the same vector without
-    \code{"Enhances"}.
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
   }
 
-\item{recursive}{logical: should (reverse) dependencies of (reverse)
-    dependencies (and so on) be included?}
+\item{recursive}{a logical indicating whether (reverse) dependencies
+    of (reverse) dependencies (and so on) should be included, or a
+    character vector like \code{which} indicating the type of (reverse)
+    dependencies to be added recursively.}
 
 \item{reverse}{logical: if \code{FALSE} (default), regular
     dependencies are calculated, otherwise reverse dependencies.}
