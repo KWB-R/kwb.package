@@ -6,7 +6,8 @@
 \usage{
 getDependencyData(
   db,
-  fields = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+  fields = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"),
+  dbg = FALSE
 )
 }
 \arguments{
@@ -15,6 +16,8 @@ getDependencyData(
 
 \item{fields}{types of dependencies to be considered. Default:
 \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}}
+
+\item{dbg}{logical indicating whether or not to show debug messages}
 }
 \description{
 Get Package Dependency Data from Package Database

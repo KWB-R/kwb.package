@@ -6,10 +6,12 @@
 #'   \code{\link{getCranPackageDatabase}}
 #' @param fields types of dependencies to be considered. Default:
 #'   \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")} 
+#' @param dbg logical indicating whether or not to show debug messages
 #' @export
 getDependencyData <- function(
     db, 
-    fields = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
+    fields = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"),
+    dbg = FALSE
 )
 {
   stopifnot(`db must be a matrix or a data frame` = length(dim(db)) == 2L)
@@ -20,6 +22,7 @@ getDependencyData <- function(
   lapply(intersect(fields, names(db)), function(field) {
     catAndRun(
       sprintf("Analysing %s field", field),
+      dbg = dbg,
       packages %>% 
         toDependencyData(selectColumns(db, field)) %>% 
         cbind(type = tolower(field))
