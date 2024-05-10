@@ -6,7 +6,7 @@ test_that("downloadGitHubPackage() works", {
 
   expect_error(f())
 
-  result <- f("kwb-r/kwb.utils")
+  suppressMessages(result <- f("kwb-r/kwb.utils"))
   
   expect_true(endsWith(result, ".tar.gz"))
   expect_true(file.exists(result))
