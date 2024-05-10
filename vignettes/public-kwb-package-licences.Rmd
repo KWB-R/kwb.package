@@ -1,0 +1,149 @@
+---
+title: "Licences Public KWB Packages (Should) Have"
+author: "Hauke Sonnenberg"
+date: "2024-05-10"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Licences Public KWB Packages (Should) Have}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+
+# Load pipe operator
+`%>%` <- magrittr::`%>%`
+
+datatable_with_columnwise_search <- function(data, ...) {
+  data %>% 
+  DT::datatable(
+    options = list(dom = 'tp'), 
+    filter = list(position = "top"),
+    ...
+  )
+}
+```
+
+## Install required packages
+
+```{r results = "hide"}
+install_if_not_installed <- function(name, branch = "dev") {
+  if (name %in% rownames(installed.packages())) {
+    return()
+  }
+  remotes::install_github(
+    sprintf("kwb-r/%s@%s", name, branch),
+    upgrade = "never"
+  )
+}
+
+install_if_not_installed("kwb.pkgstatus", branch = "get-repos")
+install_if_not_installed("kwb.package")
+```
+
+## What (public) R packages have we published on GitHub?
+
+```{r eval = TRUE, echo = TRUE}
+github_package_db <- kwb.utils:::get_cached("github_package_db", dbg = FALSE)
+
+if (is.null(github_package_db)) {
+  github_package_db <- kwb.pkgstatus::make_github_package_db() %>% 
+    kwb.utils:::cache_and_return(name = "github_package_db")
+}
+
+sort(github_package_db$Package)
+```
+
+## What packages do these packages directly depend on?
+
+```{r eval = TRUE, echo = TRUE}
+remove_r_or_empty_dependency <- function(data) {
+  data[!data$dep_name %in% c("", "R"),]
+}
+
+dependencies <- github_package_db %>% 
+  kwb.package::getDependencyData(dbg = FALSE) %>% 
+  kwb.utils::selectColumns(c("package", "type", "dep_name", "dep_full")) %>% 
+  remove_r_or_empty_dependency()
+```
+
+```{r echo = FALSE, results = "asis"}
+datatable_with_columnwise_search(dependencies)
+```
+
+## What licences do the dependencies have?
+
+### Get licence information on CRAN packages
+
+I lookup the licences in the database of CRAN packages. I do not care about
+package versions but lookup the licences of the most current package versions!
+
+```{r eval = TRUE, echo = TRUE}
+cran_package_db <- kwb.package::getCranPackageDatabase()
+
+cran_licences <- dependencies %>% 
+  kwb.utils::selectColumns("dep_name") %>% 
+  unique() %>% 
+  kwb.package::getPackageLicences(db = cran_package_db) %>% 
+  kwb.utils::removeEmptyColumns() %>% 
+  unique() # due to duplicates in cran_package_db!
+```
+
+```{r echo = FALSE, results = "asis", eval = FALSE}
+datatable_with_columnwise_search(cran_licences)
+```
+
+### Combine dependency information with licence information
+
+```{r eval = TRUE}
+deps_with_licence <- dependencies %>% 
+  merge(cran_licences, by.x = "dep_name", by.y = "package", all.x = TRUE) %>% 
+  kwb.utils::moveColumnsToFront(names(dependencies)) %>% 
+  kwb.utils::fullySorted()
+
+stopifnot(nrow(dependencies) == nrow(deps_with_licence))
+```
+
+```{r echo = FALSE, results = "asis"}
+datatable_with_columnwise_search(deps_with_licence)
+```
+
+### Write dependency licence information to an Excel file
+
+```{r}
+writexl::write_xlsx(
+  x = deps_with_licence,
+  path =  "~/public-kwb-package-dependencies-with-licence.xlsx"
+)
+```
+
+## Find the GPL violations
+
+Sort out the "Suggests" dependencies and look for the dependencies that have a
+GPL licence:
+
+```{r}
+is_suggests <- deps_with_licence$type == "suggests"
+is_gpl <- grepl("GPL", deps_with_licence$licence)
+
+deps_remaining <- deps_with_licence[!is_suggests & is_gpl, ]
+
+(violating_packages <- sort(unique(deps_remaining$package)))
+```
+
+### Conclusion
+
+We have 
+
+- `r nrow(github_package_db)` public R packages on GitHub of which
+- `r length(violating_packages)` have at least one direct dependency with a GPL
+licence (ignoring all "Suggested" dependencies).
+
+These are the corresponding dependencies of the different types:
+
+```{r results = "asis", echo = FALSE, eval = TRUE}
+datatable_with_columnwise_search(deps_remaining, rownames = FALSE)
+```
