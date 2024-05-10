@@ -99,7 +99,7 @@ There are some packages that are used by both, "wasserportal" and "kwb.dwd".
 kwb.package::cranVersions("magrittr")
 ```
 
-### Which versions of R packages on GitHub exist?
+### What R package versions exist on our GitHub account "KWB-R"?
 
 ```{r}
 kwb.package::githubVersions(name = "kwb.utils")
@@ -123,4 +123,49 @@ corresponding tag defined in the GitHub repo as in the following example:
 
 ```{r}
 kwb.package::downloadGitHubPackage("kwb-r/kwb.utils@v0.12.0")
+```
+
+### Which of our R packages on GitHub are on R-Universe?
+
+Thanks to Michael Rustler our R packages that are published on our 
+GitHub account (https://github.com/kwb-r) are also made available on a 
+CRAN-like repository called an "R-universe" (https://kwb-r.r-universe.dev).
+
+The packages on GitHub can be installed with `remotes::install_github()`, 
+whereas the R-universe packages can be installed with the base R command
+`install.packages()` given that the path to the corresponding repo is either
+set in `options("repos")` or explicitly given, such as in:
+
+```
+install.packages("kwb.utils", repos = "https://kwb-r.r-universe.dev")
+```
+I wonder how to check if all packages that are on GitHub are also available
+in our R-universe. This is the way to go:
+
+```{r eval = TRUE}
+# Provide magrittr's pipe operator
+`%>%` <- magrittr::`%>%`
+
+# Get database of packages that are available on our GitHub account
+github_package_db <- kwb.utils:::get_cached("github_package_db")
+
+if (is.null(github_package_db)) {
+  github_package_db <- kwb.pkgstatus::make_github_package_db() %>% 
+    kwb.utils:::cache_and_return(name = "github_package_db")
+}
+
+# Get database of packages that are available in our R-universe
+universe_package_db <- "https://kwb-r.r-universe.dev" %>% 
+  contrib.url(type = "both") %>% 
+  available.packages() %>% 
+  as.data.frame(row.names = NULL)
+
+# What packages are only on KWB-R on GitHub but not on R-universe?
+github_packages <- github_package_db$Package
+universe_packages <- universe_package_db$Package
+
+github_package_db[!github_packages %in% universe_packages, c(1L, 3L, 6L)]
+
+# Are there packages on R-universe that are not on GitHub?
+universe_package_db[!universe_packages %in% github_packages, 1:3]
 ```
