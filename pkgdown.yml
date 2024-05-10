@@ -3,7 +3,7 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   tutorial: tutorial.html
-last_built: 2024-05-06T18:50Z
+last_built: 2024-05-10T10:51Z
 urls:
   reference: https://kwb-r.github.io/kwb.package/reference
   article: https://kwb-r.github.io/kwb.package/articles
