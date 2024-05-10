@@ -71,7 +71,7 @@ getPackageLicences <- function(
   licence_fields <- grep("^licence", names(db), value = TRUE)
   stopifnot(length(licence_fields) > 0L)
   
-  merge(
+  result <- merge(
     x = noFactorDataFrame(package = packages),
     y = selectColumns(db, c("package", "version", licence_fields)), 
     by = "package", 
